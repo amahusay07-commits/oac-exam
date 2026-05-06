@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oracle Analytics Cloud 2025 — Exam 1Z0-1041-25</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:   #0f1f3d;
+    --navy2:  #162848;
+    --accent: #c8102e;
+    --gold:   #f0a500;
+    --green:  #1a7f4b;
+    --green-bg: #e6f4ed;
+    --red-bg: #fde8eb;
+    --red:    #c8102e;
+    --blue:   #1a56a0;
+    --blue-lt:#e8f0fb;
+    --gray:   #f4f6f9;
+    --border: #d0d8e8;
+    --text:   #1a2236;
+    --muted:  #5a6a85;
+    --white:  #ffffff;
+    --mono:   'IBM Plex Mono', monospace;
+    --sans:   'IBM Plex Sans', sans-serif;
+    --radius: 8px;
+    --shadow: 0 2px 16px rgba(15,31,61,.10);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--sans);
+    background: #eef1f7;
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(0,0,0,.3);
+  }
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .header-left h1 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: .02em;
+    line-height: 1.3;
+  }
+  .header-left p {
+    font-size: .78rem;
+    color: #a0b4d0;
+    margin-top: 2px;
+    font-family: var(--mono);
+  }
+  .header-badge {
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--mono);
+    font-size: .7rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 4px;
+    letter-spacing: .05em;
+    white-space: nowrap;
+  }
+  .progress-bar-wrap {
+    background: rgba(255,255,255,.12);
+    height: 4px;
+  }
+  .progress-bar-fill {
+    height: 4px;
+    background: var(--gold);
+    width: 0%;
+    transition: width .3s ease;
+  }
+
+  /* ── TABS ── */
+  .tabs {
+    background: var(--navy2);
+    display: flex;
+    gap: 0;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    color: #7a9bc4;
+    font-family: var(--sans);
+    font-size: .82rem;
+    font-weight: 600;
+    padding: 11px 20px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    letter-spacing: .04em;
+    transition: color .2s, border-color .2s;
+  }
+  .tab-btn:hover { color: #fff; }
+  .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+  /* ── MAIN ── */
+  .main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px;
+  }
+
+  /* ── PANELS ── */
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .stat-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+  .stat-card .label {
+    font-size: .7rem;
+    font-family: var(--mono);
+    color: var(--muted);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .stat-card .value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--navy);
+    font-family: var(--mono);
+    line-height: 1;
+  }
+  .stat-card .value.green { color: var(--green); }
+  .stat-card .value.red   { color: var(--red);   }
+  .stat-card .value.gold  { color: var(--gold);  }
+
+  /* ── QUESTION CARD ── */
+  .question-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    margin-bottom: 14px;
+    overflow: hidden;
+    transition: box-shadow .2s;
+  }
+  .question-card:hover { box-shadow: 0 4px 24px rgba(15,31,61,.13); }
+  .question-card.answered { border-left: 4px solid var(--blue); }
+  .question-card.correct  { border-left: 4px solid var(--green); background: #f8fdf9; }
+  .question-card.wrong    { border-left: 4px solid var(--red);   background: #fff8f8; }
+
+  .q-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 18px 20px 14px;
+  }
+  .q-num {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    background: var(--navy);
+    color: #fff;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: .75rem;
+    font-weight: 600;
+    margin-top: 1px;
+  }
+  .question-card.correct .q-num  { background: var(--green); }
+  .question-card.wrong .q-num    { background: var(--red); }
+
+  .q-text {
+    font-size: .93rem;
+    line-height: 1.55;
+    font-weight: 400;
+    flex: 1;
+  }
+  .q-badge {
+    flex-shrink: 0;
+    font-family: var(--mono);
+    font-size: .65rem;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: .05em;
+    background: var(--blue-lt);
+    color: var(--blue);
+    margin-top: 2px;
+    white-space: nowrap;
+  }
+
+  /* ── OPTIONS ── */
+  .options {
+    padding: 0 20px 16px 66px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .option-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 6px;
+    border: 1.5px solid var(--border);
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+    font-size: .875rem;
+    line-height: 1.45;
+    user-select: none;
+  }
+  .option-label:hover { background: var(--gray); border-color: #b0c0dc; }
+  .option-label input[type="checkbox"],
+  .option-label input[type="radio"] {
+    display: none;
+  }
+  .option-key {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    background: var(--gray);
+    border: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: .7rem;
+    font-weight: 600;
+    color: var(--muted);
+    transition: background .15s, color .15s, border-color .15s;
+    margin-top: 1px;
+  }
+  .option-label.selected .option-key {
+    background: var(--navy);
+    color: #fff;
+    border-color: var(--navy);
+  }
+  .option-label.selected {
+    background: var(--blue-lt);
+    border-color: var(--blue);
+  }
+  /* After grading */
+  .option-label.correct-choice {
+    background: var(--green-bg);
+    border-color: var(--green);
+  }
+  .option-label.correct-choice .option-key {
+    background: var(--green);
+    color: #fff;
+    border-color: var(--green);
+  }
+  .option-label.wrong-choice {
+    background: var(--red-bg);
+    border-color: var(--red);
+  }
+  .option-label.wrong-choice .option-key {
+    background: var(--red);
+    color: #fff;
+    border-color: var(--red);
+  }
+  .option-label.missed-choice {
+    background: var(--green-bg);
+    border-color: var(--green);
+    opacity: .75;
+  }
+
+  /* ── RESULT TAG ── */
+  .q-result {
+    display: none;
+    padding: 0 20px 14px 66px;
+    font-family: var(--mono);
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+  }
+  .q-result.show { display: flex; align-items: center; gap: 8px; }
+  .q-result.ok   { color: var(--green); }
+  .q-result.bad  { color: var(--red); }
+  .q-result .answer-key { color: var(--muted); font-weight: 400; }
+
+  /* ── ACTION BUTTONS ── */
+  .actions {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    font-family: var(--sans);
+    font-size: .85rem;
+    font-weight: 600;
+    padding: 10px 24px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    letter-spacing: .03em;
+    transition: all .18s;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .btn-primary {
+    background: var(--navy);
+    color: #fff;
+  }
+  .btn-primary:hover { background: var(--blue); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(15,31,61,.25); }
+  .btn-danger {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-danger:hover { background: #a50d25; transform: translateY(-1px); }
+  .btn-outline {
+    background: #fff;
+    color: var(--navy);
+    border: 1.5px solid var(--border);
+  }
+  .btn-outline:hover { border-color: var(--navy); background: var(--gray); }
+  .btn-gold {
+    background: var(--gold);
+    color: var(--navy);
+  }
+  .btn-gold:hover { background: #d4900a; transform: translateY(-1px); }
+  .btn:disabled { opacity: .45; cursor: not-allowed; transform: none !important; }
+
+  /* ── RESULT BANNER ── */
+  .result-banner {
+    display: none;
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin-bottom: 24px;
+    border: 2px solid;
+    text-align: center;
+  }
+  .result-banner.show { display: block; }
+  .result-banner.passed {
+    background: var(--green-bg);
+    border-color: var(--green);
+    color: var(--green);
+  }
+  .result-banner.failed {
+    background: var(--red-bg);
+    border-color: var(--red);
+    color: var(--red);
+  }
+  .result-banner h2 {
+    font-size: 2rem;
+    font-family: var(--mono);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .result-banner p { font-size: .95rem; opacity: .85; }
+
+  /* ── SCOREBOARD ── */
+  .scoreboard-wrap {
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .scoreboard-head {
+    background: var(--navy);
+    color: #fff;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .scoreboard-head h2 { font-size: 1rem; font-weight: 700; }
+  .scoreboard-head span { font-family: var(--mono); font-size: .75rem; color: #7a9bc4; }
+  table.sb-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .sb-table th {
+    background: #f0f4fa;
+    font-family: var(--mono);
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: var(--muted);
+    padding: 10px 18px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .sb-table td {
+    padding: 12px 18px;
+    font-size: .875rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .sb-table tr:last-child td { border-bottom: none; }
+  .sb-table tr:hover td { background: var(--gray); }
+  .sb-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-family: var(--mono);
+    font-size: .72rem;
+    font-weight: 600;
+  }
+  .sb-badge.pass { background: var(--green-bg); color: var(--green); }
+  .sb-badge.fail { background: var(--red-bg);   color: var(--red); }
+  .sb-empty {
+    padding: 40px;
+    text-align: center;
+    color: var(--muted);
+    font-size: .9rem;
+    font-style: italic;
+  }
+
+  /* ── FILTERS ── */
+  .filter-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: .78rem;
+    font-family: var(--mono);
+    cursor: pointer;
+    transition: all .15s;
+    color: var(--muted);
+  }
+  .filter-btn:hover { border-color: var(--navy); color: var(--navy); }
+  .filter-btn.active { background: var(--navy); border-color: var(--navy); color: #fff; }
+
+  /* ── MODAL OVERLAY ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10,20,40,.55);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(2px);
+  }
+  .modal-overlay.show { display: flex; }
+  .modal-box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 36px 40px;
+    max-width: 440px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,.25);
+    animation: popIn .2s ease;
+  }
+  @keyframes popIn {
+    from { transform: scale(.92); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+  }
+  .modal-icon { font-size: 2.8rem; margin-bottom: 12px; }
+  .modal-box h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 8px; }
+  .modal-box p  { font-size: .9rem; color: var(--muted); line-height: 1.5; margin-bottom: 22px; }
+  .modal-btns   { display: flex; gap: 10px; justify-content: center; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 680px) {
+    .main { padding: 16px; }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+    .header-inner { padding: 14px 16px; }
+    .tabs { padding: 0 12px; }
+    .options { padding-left: 14px; }
+    .q-header { padding: 14px 14px 10px; }
+    .header-left h1 { font-size: .9rem; }
+  }
+
+  /* ── UNANSWERED HIGHLIGHT ── */
+  .question-card.unanswered-flag { animation: pulse 1s ease 2; }
+  @keyframes pulse {
+    0%,100% { box-shadow: var(--shadow); }
+    50%      { box-shadow: 0 0 0 3px var(--gold); }
+  }
+
+  /* ── JUMP TO UNANSWERED ── */
+  .unanswered-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--gold);
+    color: var(--navy);
+    font-family: var(--mono);
+    font-size: .72rem;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    border: none;
+    transition: background .15s;
+  }
+  .unanswered-pill:hover { background: #d4900a; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-left">
+      <h1>Oracle Analytics Cloud 2025 Professional</h1>
+      <p>Exam 1Z0-1041-25 &nbsp;·&nbsp; 82 Questions &nbsp;·&nbsp; Passing Score: 70%</p>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <button class="unanswered-pill" onclick="jumpToNext()" id="jumpBtn" style="display:none">
+        ↓ Next Unanswered
+      </button>
+      <span class="header-badge">EXAM PREP</span>
+    </div>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progressBar"></div>
+  </div>
+  <div class="tabs" style="border-top:1px solid rgba(255,255,255,.08);">
+    <button class="tab-btn active" onclick="showTab('exam',this)">📝 Exam</button>
+    <button class="tab-btn" onclick="showTab('scoreboard',this)">📊 Scoreboard</button>
+  </div>
+</header>
+
+<div class="main">
+
+  <!-- ── EXAM PANEL ── -->
+  <div class="panel active" id="panel-exam">
+
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="label">Answered</div>
+        <div class="value" id="statAnswered">0 / 82</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Correct</div>
+        <div class="value green" id="statCorrect">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Wrong</div>
+        <div class="value red" id="statWrong">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Score</div>
+        <div class="value gold" id="statScore">—</div>
+      </div>
+    </div>
+
+    <div class="result-banner" id="resultBanner">
+      <h2 id="resultTitle"></h2>
+      <p id="resultSub"></p>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" id="submitBtn" onclick="confirmSubmit()">
+        ✔ Submit Exam
+      </button>
+      <button class="btn btn-danger" id="clearBtn" onclick="confirmClear()">
+        ↺ Clear &amp; Retake
+      </button>
+      <div style="flex:1"></div>
+      <div class="filter-bar" style="margin:0">
+        <button class="filter-btn active" onclick="filterCards('all',this)">All</button>
+        <button class="filter-btn" onclick="filterCards('unanswered',this)">Unanswered</button>
+        <button class="filter-btn" onclick="filterCards('correct',this)" id="filterCorrect" style="display:none">Correct</button>
+        <button class="filter-btn" onclick="filterCards('wrong',this)"   id="filterWrong"   style="display:none">Wrong</button>
+      </div>
+    </div>
+
+    <div id="examList"></div>
+  </div>
+
+  <!-- ── SCOREBOARD PANEL ── -->
+  <div class="panel" id="panel-scoreboard">
+    <div class="scoreboard-wrap">
+      <div class="scoreboard-head">
+        <h2>📊 Exam Attempt History</h2>
+        <span id="sbCount">0 attempts</span>
+      </div>
+      <div id="sbBody"></div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- ── MODALS ── -->
+<div class="modal-overlay" id="modalSubmit">
+  <div class="modal-box">
+    <div class="modal-icon">📋</div>
+    <h3>Submit Exam?</h3>
+    <p id="modalSubmitMsg">Are you sure you want to submit? All answers will be graded immediately.</p>
+    <div class="modal-btns">
+      <button class="btn btn-outline" onclick="closeModal('modalSubmit')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitExam()">Submit Now</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalClear">
+  <div class="modal-box">
+    <div class="modal-icon">↺</div>
+    <h3>Reset &amp; Retake?</h3>
+    <p>This will clear all your answers and reset the exam so you can start fresh. Your current attempt will be saved to the Scoreboard first.</p>
+    <div class="modal-btns">
+      <button class="btn btn-outline" onclick="closeModal('modalClear')">Cancel</button>
+      <button class="btn btn-danger" onclick="clearExam()">Yes, Reset</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────────────────────────────────────
+// DATA
+// ─────────────────────────────────────────────────────────────────────────────
+const QUESTIONS = [
+  {n:1,  q:"You want your report query to hit the cache data when executing sales report. Which THREE conditions are true about hitting the cache?", opts:["Queries must request the lowest grain level from the aggregated level of information.","The cache needs to satisfy at least 50% of the request.","Join conditions must be equivalent.","WHERE clause constraints need to be equivalent to the cached results or to a subset of results.","All columns in the SELECT list of a new Query must exist in the cached query and should not be calculated."], ans:["C","D","E"]},
+  {n:2,  q:"You created a new Sales dashboard with three pages: Sales, Revenue, and Orders. You need to enable a different set of report links at the page level and set different report links for different analyses. How do you first enable the report links for all dashboard pages, and then set the different report links for the different reports?", opts:["Enable all the Page Report links and then enable the Report links for each report.","Set the column permissions of each Dashboard page and then set the Report links for each report.","Enable all the Dashboard Report links from the Dashboard properties and then the Page Report links.","Enable all the Dashboard Report links from the Dashboard properties and then the Report links for each report."], ans:["D"]},
+  {n:3,  q:"Which technique does Data Preparation in OAC use for recommendation with sensitive information such as SSN, credit card number, and customer number?", opts:["Advanced Analytics functions","Obfuscation to protect sensitive information","Cryptographic algorithm to encrypt sensitive information","Sentiment Analysis algorithm"], ans:["B"]},
+  {n:4,  q:"Data Visualization has the powerful Natural Language Query (NLQ) feature. Which TWO statements are TRUE about NLQ?", opts:["NLQ is available on top of the unified Oracle Analytics Home Page.","NLQ displays rows filtered by user criteria.","As you enter search criteria and hit Shift + Enter, the application displays visual cases on the Keywords entered.","NLQ is available in all pages in Oracle Analytics Cloud."], ans:["B","D"]},
+  {n:5,  q:"When designing a dashboard in the Oracle Analytics Cloud (OAC) workbook, you want to ensure an optimal user experience across devices. Which TWO functionalities can be achieved using Canvas Properties in OAC?", opts:["Setting individual font sizes for data labels within visualizations","Hiding, creating, or moving visualizations on the canvas depending on specific breakpoints","Defining canvas responsive layouts that adapt to different screen sizes","Enabling automatic refresh of data based on device type","Configuring color themes specific to each device type"], ans:["B","C"]},
+  {n:6,  q:"What TWO statements are true about Brushing?", opts:["Brushing only works when visualizations share the dataset","Brushing only works within a single visualization","Brushing is applied to all visuals in the canvas","Brushing is not applied to Tile and Map visuals","Brushing cannot be disabled for a canvas"], ans:["A","D"]},
+  {n:7,  q:"You are creating an analytics solution for a financial institution. One of the requirements is a workbook with a model that identifies customers with multiple potential fraudulent transactions. Which algorithm would be the best fit?", opts:["Anomaly Detection","Logistic Regression","Decision Tree","Support Vector Machine"], ans:["A"]},
+  {n:8,  q:"In which TWO ways can you use Oracle Analytics (OAC) to determine which values of a given data set may provide the greatest opportunity due to their outlier qualities?", opts:["Add an outlier visualization to your canvas.","Create a box plot visualization of your data set.","Modify the color palette to highlight unique values.","Use a combination of Max, Min value reference lines."], ans:["B","D"]},
+  {n:9,  q:"You have a data set of stocks with the columns Date, MaxStockPrice and MinStockPrice. Which column CANNOT be removed when performing a trend analysis?", opts:["MinStockPrice","MaxStockPrice","All columns are required","Date"], ans:["D"]},
+  {n:10, q:"You are working on a Sales Data Model. You want to analyze Sales within the same visualization by navigating from the Year level to the Month level. Which capability of the Oracle Analytics Cloud (OAC) will you use?", opts:["Oracle Analytics Cloud automatically creates the capabilities for all dimensions.","The Hierarchy capability in Oracle Analytics Semantic Modeler.","Use the Analytics Link capability to navigate to a different canvas in Data Actions.","Drill Down Functions in Expression Editor."], ans:["B"]},
+  {n:11, q:"The Order page of the Sales dashboard contains a report. When a user clicks the value of the Sales column, the report is displayed in a new window. The user wants the drill to open in the same window. How can you achieve this?", opts:["You can set the drill in place option in section properties.","You can set Link – Within the dashboard in report properties.","You can set publish page to dashboard in dashboard properties.","It is not possible to open the drill in the report in the same window."], ans:["A"]},
+  {n:12, q:"Which TWO statements are true about Action Links?", opts:["A column's navigation option can be enabled conditionally.","Navigation from one analysis to another is not possible if they reside in different folders.","Navigation from one analysis to another works only when both analyses are created from single subject area.","Presentation variables can be used while navigating from one analysis to another."], ans:["A","D"]},
+  {n:13, q:"As part of an analysis, you have Revenue values 1000 and 2000. Assuming you entered the Aggregate function SUM(Revenue) in the second column, what will be the values in rows 1 and 2 of the second column?", opts:["Row 1: 1000  Row 2: 2000","Row 1: 2000  Row 2: 3000","Row 1: 1000  Row 2: 3000","Row 1: 3000  Row 2: 3000"], ans:["D"]},
+  {n:14, q:"You have a business requirement to create a three-month rolling sales calculation in Oracle Analytics Cloud (OAC) workbook. Which time series function are you going to use?", opts:["PERIODROLLING (Sales, -1, 1)","AGO (Sales, Month, 3)","Forecast (Sales, Month, 3)","TODATE (Sales, Month)"], ans:["A"]},
+  {n:15, q:"You need to compute Sales for a period that starts at a quarter before and ends at a quarter after the current quarter. Which time series function will you use?", opts:["AGO","TODATE","PERIODROLLING","FORECAST"], ans:["C"]},
+  {n:16, q:"You are working on a Sales Order Data Model. You need to ensure the aggregation rule for the number of items per order column is set to Count. Which TWO methods can be used to set the aggregation rule for this column to Count within Oracle Analytics Cloud (OAC)?", opts:["Data set properties cannot be updated after they are imported.","Change the dataset property to count in the Data Tab.","Change the column property to count in the Present Pane.","Change the column property to count from the Grammar Panel.","Create a new column with count aggregation in the Expression Editor."], ans:["B","E"]},
+  {n:17, q:"You are asked to analyze an unfamiliar spreadsheet of employee attrition data. Which TWO capabilities Oracle Analytics provides to leverage the visuals generated out of the box (OOTB)?", opts:["Calculating a forecast in the expression builder of the possibility of attrition.","Using Auto-Insights on the Employee Attrition Data Set","Using the Explain option on the Attrition attribute.","Performing a cluster analysis of Employee in My Calculations."], ans:["B","C"]},
+  {n:18, q:"Using Present Insights, you can take a snapshot of any information in a visualization. Which statement is true about sharing with Insights?", opts:["Insights is always shared in the form of a story so everybody will see the same information","Insights is shared as a story, and everybody will see their information based on permission","By default, all users cannot share Insights","It is not possible to share Insights with other users"], ans:["B"]},
+  {n:19, q:"What does Oracle Analytics Explain work on?", opts:["Imported Excel file only","Data sets and subject areas","Data sets only","Data sets with more than three attributes"], ans:["C"]},
+  {n:20, q:"Which action aids the creation of a story after generating visuals with Auto-Insights in Oracle Analytics Cloud?", opts:["Navigate to the Present Tab in Oracle Analytics Cloud for story deployment.","Utilize the Oracle Day by Day Mobile Application for story creation.","Navigate to the story creation feature exclusively available in Oracle Analytics Server.","Navigate to the Visualize Tab in Oracle Analysis Cloud for story deployment."], ans:["A"]},
+  {n:21, q:"Which role is required to edit and create a new semantic model in Oracle Analytics Cloud Enterprise Edition?", opts:["BI Data Load Author","BI RPD Model Author","BI Content Author","DV Consumer Role","BI Data Model Author"], ans:["E"]},
+  {n:22, q:"You are a BI Administrator of Oracle Analytics Cloud (OAC) and you want to provide a power user access to create workbooks, and load data for data visualizations, analyses, and pixel-perfect reports. Which application role must you grant to the user?", opts:["DV Content Author","BI Dataload Author","BI Data Model Author","BI Content Author"], ans:["D"]},
+  {n:23, q:"You have a BI Service Administrator application role and you are notified that a user cannot get answers when using Day by Day with Oracle Analytics Cloud Professional Edition. Which THREE statements are valid about investigating this issue?", opts:["Verify that the user is assigned the BI Content Author and DV Consumer Roles.","Inspect the data set and make sure that it is certified indexed for searching and English language is selected.","Verify that the user has been assigned the BI Content Author and BI Data Load Author roles.","Inspect the data set and check the access control.","Day by Day does not work with Oracle Analytics Cloud Professional edition."], ans:["A","B","D"]},
+  {n:24, q:"You have a business security requirement allowing a user-defined group to create and edit only data sets in the workbooks. Which statement is true regarding Oracle Analytics Cloud Application Role?", opts:["Create a User-Defined Application Role with only required authoring capabilities and grant it to the group.","Use the predefined 'DV Content Author' application role and grant it to the Group.","Use the predefined 'BI Content Author' application role and grant it to the Group.","Modify the 'DV Content Author' application role permission with only the required authoring capabilities and grant it to the group."], ans:["A"]},
+  {n:25, q:"What is the benefit of fine-grained permissions compared to the predefined OAC Application Roles?", opts:["Fine-grained permissions can only be assigned to predefined OAC Application Roles","Fine-grained permissions eliminate the need for predefined OAC Application Roles","Fine-grained permissions simplify user management by reducing the number of roles","Fine-grained permissions allow for assigning specific permissions to user-defined OAC Application Roles"], ans:["D"]},
+  {n:26, q:"Which TWO statements are true about managing users, roles, and application roles in the console?", opts:["You can create application roles.","You can create users.","You can create roles.","You can assign multiple users to an application role by adding a role as a member of an application role.","You can assign multiple users to an application role by adding an application role as a member of a role."], ans:["C","D"]},
+  {n:27, q:"Which TWO statements are true regarding users, groups, and application roles in the Oracle Analytics (OAC) Console?", opts:["Groups can be created directly within the OAC Console by administrators.","User-defined application roles can be created directly within the OAC Console by administrators.","User provisioning in OAC is handled through an external identity provider such as Oracle IAM.","Users can be created directly within the OAC Console by administrators.","Application roles are assigned directly to data sources or connections to control data access."], ans:["B","C"]},
+  {n:28, q:"Which TWO statements are true about the Presentation Catalog?", opts:["My folders can be shared with other users.","You can grant ownership of items you create to other users.","To prevent corruption, catalog storage of objects of different types must be segregated into their own folders.","Catalog items can be set to read-only."], ans:["B","D"]},
+  {n:29, q:"A colleague created few workbooks and left the organization. Which feature in Console is the ONLY way for the Administrator to change the ownership of your colleague's artifacts?", opts:["Content","Go to the individual artifacts and assign them to the Administrator.","Users and Roles","System Settings","Snapshots"], ans:["A"]},
+  {n:30, q:"You are asked to create a custom sales report for each of the 3,200 sales representatives, by using Oracle Analytics Cloud Enterprise Edition. Which tool must you use?", opts:["BI Agent to deliver the sales report.","SMTP Email Configuration to deliver the sales report.","Pixel Perfect Reporting with bursting to create the sales report.","BI Delivery to deliver the sales report.","Oracle SmartView to generate the sales report."], ans:["C"]},
+  {n:31, q:"Which type of report is an example of the bursting feature in Pixel Perfect Reporting?", opts:["Interactive data exploration","Bar codes","Government PDF forms","Ad hoc reporting","Customized regional marketing reports"], ans:["E"]},
+  {n:32, q:"You are working with an Oracle Analytics Cloud (OAC) workbook containing key sales performance metrics. You want to automatically deliver the report to the regional managers every Monday morning. Which statement about using the workbook email scheduler is true?", opts:["The feature currently doesn't require any specific configuration by an OAC administrator.","You can schedule emails for workbooks on the 'My Folders' and 'Shared Folders.'","The workbook email scheduler supports sending dashboards along with scheduled emails.","All regional managers must be preconfigured as Oracle Analytics Cloud users to receive scheduled emails.","Bursting allows you to personalize the emails workbook for each recipient based on their data access permissions."], ans:["E"]},
+  {n:33, q:"Which TWO steps do you perform to create pixel perfect reports with OA Publisher?", opts:["Create connections to sources, including Oracle 10g/11g, Oracle BI Server, JDBC, and MS SQL Server","Test connections between OA Publisher and configured sources by using Oracle Fusion Middleware Connection","Define a data model to set the business view of the data, join data sets, and create custom measures","Generate a sample set of data that can be used for configuring and testing the report, and save it to a file"], ans:["C","D"]},
+  {n:34, q:"You are tasked with creating a report in Oracle Analytics Publisher (OAP) that displays sales figures by product category and regions. Which is the INITIAL step when building this report in OAP?", opts:["Design the layout of the report using the Layout Editor.","Define the data model connection to the relational database.","Create a prompt to allow users to select specific product categories and regions.","Select the charts and graphs to visualize the sales data."], ans:["B"]},
+  {n:35, q:"Which version of OBIEE is supported for migration to OAC?", opts:["You cannot migrate content from OBIEE to OAC","OBIEE 10g","OBIEE 12g and later","OBIEE 12c","OBIEE 11.1x and later"], ans:["D"]},
+  {n:36, q:"Which statement is true when migrating content from Oracle BI Enterprise Edition 12C to Oracle Analytics Cloud?", opts:["Both the Oracle BI Enterprise Edition 12c Data Model and the Catalog must be migrated to OAC together.","There is no option to migrate Oracle BI Enterprise Edition 11g content to Oracle Analytics Cloud.","You can only migrate an Oracle BI Enterprise Edition 12c Data Model to OAC. Catalog migration is not allowed.","You can migrate a snapshot from Oracle BI Enterprise Edition 12c to Oracle Analytics Cloud."], ans:["D"]},
+  {n:37, q:"You are designing an analytics solution that requires self-service analytics and highly formatted reports delivered by scheduled email to external resellers. Which edition of Oracle Analytics must you use?", opts:["OAC Business Intelligence Edition","OAC Enterprise Edition","OA Data Visualization Cloud","OA Fusion Analytics Warehouse Edition","OAC Professional Edition"], ans:["B"]},
+  {n:38, q:"Which service do you need to subscribe to for creating an Oracle Analytics Cloud (OAC) instance?", opts:["Oracle Cloud Storage","Oracle Storage","Oracle Analytics Cloud","Oracle Autonomous Database"], ans:["C"]},
+  {n:39, q:"Which data action must you use to connect Oracle Analytics Publisher reports?", opts:["Publish Event","Webhooks","Analytics Link","HTTP API","URL Navigation"], ans:["C"]},
+  {n:40, q:"You are the administrator for an Oracle Analytics Cloud (OAC) instance and want to implement a vanity URL. Which TWO statements regarding Oracle Analytics Cloud (OAC) vanity URLs are true?", opts:["They can enhance security by enabling two factor authentication for your OAC instance.","They can only be configured for Oracle Analytics Cloud Enterprise Edition.","They can be leveraged to strengthen brand recognition for your organization analytics platform.","They can be an alternative login to the long, default Oracle Cloud Analytics URL","They can be created only by modifying Oracle Analytics Cloud interface configurations."], ans:["C","D"]},
+  {n:41, q:"Oracle Applications Connector supports Oracle Fusion Application Cloud. Which is valid about Oracle Application Connector?", opts:["When creating a connection, enter the URL for Oracle Fusion Application.","The active user's credentials option in the Create Oracle Application Connection Dialog box cannot be used with Oracle Application Connector","It can be used with Thin Client Modeler","It cannot connect to on-premises Oracle BI Enterprise Edition","When creating a connection, enter the Business Intelligence URL for Oracle Fusion Applications."], ans:["A"]},
+  {n:42, q:"You must create an Oracle Autonomous Data Warehouse connection for a data set. What do you need to create this connection for the appropriate schema?", opts:["Wallet file, TNS descriptor, and user credentials.","SSO file, tnsnames file, and user credentials.","TNS Descriptor, and user credentials","Wallet file and user credentials.","SSO file and user credentials."], ans:["A"]},
+  {n:43, q:"Your client has a significant data warehouse on their premises. Which statement accurately describes the role and function of a Data Gateway?", opts:["It enables secure and efficient data transfer between on-premise data sources and Oracle Analytics Cloud.","It provides advanced data analysis capabilities for Oracle Database users.","It is designed to optimize cloud storage usage within Oracle Analytics Cloud.","It serves as a tool for data visualization within Oracle Analytics Cloud."], ans:["A"]},
+  {n:44, q:"As an analyst how would you access query logs for your visuals created in Workbooks?", opts:["By asking the administrator to provide the log for the visuals in the Workbook.","By using developer option enabled by the administrator or Content Author","By using session and Query Cache","By using Issue SQL"], ans:["B"]},
+  {n:45, q:"What are TWO benefits of using Oracle Cloud Infrastructure (OCI) logging to access Oracle Analytics Cloud (OAC) logs?", opts:["OCI logging provides a user interface for log creation and reduces storage requirements.","OCI logging automatically archives OAC logs for disaster recovery purposes.","OCI logging allows direct editing of OAC logs and streamlines data export for external tools.","OCI logging simplifies compliance auditing of OAC user activity.","OCI logging offers a centralized location for managing logs from OAC resources."], ans:["D","E"]},
+  {n:46, q:"Your company wants to start auditing Pixel Perfect reports and catalog objects. How do you enable auditing?", opts:["Set the enable monitor and audit property = true, set audit level","Select the enable monitor and audit check box, set audit level, create a JNDI connection","Select the enable monitor and audit check box, set audit level, create a web service connection","Select the enable monitor and audit check box, create a Job connection"], ans:["B"]},
+  {n:47, q:"Which is a supported source for registering and using a Machine Learning module?", opts:["SQL Server","Oracle Data Science","Mongo Database","Autonomous Data Warehouse","Oracle Cloud Object Storage"], ans:["B"]},
+  {n:48, q:"You have implemented a parameter allowing users to easily switch between attributes in OAC. Which TWO statements are true about using parameters?", opts:["Parameters can be assigned a default value, but users cannot override it.","Parameters can be used with workbook titles and visualizations labels.","Parameters can only be used with prompts and visualizations.","Parameters can only be used as filters.","Parameters can be used as column selectors."], ans:["B","E"]},
+  {n:49, q:"You have implemented a parameter allowing users to easily switch between attributes in an OAC dashboard analyzing sales data. Which TWO statements are true about using parameters?", opts:["Parameters can only be used with prompts on visualizations","Parameters can be assigned a default value, but users cannot override it","Parameters can only be used as filters","Parameters can be used with workbook titles and visualizations","Parameters can be used in calculations and expressions"], ans:["D","E"]},
+  {n:50, q:"You have created a product type dashboard prompt and applied it to the Sales dashboard. When a user selects the prompt, the data in two reports is refreshed but the data in two other reports is not. What are TWO possible reasons for this?", opts:["The Report filter is set to be prompted.","The reports have a protected filter.","The Reports filter is set to the presentation variable.","The Reports filter formula is different from the prompt column formula."], ans:["B","C"]},
+  {n:51, q:"Which TWO are true about dashboard prompts?", opts:["Prompts can be developed using only a single column.","All prompts must be displayed on a single page.","Repository variables and session variables can be used in prompt default values.","Prompt values can be limited based on values selected in other prompts."], ans:["C","D"]},
+  {n:52, q:"You have created the Product Type dashboard prompt applied to the Sales dashboard with three pages: Sales, Order, and Revenue. The dashboard prompt is applied to all pages, but you want it to apply only to the Sales page. What configuration changes are required?", opts:["In the Dashboard editor, edit the section and add a condition to change the scope","In the Dashboard editor, go to dashboard properties and change the scope from Dashboard to Page","In the Dashboard editor, edit the dashboard prompt properties and change the scope from Dashboard to Page","In the Prompt Configuration option, change the Choose Input Type"], ans:["B"]},
+  {n:53, q:"Which TWO can be passed to display as prompts in your Publisher Report?", opts:["List of values","Number of filters","Date filters","Expression filters","List filters"], ans:["A","C"]},
+  {n:54, q:"You have a global data set for oil prices for each country. You need to perform analyses on Asian countries for a period of one month. Which TWO combinations of filters could you use to achieve this?", opts:["List and Date Range","Expression and Date Range","Range and Expression","List and Range","Date Range and Top Bottom N"], ans:["A","B"]},
+  {n:55, q:"You want to create a Sales Amount by Month visual. The visual should display sales amount from all cities in the South region with more than 1 million USD. Which TWO filters can be applied for Region and Sales Amount?", opts:["List filter for Region and Range filter for Sales Amount","List filter for Region and List filter for Sales Amount","List filter for Region and Expression filter for Sales Amount","Range filter for Region and Date filter for Sales Amount."], ans:["A","C"]},
+  {n:56, q:"Which TWO steps do you perform to create a Relative Time filter?", opts:["Select Relative as the filter type and set the Relative to property.","Select Relative Time as the filter type.","Add a date column to the Filter bar.","Select Date Range as the filter type."], ans:["B","C"]},
+  {n:57, q:"Which THREE are true about adjusting visualization properties when placing multiple visuals on a canvas?", opts:["You can resize visuals manually if the Canvas Layout option is set to freeform.","You can adjust visualization properties from the Visualization Properties pane.","You can change a visual's location on the canvas by selecting and dragging it to the desired location.","You can hide a visual by right clicking the canvas and selecting Hide from the shortcut menu.","You can add a copy of selected canvas to the projects row of canvas tabs by right clicking the canvas and selecting Edit and Copy visualizations."], ans:["A","B","C"]},
+  {n:58, q:"Oracle Analytics Cloud (OAC) offers several visualization options for presenting query results. Which TWO methods do you use to invoke the best visualization in OAC?", opts:["Select the desired data elements from the Data Elements pane and then right click and select create best visualization from the drop-down menu.","Select the desired data elements from the Data Elements pane and drag them to a blank area of the canvas.","Select the best visualization option from the project canvas settings drop-down menu.","Select the desired data elements from the Data Elements pane and drag them to the Best Visualizations zone in the Employee Pane.","Change the projects properties to Always use Best Visualizations."], ans:["A","B"]},
+  {n:59, q:"Which TWO can be defined on a Canvas in a story in Oracle Analytics Cloud?", opts:["Notes","Narration","Filters","Notifications"], ans:["A","C"]},
+  {n:60, q:"An analyst is creating a story on the Present tab of the Workbook. What is the most likely reason they have done this?", opts:["To share the story on Day by Day with their decision maker.","To share the story by exporting to XML.","To share the story by exporting to PDF.","To share the story with consumers on the Home Page."], ans:["C"]},
+  {n:61, q:"Which TWO are true about creating a story in Oracle Analytics Cloud?", opts:["Insights always take a snapshot data for a story.","You can only export the active visual.","A story can have multiple canvases.","A project can have only one story"], ans:["B","C"]},
+  {n:62, q:"You created a workbook with your dataset and generated a set of insights. In which TWO ways can you efficiently share workbooks?", opts:["Convert the workbook into a dashboard and export the dashboard file.","Take a screenshot of each canvas.","Export the workbook into pdf.","Share the workbook as .dva file."], ans:["C","D"]},
+  {n:63, q:"Your Oracle Analytics client asks you to shape a story and share it as a file. Which are THREE valid file types for sharing a story?", opts:["Package (.dva)","AutoCAD (.dxf)","Image (.png)","Word (.docx)","Acrobat (.pdf)"], ans:["A","C","E"]},
+  {n:64, q:"You access a data visualization project by using your phone's browser. The project has three visualizations. How are the visualizations sized?", opts:["The first visualization takes 50% of the display area and the other two take 25% each.","Only a single visualization is displayed.","You cannot access data visualizations by using a phone's browser.","Each visualization is of the same size."], ans:["D"]},
+  {n:65, q:"Your client created a new custom map-layer. How can this mapped layer be exposed in the workbook?", opts:["Navigate to the console, Click Maps, On the Map Layer tab upload the xml file.","Navigate to the console, Click Maps, On the Map Layer tab upload the geojson file.","Create a New Workbook. Add map visualization. Change the layer property to new. Click upload. Select the geojson file.","Create a New Workbook. Add map visualization. Change the layer property to new. Click upload. Select the json file."], ans:["C"]},
+  {n:66, q:"Which TWO maps use an API key to add as Map background?", opts:["Google Maps","Oracle Map","WMS Map","Tiled Web Map","Baidu Map"], ans:["A","E"]},
+  {n:67, q:"Your client wants to implement a custom plug-in from Oracle Analytics Library. What action do you need to take before the extension is available for use in projects?", opts:["Refresh the page","No additional action needed","Restart the OAC instance","Enable the plug-in from the plug-in menu."], ans:["A"]},
+  {n:68, q:"You create a Watchlist in the Oracle Analytics Cloud (OAC). Which statement about adding visualizations to a watchlist is true?", opts:["Watchlist can only contain tables and graphs but cannot include charts.","Adding a visualization for a Watchlist removes it from the original workbook.","You can add any visualization from any workbooks in OAC to watchlist.","You can only add visualizations from the same workbook to a Watchlist."], ans:["C"]},
+  {n:69, q:"In Oracle Analytics Cloud (OAC) you can quickly search for Saved Objects. However, if your input or search criteria is not formed correctly it will not display results. Which input causes this?", opts:["The input contains an asterisk (*) in the search text (for example, *revenue)","The input contains the date attribute in the year-month-day format.","The input contains a comma (,) in the search text.","The input contains the object name only as search text."], ans:["C"]},
+  {n:70, q:"How do you create a Machine Learning (ML) Model?", opts:["Use Data Replication Flow in OAC.","An administrator can create an ML Model from the Machine Learning tab.","Create an ML Model using the Create option.","Use an existing ETL tool to create an ML Model.","Use the Data Flow feature in OAC."], ans:["E"]},
+  {n:71, q:"How should you use a machine learning model within a canvas of an Oracle Analytics Cloud Workbook?", opts:["Create a data sequence.","Create a scenario using the required model.","Create a custom calculation.","Use the machine learning model visualization."], ans:["D"]},
+  {n:72, q:"How should you determine the accuracy of a Machine Learning model created in Oracle Analytics Cloud (OAC)?", opts:["Run the Machine Learning model with various filter values applied.","Open the Inspect dialog for a given Machine Learning model and review the F1 score.","Use the Debug option in the Data Flow where the model was created.","Create Data Flow that includes a histogram.","Open the Inspect dialog for a given Machine Learning model and review the P score."], ans:["B"]},
+  {n:73, q:"Which are TWO use-cases for Data Flow?", opts:["To curate data sets that can be used for visualizations.","Create a custom Python Machine Learning model using OOTB capabilities in Data Flow.","Train and Test the Machine Learning Model.","Perform some lightweight transformation within the workbook."], ans:["A","C"]},
+  {n:74, q:"Which statement is true about Data Flows and Sequences?", opts:["Both Sequences and Data Flows can be scheduled","You cannot run a Sequence","Sequences cannot be scheduled but Data Flows can be scheduled","Sequences can be scheduled but not Data Flows"], ans:["A"]},
+  {n:75, q:"You need to curate data for Country Dimension and dependent Sales Facts. How do you design the data flow and load data for these two separate data sets in data-storage?", opts:["Create two separate data flows. Then call one data flow from the other.","Create a single data flow that loads data to the Country data storage first, then to the Sales data storage.","Create two separate data flows. Then create a sequence where the data flow for Sales is called.","Create two separate data flows. Then create a sequence where the data flow for Country is called followed by flow for Sales."], ans:["D"]},
+  {n:76, q:"Which of these steps is REQUIRED in a Data Flow to create a new curated data set?", opts:["Add Data","Merge Columns","Filter","Aggregate"], ans:["A"]},
+  {n:77, q:"You have two data sets: Country and Revenue. Year has been marked as an Attribute. What are the TWO steps to create a data set that you can use for analyzing country revenues over time?", opts:["Keep Matching Rows on both data sets and match the Country_code column on both data sets.","Apply the default Aggregation on Revenue_amount.","Keep Matching Rows on both data sets and match the ID column.","Apply the default Aggregation on Year."], ans:["A","B"]},
+  {n:78, q:"You are creating a data model for a healthcare provider. Patient information is contained in related tables. The project owner requires that these tables not be merged. What is the correct relational topology to model the patient dimension?", opts:["Snowflake","Distributed tree","Universe","Star","Balanced tree"], ans:["A"]},
+  {n:79, q:"You have a historical Sales data set which you use to train a model in OAC. Your products have an attribute named Profitability with THREE values: high, medium, low. Which train data step is required to train a model in OAC?", opts:["Train Multi-Classifier","Train Numeric Prediction","Train Binary-Classifier","Train Clustering","Train Text Prediction"], ans:["A"]},
+  {n:80, q:"What does a fact table use to reference a dimension table?", opts:["Primary Key","Dimension Attribute","Master Key","Aggregate Type","Foreign Key"], ans:["E"]},
+  {n:81, q:"A column in your data has a wide range of numerical values. You want to create a column that labels these values as Large, Medium and Small. Which data preparation action helps you to accomplish this?", opts:["Group","Convert","Extrapolate","Bin","Bundle"], ans:["D"]},
+  {n:82, q:"Which TWO filters can be applied to all Dimensional data types?", opts:["Date","List","Range","Expression"], ans:["B","D"]},
+];
+
+const LETTERS = 'ABCDE';
+let userAnswers = {}; // {qIndex: Set of letters}
+let graded = false;
+let scores = JSON.parse(localStorage.getItem('oac_scores') || '[]');
+let currentFilter = 'all';
+
+// ─────────────────────────────────────────────────────────────────────────────
+// BUILD EXAM
+// ─────────────────────────────────────────────────────────────────────────────
+function buildExam() {
+  const list = document.getElementById('examList');
+  list.innerHTML = '';
+  QUESTIONS.forEach((q, qi) => {
+    const multi = q.ans.length > 1;
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = `card-${qi}`;
+
+    const badge = multi
+      ? `<span class="q-badge">${q.ans.length === 3 ? 'SELECT 3' : 'SELECT 2'}</span>`
+      : `<span class="q-badge" style="background:#f0f4fa;color:#5a6a85">SINGLE</span>`;
+
+    let optHtml = '';
+    q.opts.forEach((opt, oi) => {
+      const letter = LETTERS[oi];
+      const type = multi ? 'checkbox' : 'radio';
+      optHtml += `
+        <label class="option-label" id="opt-${qi}-${oi}">
+          <input type="${type}" name="q${qi}" value="${letter}" onchange="toggleOpt(${qi},${oi},this)">
+          <span class="option-key">${letter}</span>
+          <span>${opt}</span>
+        </label>`;
+    });
+
+    card.innerHTML = `
+      <div class="q-header">
+        <span class="q-num">${q.n}</span>
+        <span class="q-text">${q.q}</span>
+        ${badge}
+      </div>
+      <div class="options">${optHtml}</div>
+      <div class="q-result" id="result-${qi}"></div>
+    `;
+    list.appendChild(card);
+  });
+}
+
+function toggleOpt(qi, oi, input) {
+  if (graded) { input.checked = !input.checked; return; }
+  const q = QUESTIONS[qi];
+  const multi = q.ans.length > 1;
+  const letter = LETTERS[oi];
+
+  if (!userAnswers[qi]) userAnswers[qi] = new Set();
+
+  if (multi) {
+    if (input.checked) {
+      userAnswers[qi].add(letter);
+      document.getElementById(`opt-${qi}-${oi}`).classList.add('selected');
+    } else {
+      userAnswers[qi].delete(letter);
+      document.getElementById(`opt-${qi}-${oi}`).classList.remove('selected');
+    }
+  } else {
+    // Radio: clear all siblings first
+    q.opts.forEach((_, i) => {
+      document.getElementById(`opt-${qi}-${i}`).classList.remove('selected');
+    });
+    userAnswers[qi] = new Set([letter]);
+    document.getElementById(`opt-${qi}-${oi}`).classList.add('selected');
+  }
+
+  if (userAnswers[qi].size === 0) delete userAnswers[qi];
+  updateStats();
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// STATS
+// ─────────────────────────────────────────────────────────────────────────────
+function updateStats() {
+  const answered = Object.keys(userAnswers).length;
+  document.getElementById('statAnswered').textContent = `${answered} / 82`;
+  document.getElementById('progressBar').style.width = `${(answered/82)*100}%`;
+  const unanswered = 82 - answered;
+  const btn = document.getElementById('jumpBtn');
+  btn.style.display = unanswered > 0 ? 'inline-flex' : 'none';
+  btn.textContent = `↓ ${unanswered} Unanswered`;
+  if (!graded) {
+    document.getElementById('statCorrect').textContent = '—';
+    document.getElementById('statWrong').textContent   = '—';
+    document.getElementById('statScore').textContent   = '—';
+  }
+  updateCardStates();
+}
+
+function updateCardStates() {
+  QUESTIONS.forEach((q, qi) => {
+    const card = document.getElementById(`card-${qi}`);
+    card.classList.remove('answered','correct','wrong');
+    if (graded) return; // graded state handled by gradeExam
+    if (userAnswers[qi] && userAnswers[qi].size > 0) card.classList.add('answered');
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SUBMIT
+// ─────────────────────────────────────────────────────────────────────────────
+function confirmSubmit() {
+  const answered = Object.keys(userAnswers).length;
+  const unanswered = 82 - answered;
+  const msg = unanswered > 0
+    ? `You have ${unanswered} unanswered question${unanswered>1?'s':''}. You can still submit — unanswered questions will be marked wrong.`
+    : 'All 82 questions answered. Ready to submit!';
+  document.getElementById('modalSubmitMsg').textContent = msg;
+  document.getElementById('modalSubmit').classList.add('show');
+}
+
+function submitExam() {
+  closeModal('modalSubmit');
+  gradeExam();
+}
+
+function gradeExam() {
+  graded = true;
+  let correct = 0;
+  let wrong = 0;
+
+  QUESTIONS.forEach((q, qi) => {
+    const card = document.getElementById(`card-${qi}`);
+    const resultEl = document.getElementById(`result-${qi}`);
+    const userSet = userAnswers[qi] || new Set();
+    const ansSet = new Set(q.ans);
+
+    // Compare
+    const isCorrect = userSet.size === ansSet.size &&
+                      [...ansSet].every(l => userSet.has(l));
+
+    // Style options
+    q.opts.forEach((_, oi) => {
+      const letter = LETTERS[oi];
+      const lbl = document.getElementById(`opt-${qi}-${oi}`);
+      lbl.classList.remove('selected');
+      const isCorrectChoice = ansSet.has(letter);
+      const isUserChoice    = userSet.has(letter);
+
+      if (isUserChoice && isCorrectChoice) lbl.classList.add('correct-choice');
+      else if (isUserChoice && !isCorrectChoice) lbl.classList.add('wrong-choice');
+      else if (!isUserChoice && isCorrectChoice) lbl.classList.add('missed-choice');
+    });
+
+    // Card state
+    card.classList.remove('answered');
+    if (isCorrect) {
+      card.classList.add('correct');
+      correct++;
+    } else {
+      card.classList.add('wrong');
+      wrong++;
+    }
+
+    // Result tag
+    resultEl.classList.add('show');
+    if (isCorrect) {
+      resultEl.classList.add('ok');
+      resultEl.innerHTML = `✔ CORRECT`;
+    } else {
+      resultEl.classList.add('bad');
+      const userStr = userSet.size ? [...userSet].sort().join(', ') : 'No answer';
+      const ansStr  = q.ans.join(', ');
+      resultEl.innerHTML = `✘ WRONG &nbsp;<span class="answer-key">Your answer: ${userStr} &nbsp;|&nbsp; Correct: ${ansStr}</span>`;
+    }
+  });
+
+  const pct = (correct / 82) * 100;
+  const passed = pct >= 70;
+
+  // Stats
+  document.getElementById('statCorrect').textContent = correct;
+  document.getElementById('statWrong').textContent   = wrong;
+  document.getElementById('statScore').textContent   = pct.toFixed(1) + '%';
+
+  // Banner
+  const banner = document.getElementById('resultBanner');
+  banner.classList.add('show', passed ? 'passed' : 'failed');
+  document.getElementById('resultTitle').textContent = passed ? `✔ PASSED — ${pct.toFixed(1)}%` : `✘ FAILED — ${pct.toFixed(1)}%`;
+  document.getElementById('resultSub').textContent   = passed
+    ? `Congratulations! You scored ${correct} out of 82. You passed the 70% threshold.`
+    : `You scored ${correct} out of 82. A score of 58 or more (70%) is required to pass.`;
+
+  // Show filter buttons
+  document.getElementById('filterCorrect').style.display = 'inline-block';
+  document.getElementById('filterWrong').style.display   = 'inline-block';
+
+  // Hide jump button
+  document.getElementById('jumpBtn').style.display = 'none';
+
+  // Log to scoreboard
+  const attempt = {
+    n: scores.length + 1,
+    date: new Date().toLocaleDateString('en-US'),
+    time: new Date().toLocaleTimeString('en-US', {hour:'2-digit',minute:'2-digit'}),
+    correct,
+    total: 82,
+    pct: pct.toFixed(1),
+    passed
+  };
+  scores.push(attempt);
+  localStorage.setItem('oac_scores', JSON.stringify(scores));
+  renderScoreboard();
+
+  banner.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CLEAR
+// ─────────────────────────────────────────────────────────────────────────────
+function confirmClear() {
+  document.getElementById('modalClear').classList.add('show');
+}
+
+function clearExam() {
+  closeModal('modalClear');
+  graded = false;
+  userAnswers = {};
+
+  // Reset all cards
+  QUESTIONS.forEach((q, qi) => {
+    const card = document.getElementById(`card-${qi}`);
+    card.classList.remove('answered','correct','wrong','unanswered-flag');
+
+    q.opts.forEach((_, oi) => {
+      const lbl = document.getElementById(`opt-${qi}-${oi}`);
+      lbl.classList.remove('selected','correct-choice','wrong-choice','missed-choice');
+      // Uncheck the actual input
+      const inp = lbl.querySelector('input');
+      if (inp) inp.checked = false;
+    });
+
+    const resultEl = document.getElementById(`result-${qi}`);
+    resultEl.className = 'q-result';
+    resultEl.innerHTML = '';
+  });
+
+  // Reset banner
+  const banner = document.getElementById('resultBanner');
+  banner.className = 'result-banner';
+
+  // Reset stats
+  document.getElementById('statAnswered').textContent = '0 / 82';
+  document.getElementById('statCorrect').textContent  = '—';
+  document.getElementById('statWrong').textContent    = '—';
+  document.getElementById('statScore').textContent    = '—';
+  document.getElementById('progressBar').style.width  = '0%';
+
+  // Hide post-grade filters
+  document.getElementById('filterCorrect').style.display = 'none';
+  document.getElementById('filterWrong').style.display   = 'none';
+  filterCards('all', document.querySelector('.filter-btn'));
+  currentFilter = 'all';
+
+  // Show jump btn
+  document.getElementById('jumpBtn').style.display = 'inline-flex';
+  document.getElementById('jumpBtn').textContent = '↓ 82 Unanswered';
+
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// FILTER
+// ─────────────────────────────────────────────────────────────────────────────
+function filterCards(type, btn) {
+  currentFilter = type;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+
+  QUESTIONS.forEach((q, qi) => {
+    const card = document.getElementById(`card-${qi}`);
+    let show = true;
+    if (type === 'unanswered') show = !userAnswers[qi] || userAnswers[qi].size === 0;
+    else if (type === 'correct') show = card.classList.contains('correct');
+    else if (type === 'wrong')   show = card.classList.contains('wrong');
+    card.style.display = show ? 'block' : 'none';
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// JUMP TO NEXT UNANSWERED
+// ─────────────────────────────────────────────────────────────────────────────
+function jumpToNext() {
+  for (let qi = 0; qi < 82; qi++) {
+    if (!userAnswers[qi] || userAnswers[qi].size === 0) {
+      const card = document.getElementById(`card-${qi}`);
+      card.style.display = 'block';
+      card.scrollIntoView({behavior:'smooth', block:'center'});
+      card.classList.add('unanswered-flag');
+      setTimeout(() => card.classList.remove('unanswered-flag'), 2000);
+      return;
+    }
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SCOREBOARD
+// ─────────────────────────────────────────────────────────────────────────────
+function renderScoreboard() {
+  const body = document.getElementById('sbBody');
+  const count = document.getElementById('sbCount');
+  count.textContent = `${scores.length} attempt${scores.length !== 1 ? 's' : ''}`;
+
+  if (scores.length === 0) {
+    body.innerHTML = `<div class="sb-empty">No attempts yet. Complete the exam and click Submit to record your score.</div>`;
+    return;
+  }
+
+  let rows = scores.map((s, i) => `
+    <tr>
+      <td><span style="font-family:var(--mono);font-weight:600;color:var(--navy)">EXAM_${s.n}</span></td>
+      <td style="color:var(--muted);font-size:.82rem">${s.date} ${s.time}</td>
+      <td style="font-family:var(--mono);font-weight:600">${s.correct} / ${s.total}</td>
+      <td style="font-family:var(--mono);font-weight:700;color:${s.passed?'var(--green)':'var(--red)'}">${s.pct}%</td>
+      <td><span class="sb-badge ${s.passed?'pass':'fail'}">${s.passed?'✔ PASSED':'✘ FAILED'}</span></td>
+    </tr>`).join('');
+
+  // Best score row
+  const best = scores.reduce((a,b) => +a.pct > +b.pct ? a : b);
+  rows += `
+    <tr style="background:#f8faf0;border-top:2px solid var(--border)">
+      <td colspan="2" style="font-weight:700;color:var(--navy)">🏆 Best Score</td>
+      <td style="font-family:var(--mono);font-weight:700">${best.correct} / 82</td>
+      <td style="font-family:var(--mono);font-weight:700;color:${best.passed?'var(--green)':'var(--red)'}">${best.pct}%</td>
+      <td><span class="sb-badge ${best.passed?'pass':'fail'}">${best.passed?'✔ PASSED':'✘ FAILED'}</span></td>
+    </tr>`;
+
+  body.innerHTML = `
+    <table class="sb-table">
+      <thead><tr>
+        <th>Attempt</th><th>Date &amp; Time</th><th>Score</th><th>Percentage</th><th>Result</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <div style="padding:12px 18px;text-align:right">
+      <button class="btn btn-outline" style="font-size:.75rem;padding:6px 14px" onclick="clearScores()">🗑 Clear History</button>
+    </div>`;
+}
+
+function clearScores() {
+  if (!confirm('Clear all score history?')) return;
+  scores = [];
+  localStorage.removeItem('oac_scores');
+  renderScoreboard();
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TABS & MODALS
+// ─────────────────────────────────────────────────────────────────────────────
+function showTab(name, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(`panel-${name}`).classList.add('active');
+  btn.classList.add('active');
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('show');
+}
+
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('show'); });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────────────────────────────────────
+buildExam();
+updateStats();
+renderScoreboard();
+document.getElementById('jumpBtn').style.display = 'inline-flex';
+document.getElementById('jumpBtn').textContent = '↓ 82 Unanswered';
+</script>
+</body>
+</html>
