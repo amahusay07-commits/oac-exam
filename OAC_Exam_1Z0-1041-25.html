@@ -645,6 +645,9 @@
     <div class="result-banner" id="resultBanner">
       <h2 id="resultTitle"></h2>
       <p id="resultSub"></p>
+      <button class="btn btn-gold" id="downloadBtn" onclick="downloadResult()" style="display:none;margin-top:16px;">
+        ⬇ Download My Result
+      </button>
     </div>
 
     <div class="actions">
@@ -1003,6 +1006,7 @@ function gradeExam() {
   localStorage.setItem('oac_scores', JSON.stringify(scores));
   renderScoreboard();
 
+  document.getElementById('downloadBtn').style.display = 'inline-flex';
   banner.scrollIntoView({behavior:'smooth', block:'center'});
 }
 
@@ -1039,6 +1043,7 @@ function clearExam() {
   // Reset banner
   const banner = document.getElementById('resultBanner');
   banner.className = 'result-banner';
+  document.getElementById('downloadBtn').style.display = 'none';
 
   // Reset stats
   document.getElementById('statAnswered').textContent = '0 / 82';
@@ -1264,6 +1269,182 @@ function doLogin() {
 document.getElementById('loginName').addEventListener('keydown', e => {
   if (e.key === 'Enter') document.getElementById('loginPin').focus();
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DOWNLOAD RESULT
+// ─────────────────────────────────────────────────────────────────────────────
+function downloadResult() {
+  const studentName = (document.getElementById('welcomeUser')?.textContent || '')
+    .replace('Welcome, ', '').replace('!', '').trim() || 'Student';
+
+  const now   = new Date();
+  const dateStr = now.toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'});
+  const timeStr = now.toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'});
+
+  let correct = 0, wrong = 0, unanswered = 0;
+  QUESTIONS.forEach((q, qi) => {
+    const userSet = userAnswers[qi] || new Set();
+    const ansSet  = new Set(q.ans);
+    if (userSet.size === 0) unanswered++;
+    else if (userSet.size === ansSet.size && [...ansSet].every(l => userSet.has(l))) correct++;
+    else wrong++;
+  });
+
+  const pct    = ((correct / 82) * 100).toFixed(1);
+  const passed = parseFloat(pct) >= 70;
+
+  // Build question rows
+  let rows = '';
+  QUESTIONS.forEach((q, qi) => {
+    const userSet = userAnswers[qi] || new Set();
+    const ansSet  = new Set(q.ans);
+    const isCorrect = userSet.size === ansSet.size && [...ansSet].every(l => userSet.has(l));
+    const userAns = userSet.size ? [...userSet].sort().join(', ') : '—';
+    const corrAns = q.ans.join(', ');
+
+    // Build options list
+    let optRows = '';
+    q.opts.forEach((opt, oi) => {
+      const letter = 'ABCDE'[oi];
+      const isCorrectChoice = ansSet.has(letter);
+      const isUserChoice    = userSet.has(letter);
+      let bg = '#ffffff', mark = '';
+      if (isUserChoice && isCorrectChoice)  { bg = '#e6f4ed'; mark = ' ✔'; }
+      else if (isUserChoice && !isCorrectChoice) { bg = '#fde8eb'; mark = ' ✘'; }
+      else if (!isUserChoice && isCorrectChoice) { bg = '#fff8e1'; mark = ' ← correct'; }
+      optRows += `<tr style="background:${bg}">
+        <td style="padding:5px 10px;font-family:monospace;font-weight:700;color:#1a2236;width:30px">${letter}</td>
+        <td style="padding:5px 10px;font-size:12px;color:#1a2236">${opt}${mark}</td>
+      </tr>`;
+    });
+
+    const rowBg    = isCorrect ? '#e6f4ed' : (userSet.size === 0 ? '#f4f6f9' : '#fde8eb');
+    const statusIcon = isCorrect ? '✔' : (userSet.size === 0 ? '—' : '✘');
+    const statusColor = isCorrect ? '#1a7f4b' : (userSet.size === 0 ? '#5a6a85' : '#c8102e');
+
+    rows += `
+    <tr>
+      <td colspan="2" style="padding:0">
+        <table width="100%" cellspacing="0" cellpadding="0" style="border:1.5px solid #d0d8e8;border-radius:8px;margin-bottom:10px;overflow:hidden;border-collapse:separate">
+          <tr style="background:${rowBg}">
+            <td style="padding:10px 14px;width:36px;vertical-align:top">
+              <span style="display:inline-block;width:28px;height:28px;background:#0f1f3d;color:#fff;border-radius:6px;text-align:center;line-height:28px;font-size:12px;font-weight:700">${q.n}</span>
+            </td>
+            <td style="padding:10px 14px;font-size:13px;color:#1a2236;font-weight:600;vertical-align:top">${q.q}</td>
+            <td style="padding:10px 14px;text-align:right;vertical-align:top;white-space:nowrap">
+              <span style="font-size:18px;font-weight:700;color:${statusColor}">${statusIcon}</span>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" style="padding:0 14px 10px 14px">
+              <table width="100%" cellspacing="0" cellpadding="0">${optRows}</table>
+              <div style="margin-top:8px;font-size:11px;color:#5a6a85;font-family:monospace">
+                Your answer: <strong style="color:${isCorrect?'#1a7f4b':'#c8102e'}">${userAns}</strong>
+                &nbsp;|&nbsp; Correct answer: <strong style="color:#1a7f4b">${corrAns}</strong>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>`;
+  });
+
+  const html = `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Exam Result — ${studentName}</title>
+<style>
+  body { font-family: 'Segoe UI', Arial, sans-serif; margin:0; padding:0; background:#f4f6f9; color:#1a2236; }
+  .page { max-width: 820px; margin: 0 auto; background: #fff; }
+  @media print {
+    body { background: #fff; }
+    .no-print { display: none !important; }
+    .page { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div style="background:#0f1f3d;color:#fff;padding:32px 40px 24px;">
+    <div style="font-size:11px;letter-spacing:.1em;color:#a0b4d0;margin-bottom:6px;font-family:monospace">EXAM RESULT REPORT</div>
+    <h1 style="margin:0;font-size:1.4rem;font-weight:700">Oracle Analytics Cloud 2025 Professional Review</h1>
+    <p style="margin:6px 0 0;font-size:.85rem;color:#a0b4d0">${dateStr} &nbsp;·&nbsp; ${timeStr}</p>
+  </div>
+
+  <!-- STUDENT INFO + SCORE -->
+  <div style="padding:24px 40px;border-bottom:2px solid #eef1f7;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px">
+    <div>
+      <div style="font-size:11px;color:#5a6a85;letter-spacing:.08em;margin-bottom:4px">STUDENT NAME</div>
+      <div style="font-size:1.2rem;font-weight:700;color:#0f1f3d">${studentName}</div>
+      <div style="font-size:.82rem;color:#5a6a85;margin-top:2px">Accenture · OAC 2025 Review</div>
+    </div>
+    <div style="text-align:center;background:${passed?'#e6f4ed':'#fde8eb'};border:2px solid ${passed?'#1a7f4b':'#c8102e'};border-radius:12px;padding:16px 28px">
+      <div style="font-size:2.2rem;font-weight:700;color:${passed?'#1a7f4b':'#c8102e'};line-height:1">${pct}%</div>
+      <div style="font-size:.8rem;font-weight:700;color:${passed?'#1a7f4b':'#c8102e'};margin-top:2px">${passed?'✔ PASSED':'✘ FAILED'}</div>
+      <div style="font-size:.72rem;color:#5a6a85;margin-top:4px">Passing: 70%</div>
+    </div>
+  </div>
+
+  <!-- SCORE BREAKDOWN -->
+  <div style="padding:20px 40px;background:#f8fafc;border-bottom:1px solid #eef1f7;display:flex;gap:24px;flex-wrap:wrap">
+    <div style="text-align:center;min-width:80px">
+      <div style="font-size:1.6rem;font-weight:700;color:#0f1f3d;font-family:monospace">${correct}</div>
+      <div style="font-size:.7rem;color:#5a6a85;letter-spacing:.06em">CORRECT</div>
+    </div>
+    <div style="text-align:center;min-width:80px">
+      <div style="font-size:1.6rem;font-weight:700;color:#c8102e;font-family:monospace">${wrong}</div>
+      <div style="font-size:.7rem;color:#5a6a85;letter-spacing:.06em">WRONG</div>
+    </div>
+    <div style="text-align:center;min-width:80px">
+      <div style="font-size:1.6rem;font-weight:700;color:#5a6a85;font-family:monospace">${unanswered}</div>
+      <div style="font-size:.7rem;color:#5a6a85;letter-spacing:.06em">UNANSWERED</div>
+    </div>
+    <div style="text-align:center;min-width:80px">
+      <div style="font-size:1.6rem;font-weight:700;color:#0f1f3d;font-family:monospace">82</div>
+      <div style="font-size:.7rem;color:#5a6a85;letter-spacing:.06em">TOTAL</div>
+    </div>
+  </div>
+
+  <!-- LEGEND -->
+  <div style="padding:12px 40px;background:#fffdf0;border-bottom:1px solid #eef1f7;font-size:11px;color:#5a6a85;display:flex;gap:20px;flex-wrap:wrap">
+    <span><span style="background:#e6f4ed;padding:2px 8px;border-radius:3px">Green</span> = Your correct answer</span>
+    <span><span style="background:#fde8eb;padding:2px 8px;border-radius:3px">Red</span> = Your wrong answer</span>
+    <span><span style="background:#fff8e1;padding:2px 8px;border-radius:3px">Yellow</span> = Correct answer you missed</span>
+  </div>
+
+  <!-- PRINT BUTTON -->
+  <div class="no-print" style="padding:16px 40px;text-align:right">
+    <button onclick="window.print()" style="background:#0f1f3d;color:#fff;border:none;padding:10px 24px;border-radius:6px;font-size:.85rem;font-weight:700;cursor:pointer;letter-spacing:.04em">
+      🖨 Print / Save as PDF
+    </button>
+  </div>
+
+  <!-- QUESTIONS -->
+  <div style="padding:10px 40px 40px">
+    <table width="100%" cellspacing="0" cellpadding="0">
+      ${rows}
+    </table>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="background:#0f1f3d;color:#a0b4d0;padding:16px 40px;font-size:.75rem;text-align:center">
+    Oracle Analytics Cloud 2025 Professional Review &nbsp;·&nbsp; Accenture &nbsp;·&nbsp; Generated ${dateStr}
+  </div>
+
+</div>
+</body>
+</html>`;
+
+  // Open in new tab and trigger print dialog
+  const win = window.open('', '_blank');
+  win.document.write(html);
+  win.document.close();
+  win.focus();
+}
+
 </script>
 
 </body>
