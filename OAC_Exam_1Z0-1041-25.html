@@ -1,9 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<style id="loginStyle">
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;0,700&display=swap');
+  #loginScreen {
+    position:fixed;inset:0;z-index:9999;
+    background:#0f1f3d;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Sans',sans-serif;
+  }
+  .login-box {
+    background:#fff;border-radius:14px;
+    padding:48px 44px 40px;width:100%;max-width:420px;
+    box-shadow:0 24px 80px rgba(0,0,0,.45);text-align:center;
+  }
+  .login-logo {
+    width:60px;height:60px;background:#c8102e;border-radius:12px;
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 20px;font-size:1.8rem;
+  }
+  .login-box h2 {font-size:1.15rem;font-weight:700;color:#0f1f3d;margin-bottom:6px;}
+  .login-box .sub {font-size:.82rem;color:#5a6a85;margin-bottom:28px;line-height:1.55;}
+  .login-label {font-size:.78rem;font-weight:700;color:#0f1f3d;text-align:left;display:block;margin-bottom:6px;letter-spacing:.04em;}
+  .login-field {
+    width:100%;padding:12px 14px;border:1.5px solid #d0d8e8;
+    border-radius:8px;font-size:1rem;
+    font-family:'IBM Plex Mono',monospace;
+    outline:none;letter-spacing:.12em;margin-bottom:12px;
+    transition:border-color .2s;box-sizing:border-box;
+  }
+  .login-field:focus {border-color:#1a56a0;}
+  .login-field.shake {animation:shake .4s ease;}
+  @keyframes shake {
+    0%,100%{transform:translateX(0)}
+    20%{transform:translateX(-8px)}
+    40%{transform:translateX(8px)}
+    60%{transform:translateX(-5px)}
+    80%{transform:translateX(5px)}
+  }
+  .login-btn {
+    width:100%;padding:13px;background:#0f1f3d;color:#fff;
+    border:none;border-radius:8px;font-size:.95rem;font-weight:700;
+    cursor:pointer;font-family:'IBM Plex Sans',sans-serif;
+    letter-spacing:.05em;transition:background .2s;margin-top:4px;
+  }
+  .login-btn:hover{background:#1a56a0;}
+  .login-error {color:#c8102e;font-size:.8rem;margin:8px 0 2px;min-height:20px;font-weight:600;}
+  .login-footer {margin-top:20px;font-size:.7rem;color:#a0b4c8;border-top:1px solid #eef1f7;padding-top:14px;}
+  #examWrap{display:none;}
+</style>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Oracle Analytics Cloud 2025 — Exam 1Z0-1041-25</title>
+<title>Oracle Analytics Cloud 2025 Professional Review</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -529,17 +578,35 @@
 </head>
 <body>
 
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">🎓</div>
+    <h2>Oracle Analytics Cloud 2025</h2>
+    <p class="sub">Professional Review Exam &nbsp;·&nbsp; Accenture<br>Enter your name and PIN to access the exam.</p>
+    <label class="login-label">YOUR NAME</label>
+    <input class="login-field" id="loginName" type="text" placeholder="e.g. Abadilla, Althea" autocomplete="off">
+    <label class="login-label">YOUR PIN</label>
+    <input class="login-field" id="loginPin" type="password" placeholder="••••••" maxlength="6" autocomplete="off"
+      onkeydown="if(event.key==='Enter')doLogin()">
+    <div class="login-error" id="loginError"></div>
+    <button class="login-btn" onclick="doLogin()">Access Exam →</button>
+    <div class="login-footer">Access is restricted to authorized Accenture personnel only.<br>Contact your administrator if you need assistance.</div>
+  </div>
+</div>
+
+<div id='examWrap'>
+
 <header>
   <div class="header-inner">
     <div class="header-left">
-      <h1>Oracle Analytics Cloud 2025 Professional</h1>
-      <p>Exam 1Z0-1041-25 &nbsp;·&nbsp; 82 Questions &nbsp;·&nbsp; Passing Score: 70%</p>
+      <h1>Oracle Analytics Cloud 2025 Professional Review</h1>
+      <p>82 Questions &nbsp;·&nbsp; Passing Score: 70%</p>
     </div>
     <div style="display:flex;align-items:center;gap:10px;">
       <button class="unanswered-pill" onclick="jumpToNext()" id="jumpBtn" style="display:none">
         ↓ Next Unanswered
       </button>
-      <span class="header-badge">EXAM PREP</span>
+      <span id="welcomeUser" style="color:#a0d4ff;font-size:.8rem;font-family:'IBM Plex Sans',sans-serif;"></span><span class="header-badge">EXAM PREP</span>
     </div>
   </div>
   <div class="progress-bar-wrap">
@@ -1105,5 +1172,99 @@ renderScoreboard();
 document.getElementById('jumpBtn').style.display = 'inline-flex';
 document.getElementById('jumpBtn').textContent = '↓ 82 Unanswered';
 </script>
+
+</div><!-- /examWrap -->
+
+<script id="loginScript">
+const USERS = {
+  "althea.abadilla@accenture.com": {name:"Abadilla, Althea", pin:"602276"},
+  "ian.o.abastillas@accenture.com": {name:"Abastillas, Ian", pin:"804025"},
+  "jan.m.b.abellana@accenture.com": {name:"Abellana, Jan Michael", pin:"016525"},
+  "glevejane.acabal@accenture.com": {name:"Acabal, Gleve", pin:"808631"},
+  "kenneth.orven.agamon@accenture.com": {name:"Agamon, Kenneth Orven", pin:"930086"},
+  "roblitchelle.aloguin@accenture.com": {name:"Aloguin, Roblitchelle Lovely", pin:"875935"},
+  "hannah.mae.arias@accenture.com": {name:"Arias, Hannah Mae", pin:"868570"},
+  "clivebray.s.bacho@accenture.com": {name:"Bacho, Clivebray S.", pin:"220212"},
+  "richard.m.balane.jr@accenture.com": {name:"Balane, Richard", pin:"633229"},
+  "marjun.boctulan@accenture.com": {name:"Boctulan, Marjun", pin:"661713"},
+  "shaira.ann.c.castro@accenture.com": {name:"Castro, Shaira Ann C.", pin:"965687"},
+  "manuel.c.chua.iii@accenture.com": {name:"Chua III, Manuel C.", pin:"203229"},
+  "joecil.de.gracia@accenture.com": {name:"De Gracia, Joe", pin:"836394"},
+  "jason.b.dela.cerna@accenture.com": {name:"Dela Cerna, Jason B.", pin:"225258"},
+  "rey.a.dumalagan@accenture.com": {name:"Dumalagan, Rey Allen", pin:"329500"},
+  "jigger.escala@accenture.com": {name:"Escala, Jigger", pin:"167403"},
+  "matthew.o.fajardo@accenture.com": {name:"Fajardo, Matt", pin:"959807"},
+  "raymond.rox.garcia@accenture.com": {name:"Garcia, Raymond Rox", pin:"652614"},
+  "ronalyn.m.gaudicos@accenture.com": {name:"Gaudicos, Ronalyn M.", pin:"498251"},
+  "joshua.gida@accenture.com": {name:"Gida, Joshua", pin:"982661"},
+  "rasshel.gonzaga@accenture.com": {name:"Gonzaga, Rash", pin:"757503"},
+  "chris.gonzales@accenture.com": {name:"Gonzales, Chris Carloff", pin:"098830"},
+  "par.boris.m.gonzales@accenture.com": {name:"Gonzales, Par Boris Mikhael I.", pin:"890407"},
+  "honeydee.hapson@accenture.com": {name:"Hapson, Honeydee", pin:"714528"},
+  "hannah.mhae.laquinon@accenture.com": {name:"Laquinon, Hannah Mhae", pin:"425723"},
+  "arey.mahusay@accenture.com": {name:"Mahusay, Arey", pin:"964512"},
+  "wilrie.b.mariquit@accenture.com": {name:"Mariquit, Wilrie B.", pin:"352206"},
+  "janice.montero@accenture.com": {name:"Montero, Janice F.", pin:"298026"},
+  "jessica.nava@accenture.com": {name:"Nava, Jessica", pin:"219547"},
+  "kenneth.olayer@accenture.com": {name:"Olayer, Kenneth", pin:"810444"},
+  "gillan.olimpo@accenture.com": {name:"Olimpo, Gillan", pin:"769043"},
+  "jhon.daniel.olmilla@accenture.com": {name:"Olmilla, JD", pin:"821442"},
+  "cecil.oltiano@accenture.com": {name:"Oltiano, Cecil", pin:"294850"},
+  "jbelle.a.pangilinan@accenture.com": {name:"Pangilinan, Jbelle", pin:"989981"},
+  "john.m.quiachon@accenture.com": {name:"Quiachon, John Michael", pin:"424039"},
+  "john.eudz.m.rebuyon@accenture.com": {name:"Rebuyon, John Eudz Mari S.", pin:"274499"},
+  "kim.charnova.revil@accenture.com": {name:"Revil, Kim Charnova", pin:"571295"},
+  "joan.therize.reyes@accenture.com": {name:"Reyes, Joan Therize", pin:"570558"},
+  "guillermo.rollan.ii@accenture.com": {name:"Rollan II, Guillermo S.", pin:"190156"},
+  "joan.rulida@accenture.com": {name:"Rulida, Joan", pin:"218256"},
+  "jake.sala@accenture.com": {name:"Sala, Jake", pin:"455927"},
+  "sole.alen.c.saniel@accenture.com": {name:"Saniel, Sole Alen C.", pin:"236237"},
+  "x.suficiencia@accenture.com": {name:"Suficiencia, Xannetz", pin:"049902"},
+  "kerwin.tanggaan@accenture.com": {name:"Tangga-an, Kerwin B.", pin:"298831"},
+  "thea.tuazon@accenture.com": {name:"Tuazon, Thea", pin:"876960"},
+  "nathaniel.vinluan@accenture.com": {name:"Vinluan, Nathaniel", pin:"826911"},
+  "cris.gievid.m.narca@accenture.com": {name:"Narca, Cris Gievid M.", pin:"152672"},
+  "carl.bryan.ampit@accenture.com": {name:"Ampit, Bryan", pin:"624980"}
+};
+
+function doLogin() {
+  const nameInput = document.getElementById('loginName').value.trim();
+  const pinInput  = document.getElementById('loginPin').value.trim();
+  const errEl     = document.getElementById('loginError');
+  const pinField  = document.getElementById('loginPin');
+
+  // Find user by name (case-insensitive partial match) or by PIN
+  let matched = null;
+  for (const [email, data] of Object.entries(USERS)) {
+    if (data.pin === pinInput &&
+        data.name.toLowerCase().includes(nameInput.toLowerCase())) {
+      matched = {email, ...data};
+      break;
+    }
+  }
+
+  if (!matched) {
+    errEl.textContent = 'Incorrect name or PIN. Please try again.';
+    pinField.classList.add('shake');
+    pinField.value = '';
+    setTimeout(() => pinField.classList.remove('shake'), 500);
+    return;
+  }
+
+  // Login success
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('examWrap').style.display = 'block';
+
+  // Personalise header
+  const welcomeEl = document.getElementById('welcomeUser');
+  if (welcomeEl) welcomeEl.textContent = 'Welcome, ' + matched.name.split(',')[1].trim() + '!';
+}
+
+// Allow Enter key on name field too
+document.getElementById('loginName').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('loginPin').focus();
+});
+</script>
+
 </body>
 </html>
