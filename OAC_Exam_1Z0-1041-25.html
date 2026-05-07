@@ -941,6 +941,9 @@ function gradeExam() {
     const isCorrect = userSet.size === ansSet.size &&
                       [...ansSet].every(l => userSet.has(l));
 
+    // Skip unanswered questions entirely — no styling, no result tag
+    if (userSet.size === 0) return;
+
     // Style options
     q.opts.forEach((_, oi) => {
       const letter = LETTERS[oi];
@@ -973,7 +976,8 @@ function gradeExam() {
       resultEl.classList.add('bad');
       const userStr = userSet.size ? [...userSet].sort().join(', ') : 'No answer';
       const ansStr  = q.ans.join(', ');
-      resultEl.innerHTML = `✘ WRONG &nbsp;<span class="answer-key">Your answer: ${userStr} &nbsp;|&nbsp; Correct: ${ansStr}</span>`;
+      const displayAns = userStr !== 'No answer' ? userStr : '<em style="color:#a0aab8">No answer</em>';
+      resultEl.innerHTML = `✘ WRONG &nbsp;<span class="answer-key">Your answer: ${displayAns} &nbsp;|&nbsp; Correct: ${ansStr}</span>`;
     }
   });
 
@@ -981,8 +985,10 @@ function gradeExam() {
   const passed = pct >= 70;
 
   // Stats
+  const totalAnswered = Object.keys(userAnswers).length;
+  const actualWrong   = totalAnswered - correct;
   document.getElementById('statCorrect').textContent = correct;
-  document.getElementById('statWrong').textContent   = wrong;
+  document.getElementById('statWrong').textContent   = actualWrong;
   document.getElementById('statScore').textContent   = pct.toFixed(1) + '%';
 
   // Banner
