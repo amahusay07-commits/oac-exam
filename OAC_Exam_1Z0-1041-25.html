@@ -615,7 +615,7 @@
         ↓ Next Unanswered
       </button>
       <span id="welcomeUser" style="color:#a0d4ff;font-size:.8rem;font-family:'IBM Plex Sans',sans-serif;"></span>
-      <button onclick="confirmLogout()" style="background:rgba(200,16,46,.2);color:#ff8a96;border:1px solid rgba(200,16,46,.35);border-radius:6px;padding:6px 14px;font-size:.75rem;font-weight:700;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;letter-spacing:.04em;transition:all .2s;" onmouseover="this.style.background='rgba(200,16,46,.5)';this.style.color='#fff'" onmouseout="this.style.background='rgba(200,16,46,.2)';this.style.color='#ff8a96'">⏻ Logout</button>
+      <button onclick="confirmLogout()" id="logoutBtn" style="background:rgba(200,16,46,.25);color:#ff8a96;border:1px solid rgba(200,16,46,.4);border-radius:6px;padding:6px 16px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;letter-spacing:.04em;">⏻ Logout</button>
       <span class="header-badge">EXAM PREP</span>
     </div>
   </div>
@@ -1195,28 +1195,16 @@ document.getElementById('jumpBtn').textContent = '↓ 82 Unanswered';
 
 // ── LOGOUT ──
 function confirmLogout() {
-  document.getElementById('logoutModal').style.display = 'flex';
+  if (confirm('Are you sure you want to logout?\n\nYour answers will be lost if you have not submitted yet.')) {
+    doLogout();
+  }
 }
 function doLogout() {
+  // Reset state
   graded = false;
   userAnswers = {};
   window.currentStudentFullName = '';
-  document.getElementById('logoutModal').style.display = 'none';
-  document.getElementById('examWrap').style.display = 'none';
-  document.getElementById('loginScreen').style.display = 'flex';
-  document.getElementById('loginName').value = '';
-  document.getElementById('loginPin').value  = '';
-  document.getElementById('loginError').textContent = '';
-  document.getElementById('welcomeUser').textContent = '';
-  document.getElementById('progressBar').style.width = '0%';
-  document.getElementById('statAnswered').textContent = '0 / 82';
-  document.getElementById('statCorrect').textContent  = '—';
-  document.getElementById('statWrong').textContent    = '—';
-  document.getElementById('statScore').textContent    = '—';
-  const banner = document.getElementById('resultBanner');
-  if (banner) banner.className = 'result-banner';
-  const dlBtn = document.getElementById('downloadBtn');
-  if (dlBtn) dlBtn.style.display = 'none';
+  // Reset all question cards
   QUESTIONS.forEach((q, qi) => {
     const card = document.getElementById('card-' + qi);
     if (card) card.classList.remove('answered','correct','wrong','unanswered-flag');
@@ -1231,6 +1219,24 @@ function doLogout() {
     const res = document.getElementById('result-' + qi);
     if (res) { res.className = 'q-result'; res.innerHTML = ''; }
   });
+  // Reset UI elements
+  document.getElementById('progressBar').style.width = '0%';
+  document.getElementById('statAnswered').textContent = '0 / 82';
+  document.getElementById('statCorrect').textContent  = '—';
+  document.getElementById('statWrong').textContent    = '—';
+  document.getElementById('statScore').textContent    = '—';
+  const banner = document.getElementById('resultBanner');
+  if (banner) banner.className = 'result-banner';
+  const dlBtn = document.getElementById('downloadBtn');
+  if (dlBtn) dlBtn.style.display = 'none';
+  // Clear login fields
+  document.getElementById('loginName').value = '';
+  document.getElementById('loginPin').value  = '';
+  document.getElementById('loginError').textContent = '';
+  document.getElementById('welcomeUser').textContent = '';
+  // Switch screens
+  document.getElementById('examWrap').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
   window.scrollTo({top:0});
 }
 
