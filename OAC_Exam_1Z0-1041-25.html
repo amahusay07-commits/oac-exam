@@ -780,13 +780,13 @@
     <h2>Oracle Analytics Cloud 2025</h2>
     <p class="sub">Professional Review Exam<br>Enter your name and PIN to access the exam.</p>
     <label class="login-label">YOUR NAME</label>
-    <input class="login-field" id="loginName" type="text" placeholder="e.g. Doe, Joe" autocomplete="off">
+    <input class="login-field" id="loginName" type="text" placeholder="e.g. Doe, John" autocomplete="off">
     <label class="login-label">YOUR PIN</label>
     <input class="login-field" id="loginPin" type="password" placeholder="••••••" maxlength="6" autocomplete="off"
       onkeydown="if(event.key==='Enter')_doLoginWrapper()">
     <div class="login-error" id="loginError"></div>
     <button class="login-btn" onclick="_doLoginWrapper()">Access Exam →</button>
-    <div class="login-footer">Access is restricted to authorized participants only.<br>Contact your administrator arey.mahusay if you need assistance.</div>
+    <div class="login-footer">Access is restricted to authorized participants only.<br>Contact your admin arey.mahusay if you need assistance.</div>
   </div>
 </div>
 
@@ -984,7 +984,18 @@
       <button class="unanswered-pill" onclick="jumpToNext()" id="jumpBtn" style="display:none">
         ↓ Next Unanswered
       </button>
-      <span id="welcomeUser" style="color:#a0d4ff;font-size:.8rem;font-family:'IBM Plex Sans',sans-serif;"></span><span class="header-badge">EXAM PREP</span>
+      <span id="welcomeUser" style="color:#a0d4ff;font-size:.8rem;font-family:'IBM Plex Sans',sans-serif;"></span>
+      <button onclick="confirmLogout()" style="
+        background:rgba(200,16,46,.2);color:#ff8a96;
+        border:1px solid rgba(200,16,46,.35);border-radius:6px;
+        padding:6px 14px;font-size:.75rem;font-weight:700;
+        cursor:pointer;font-family:'IBM Plex Sans',sans-serif;
+        letter-spacing:.04em;transition:all .2s;
+      " onmouseover="this.style.background='rgba(200,16,46,.45)';this.style.color='#fff'"
+         onmouseout="this.style.background='rgba(200,16,46,.2)';this.style.color='#ff8a96'">
+        ⏻ Logout
+      </button>
+      <span class="header-badge">EXAM PREP</span>
     </div>
   </div>
   <div class="progress-bar-wrap">
@@ -1825,6 +1836,66 @@ function downloadResult() {
   </div>
 
 </div>
+
+<!-- ── ADMIN LOGIN MODAL ── -->
+<div id="adminLoginModal" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.65);align-items:center;justify-content:center;backdrop-filter:blur(4px);">
+  <div style="background:#fff;border-radius:14px;padding:36px 36px 28px;max-width:380px;width:90%;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.4);animation:popIn .2s ease;">
+    <div style="font-size:2.2rem;margin-bottom:10px;">🔐</div>
+    <h3 style="font-size:1.1rem;font-weight:700;color:#0f1f3d;margin:0 0 6px;">Admin Login</h3>
+    <p style="font-size:.82rem;color:#5a6a85;margin:0 0 20px;line-height:1.5;">Enter your admin credentials to access the control panel.</p>
+    <div style="text-align:left;margin-bottom:8px;">
+      <div style="font-size:.72rem;font-weight:700;color:#5a6a85;margin-bottom:5px;letter-spacing:.05em;">USERNAME</div>
+      <input id="adminUser" type="text" placeholder="Username" autocomplete="off"
+        style="width:100%;padding:11px 14px;border:1.5px solid #d0d8e8;border-radius:8px;font-size:.9rem;outline:none;box-sizing:border-box;font-family:'IBM Plex Sans',sans-serif;transition:border-color .2s;"
+        onfocus="this.style.borderColor='#1a56a0'" onblur="this.style.borderColor='#d0d8e8'">
+    </div>
+    <div style="text-align:left;margin-bottom:6px;">
+      <div style="font-size:.72rem;font-weight:700;color:#5a6a85;margin-bottom:5px;letter-spacing:.05em;">PASSWORD</div>
+      <input id="adminPass" type="password" placeholder="••••••••" autocomplete="off"
+        onkeydown="if(event.key==='Enter')doAdminLogin()"
+        style="width:100%;padding:11px 14px;border:1.5px solid #d0d8e8;border-radius:8px;font-size:.9rem;outline:none;box-sizing:border-box;font-family:'IBM Plex Sans',sans-serif;transition:border-color .2s;"
+        onfocus="this.style.borderColor='#1a56a0'" onblur="this.style.borderColor='#d0d8e8'">
+    </div>
+    <div id="adminLoginErr" style="color:#c8102e;font-size:.78rem;min-height:20px;margin-bottom:10px;font-weight:600;text-align:left;"></div>
+    <div style="display:flex;gap:10px;">
+      <button onclick="hideAdminLogin()"
+        style="flex:1;padding:11px;background:#f0f4fa;border:1.5px solid #d0d8e8;border-radius:8px;font-size:.87rem;font-weight:600;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;transition:background .15s;"
+        onmouseover="this.style.background='#e0e8f4'" onmouseout="this.style.background='#f0f4fa'">
+        Cancel
+      </button>
+      <button onclick="doAdminLogin()"
+        style="flex:1;padding:11px;background:#0f1f3d;color:#fff;border:none;border-radius:8px;font-size:.87rem;font-weight:700;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;transition:background .15s;"
+        onmouseover="this.style.background='#1a56a0'" onmouseout="this.style.background='#0f1f3d'">
+        Login →
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── LOGOUT CONFIRM MODAL ── -->
+<div id="logoutModal" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.55);align-items:center;justify-content:center;backdrop-filter:blur(3px);">
+  <div style="background:#fff;border-radius:12px;padding:36px 36px 28px;max-width:380px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:popIn .2s ease;">
+    <div style="font-size:2.5rem;margin-bottom:12px;">⏻</div>
+    <h3 style="font-size:1.1rem;font-weight:700;color:#0f1f3d;margin:0 0 8px;">Logout?</h3>
+    <p style="font-size:.87rem;color:#5a6a85;margin:0 0 22px;line-height:1.55;">
+      Are you sure you want to logout? <strong>Your answers and progress will be lost</strong> if you haven't submitted yet.
+    </p>
+    <div style="display:flex;gap:10px;">
+      <button onclick="document.getElementById('logoutModal').style.display='none'"
+        style="flex:1;padding:11px;background:#f0f4fa;border:1.5px solid #d0d8e8;border-radius:8px;font-size:.87rem;font-weight:600;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;"
+        onmouseover="this.style.background='#e0e8f4'" onmouseout="this.style.background='#f0f4fa'">
+        Cancel
+      </button>
+      <button onclick="doLogout()"
+        style="flex:1;padding:11px;background:#c8102e;color:#fff;border:none;border-radius:8px;font-size:.87rem;font-weight:700;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;"
+        onmouseover="this.style.background='#a00d24'" onmouseout="this.style.background='#c8102e'">
+        Yes, Logout
+      </button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>`;
 
@@ -1867,8 +1938,9 @@ function generatePIN() {
 
 // ── Admin modal ──────────────────────────────────────────────────────────────
 function showAdminLogin() {
-  document.getElementById('adminLoginModal').style.display = 'flex';
-  document.getElementById('adminUser').focus();
+  const modal = document.getElementById('adminLoginModal');
+  modal.style.display = 'flex';
+  setTimeout(() => document.getElementById('adminUser').focus(), 100);
 }
 function hideAdminLogin() {
   document.getElementById('adminLoginModal').style.display = 'none';
@@ -2156,6 +2228,50 @@ window.addEventListener('load', () => {
     saveStudents(list);
   }
 });
+
+
+// ── LOGOUT ────────────────────────────────────────────────────────────────────
+function confirmLogout() {
+  document.getElementById('logoutModal').style.display = 'flex';
+}
+function doLogout() {
+  graded = false;
+  userAnswers = {};
+  window.currentStudentFullName = '';
+  document.getElementById('logoutModal').style.display = 'none';
+  document.getElementById('examWrap').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('loginName').value = '';
+  document.getElementById('loginPin').value  = '';
+  document.getElementById('loginError').textContent = '';
+  document.getElementById('welcomeUser').textContent = '';
+  document.getElementById('progressBar').style.width = '0%';
+  // Reset all question cards visually
+  if (typeof QUESTIONS !== 'undefined') {
+    QUESTIONS.forEach((q, qi) => {
+      const card = document.getElementById('card-' + qi);
+      if (card) card.classList.remove('answered','correct','wrong','unanswered-flag');
+      q.opts.forEach((_, oi) => {
+        const lbl = document.getElementById('opt-' + qi + '-' + oi);
+        if (lbl) {
+          lbl.classList.remove('selected','correct-choice','wrong-choice','missed-choice');
+          const inp = lbl.querySelector('input');
+          if (inp) inp.checked = false;
+        }
+      });
+      const res = document.getElementById('result-' + qi);
+      if (res) { res.className = 'q-result'; res.innerHTML = ''; }
+    });
+  }
+  const banner = document.getElementById('resultBanner');
+  if (banner) banner.className = 'result-banner';
+  const dlBtn = document.getElementById('downloadBtn');
+  if (dlBtn) dlBtn.style.display = 'none';
+  document.getElementById('statAnswered').textContent = '0 / 82';
+  document.getElementById('statCorrect').textContent  = '—';
+  document.getElementById('statWrong').textContent    = '—';
+  document.getElementById('statScore').textContent    = '—';
+}
 
 </script>
 
