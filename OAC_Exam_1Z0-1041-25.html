@@ -614,7 +614,9 @@
       <button class="unanswered-pill" onclick="jumpToNext()" id="jumpBtn" style="display:none">
         ↓ Next Unanswered
       </button>
-      <span id="welcomeUser" style="color:#a0d4ff;font-size:.8rem;font-family:'IBM Plex Sans',sans-serif;"></span><span class="header-badge">EXAM PREP</span>
+      <span id="welcomeUser" style="color:#a0d4ff;font-size:.8rem;font-family:'IBM Plex Sans',sans-serif;"></span>
+      <button onclick="confirmLogout()" style="background:rgba(200,16,46,.2);color:#ff8a96;border:1px solid rgba(200,16,46,.35);border-radius:6px;padding:6px 14px;font-size:.75rem;font-weight:700;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;letter-spacing:.04em;transition:all .2s;" onmouseover="this.style.background='rgba(200,16,46,.5)';this.style.color='#fff'" onmouseout="this.style.background='rgba(200,16,46,.2)';this.style.color='#ff8a96'">⏻ Logout</button>
+      <span class="header-badge">EXAM PREP</span>
     </div>
   </div>
   <div class="progress-bar-wrap">
@@ -1190,6 +1192,48 @@ updateStats();
 renderScoreboard();
 document.getElementById('jumpBtn').style.display = 'inline-flex';
 document.getElementById('jumpBtn').textContent = '↓ 82 Unanswered';
+
+// ── LOGOUT ──
+function confirmLogout() {
+  document.getElementById('logoutModal').style.display = 'flex';
+}
+function doLogout() {
+  graded = false;
+  userAnswers = {};
+  window.currentStudentFullName = '';
+  document.getElementById('logoutModal').style.display = 'none';
+  document.getElementById('examWrap').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('loginName').value = '';
+  document.getElementById('loginPin').value  = '';
+  document.getElementById('loginError').textContent = '';
+  document.getElementById('welcomeUser').textContent = '';
+  document.getElementById('progressBar').style.width = '0%';
+  document.getElementById('statAnswered').textContent = '0 / 82';
+  document.getElementById('statCorrect').textContent  = '—';
+  document.getElementById('statWrong').textContent    = '—';
+  document.getElementById('statScore').textContent    = '—';
+  const banner = document.getElementById('resultBanner');
+  if (banner) banner.className = 'result-banner';
+  const dlBtn = document.getElementById('downloadBtn');
+  if (dlBtn) dlBtn.style.display = 'none';
+  QUESTIONS.forEach((q, qi) => {
+    const card = document.getElementById('card-' + qi);
+    if (card) card.classList.remove('answered','correct','wrong','unanswered-flag');
+    q.opts.forEach((_, oi) => {
+      const lbl = document.getElementById('opt-' + qi + '-' + oi);
+      if (lbl) {
+        lbl.classList.remove('selected','correct-choice','wrong-choice','missed-choice');
+        const inp = lbl.querySelector('input');
+        if (inp) inp.checked = false;
+      }
+    });
+    const res = document.getElementById('result-' + qi);
+    if (res) { res.className = 'q-result'; res.innerHTML = ''; }
+  });
+  window.scrollTo({top:0});
+}
+
 </script>
 
 </div><!-- /examWrap -->
@@ -1461,6 +1505,26 @@ function downloadResult() {
   </div>
 
 </div>
+
+<!-- LOGOUT MODAL -->
+<div id="logoutModal" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.6);align-items:center;justify-content:center;backdrop-filter:blur(3px);">
+  <div style="background:#fff;border-radius:12px;padding:36px;max-width:380px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.35);animation:popIn .2s ease;">
+    <div style="font-size:2.5rem;margin-bottom:12px;">⏻</div>
+    <h3 style="font-size:1.1rem;font-weight:700;color:#0f1f3d;margin:0 0 8px;">Logout?</h3>
+    <p style="font-size:.87rem;color:#5a6a85;margin:0 0 22px;line-height:1.55;"><strong>Your answers and progress will be lost</strong> if you haven't submitted yet. Are you sure you want to logout?</p>
+    <div style="display:flex;gap:10px;">
+      <button onclick="document.getElementById('logoutModal').style.display='none'"
+        style="flex:1;padding:11px;background:#f0f4fa;border:1.5px solid #d0d8e8;border-radius:8px;font-size:.87rem;font-weight:600;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;"
+        onmouseover="this.style.background='#e0e8f4'" onmouseout="this.style.background='#f0f4fa'">Cancel</button>
+      <button onclick="doLogout()"
+        style="flex:1;padding:11px;background:#c8102e;color:#fff;border:none;border-radius:8px;font-size:.87rem;font-weight:700;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;"
+        onmouseover="this.style.background='#a00d24'" onmouseout="this.style.background='#c8102e'">Yes, Logout</button>
+    </div>
+  </div>
+</div>
+
+
+
 </body>
 </html>`;
 
