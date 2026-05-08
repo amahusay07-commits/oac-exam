@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oracle Cloud Infrastructure 2025 Generative AI Professional Review</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#0f1f3d;--navy2:#162848;--accent:#c8102e;--gold:#f0a500;
+    --green:#1a7f4b;--green-bg:#e6f4ed;--red-bg:#fde8eb;--red:#c8102e;
+    --blue:#1a56a0;--blue-lt:#e8f0fb;--gray:#f4f6f9;--border:#d0d8e8;
+    --text:#1a2236;--muted:#5a6a85;--white:#ffffff;
+    --mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;
+    --radius:8px;--shadow:0 2px 16px rgba(15,31,61,.10);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:#eef1f7;color:var(--text);min-height:100vh;}
+
+  /* LOGIN */
+  #loginScreen{position:fixed;inset:0;z-index:9999;background:#0a1628;display:flex;align-items:center;justify-content:center;font-family:var(--sans);overflow:hidden;}
+  #loginScreen canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+  .login-box{position:relative;z-index:1;background:#fff;border-radius:14px;padding:48px 44px 40px;width:100%;max-width:420px;box-shadow:0 24px 80px rgba(0,0,0,.45);text-align:center;}
+  .login-logo{width:60px;height:60px;background:#c8102e;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:1.8rem;}
+  .login-box h2{font-size:1.15rem;font-weight:700;color:#0f1f3d;margin-bottom:6px;}
+  .login-box .sub{font-size:.82rem;color:#5a6a85;margin-bottom:28px;line-height:1.55;}
+  .login-label{font-size:.78rem;font-weight:700;color:#0f1f3d;text-align:left;display:block;margin-bottom:6px;letter-spacing:.04em;}
+  .login-field{width:100%;padding:12px 14px;border:1.5px solid #d0d8e8;border-radius:8px;font-size:1rem;font-family:var(--mono);outline:none;letter-spacing:.12em;margin-bottom:12px;transition:border-color .2s;box-sizing:border-box;}
+  .login-field:focus{border-color:#1a56a0;}
+  .login-field.shake{animation:shake .4s ease;}
+  @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+  .login-btn{width:100%;padding:13px;background:#0f1f3d;color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:var(--sans);letter-spacing:.05em;transition:background .2s;margin-top:4px;}
+  .login-btn:hover{background:#1a56a0;}
+  .login-error{color:#c8102e;font-size:.8rem;margin:8px 0 2px;min-height:20px;font-weight:600;}
+  .login-footer{margin-top:20px;font-size:.7rem;color:#a0b4c8;border-top:1px solid #eef1f7;padding-top:14px;}
+  #examWrap{display:none;}
+
+  /* HEADER */
+  header{background:var(--navy);color:#fff;position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(0,0,0,.3);}
+  .header-inner{max-width:1100px;margin:0 auto;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
+  .header-left h1{font-size:1.05rem;font-weight:700;letter-spacing:.02em;line-height:1.3;}
+  .header-left p{font-size:.78rem;color:#a0b4d0;margin-top:2px;font-family:var(--mono);}
+  .header-badge{background:var(--accent);color:#fff;font-family:var(--mono);font-size:.7rem;font-weight:600;padding:4px 10px;border-radius:4px;letter-spacing:.05em;white-space:nowrap;}
+  .progress-bar-wrap{background:rgba(255,255,255,.12);height:4px;}
+  .progress-bar-fill{height:4px;background:var(--gold);width:0%;transition:width .3s ease;}
+  .tabs{background:var(--navy2);display:flex;gap:0;max-width:1100px;margin:0 auto;padding:0 32px;border-top:1px solid rgba(255,255,255,.08);}
+  .tab-btn{background:none;border:none;color:#7a9bc4;font-family:var(--sans);font-size:.82rem;font-weight:600;padding:11px 20px;cursor:pointer;border-bottom:3px solid transparent;letter-spacing:.04em;transition:color .2s,border-color .2s;}
+  .tab-btn:hover{color:#fff;}
+  .tab-btn.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+  /* MAIN */
+  .main{max-width:1100px;margin:0 auto;padding:32px;}
+  .panel{display:none;}
+  .panel.active{display:block;}
+
+  /* STATS */
+  .stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;}
+  .stat-card{background:#fff;border-radius:var(--radius);padding:16px 20px;border:1px solid var(--border);box-shadow:var(--shadow);}
+  .stat-card .label{font-size:.7rem;font-family:var(--mono);color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px;}
+  .stat-card .value{font-size:1.6rem;font-weight:700;color:var(--navy);font-family:var(--mono);line-height:1;}
+  .stat-card .value.green{color:var(--green);}
+  .stat-card .value.red{color:var(--red);}
+  .stat-card .value.gold{color:var(--gold);}
+
+  /* QUESTIONS */
+  .question-card{background:#fff;border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;transition:box-shadow .2s;}
+  .question-card:hover{box-shadow:0 4px 24px rgba(15,31,61,.13);}
+  .question-card.answered{border-left:4px solid var(--blue);}
+  .question-card.correct{border-left:4px solid var(--green);background:#f8fdf9;}
+  .question-card.wrong{border-left:4px solid var(--red);background:#fff8f8;}
+  .q-header{display:flex;align-items:flex-start;gap:14px;padding:18px 20px 14px;}
+  .q-num{flex-shrink:0;width:32px;height:32px;background:var(--navy);color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.75rem;font-weight:600;margin-top:1px;}
+  .question-card.correct .q-num{background:var(--green);}
+  .question-card.wrong .q-num{background:var(--red);}
+  .q-text{font-size:.93rem;line-height:1.55;font-weight:400;flex:1;}
+  .q-badge{flex-shrink:0;font-family:var(--mono);font-size:.65rem;font-weight:600;padding:3px 8px;border-radius:4px;letter-spacing:.05em;background:#f0f4fa;color:#5a6a85;margin-top:2px;white-space:nowrap;}
+  .options{padding:0 20px 16px 66px;display:flex;flex-direction:column;gap:7px;}
+  .option-label{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;border-radius:6px;border:1.5px solid var(--border);cursor:pointer;transition:background .15s,border-color .15s;font-size:.875rem;line-height:1.45;user-select:none;}
+  .option-label:hover{background:var(--gray);border-color:#b0c0dc;}
+  .option-label input[type="checkbox"],.option-label input[type="radio"]{display:none;}
+  .option-key{flex-shrink:0;width:22px;height:22px;border-radius:4px;background:var(--gray);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.7rem;font-weight:600;color:var(--muted);transition:background .15s,color .15s,border-color .15s;margin-top:1px;}
+  .option-label.selected .option-key{background:var(--navy);color:#fff;border-color:var(--navy);}
+  .option-label.selected{background:var(--blue-lt);border-color:var(--blue);}
+  .option-label.correct-choice{background:var(--green-bg);border-color:var(--green);}
+  .option-label.correct-choice .option-key{background:var(--green);color:#fff;border-color:var(--green);}
+  .option-label.wrong-choice{background:var(--red-bg);border-color:var(--red);}
+  .option-label.wrong-choice .option-key{background:var(--red);color:#fff;border-color:var(--red);}
+  .option-label.missed-choice{background:var(--green-bg);border-color:var(--green);opacity:.75;}
+  .q-result{display:none;padding:0 20px 14px 66px;font-family:var(--mono);font-size:.75rem;font-weight:600;letter-spacing:.04em;}
+  .q-result.show{display:flex;align-items:center;gap:8px;}
+  .q-result.ok{color:var(--green);}
+  .q-result.bad{color:var(--red);}
+  .q-result .answer-key{color:var(--muted);font-weight:400;}
+
+  /* BUTTONS */
+  .actions{display:flex;gap:12px;margin-bottom:28px;flex-wrap:wrap;}
+  .btn{font-family:var(--sans);font-size:.85rem;font-weight:600;padding:10px 24px;border-radius:6px;border:none;cursor:pointer;letter-spacing:.03em;transition:all .18s;display:inline-flex;align-items:center;gap:7px;}
+  .btn-primary{background:var(--navy);color:#fff;}
+  .btn-primary:hover{background:var(--blue);transform:translateY(-1px);box-shadow:0 4px 14px rgba(15,31,61,.25);}
+  .btn-danger{background:var(--accent);color:#fff;}
+  .btn-danger:hover{background:#a50d25;transform:translateY(-1px);}
+  .btn-outline{background:#fff;color:var(--navy);border:1.5px solid var(--border);}
+  .btn-outline:hover{border-color:var(--navy);background:var(--gray);}
+  .btn-gold{background:var(--gold);color:var(--navy);}
+  .btn-gold:hover{background:#d4900a;transform:translateY(-1px);}
+
+  /* RESULT BANNER */
+  .result-banner{display:none;border-radius:var(--radius);padding:24px 28px;margin-bottom:24px;border:2px solid;text-align:center;}
+  .result-banner.show{display:block;}
+  .result-banner.passed{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+  .result-banner.failed{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+  .result-banner h2{font-size:2rem;font-family:var(--mono);font-weight:600;margin-bottom:6px;}
+  .result-banner p{font-size:.95rem;opacity:.85;}
+
+  /* SCOREBOARD */
+  .scoreboard-wrap{background:#fff;border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;}
+  .scoreboard-head{background:var(--navy);color:#fff;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;}
+  .scoreboard-head h2{font-size:1rem;font-weight:700;}
+  .scoreboard-head span{font-family:var(--mono);font-size:.75rem;color:#7a9bc4;}
+  table.sb-table{width:100%;border-collapse:collapse;}
+  .sb-table th{background:#f0f4fa;font-family:var(--mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);padding:10px 18px;text-align:left;border-bottom:1px solid var(--border);}
+  .sb-table td{padding:12px 18px;font-size:.875rem;border-bottom:1px solid var(--border);}
+  .sb-table tr:last-child td{border-bottom:none;}
+  .sb-table tr:hover td{background:var(--gray);}
+  .sb-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-family:var(--mono);font-size:.72rem;font-weight:600;}
+  .sb-badge.pass{background:var(--green-bg);color:var(--green);}
+  .sb-badge.fail{background:var(--red-bg);color:var(--red);}
+  .sb-empty{padding:40px;text-align:center;color:var(--muted);font-size:.9rem;font-style:italic;}
+
+  /* FILTER */
+  .filter-bar{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+  .filter-btn{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:5px 14px;font-size:.78rem;font-family:var(--mono);cursor:pointer;transition:all .15s;color:var(--muted);}
+  .filter-btn:hover{border-color:var(--navy);color:var(--navy);}
+  .filter-btn.active{background:var(--navy);border-color:var(--navy);color:#fff;}
+
+  /* MODAL */
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.55);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(2px);}
+  .modal-overlay.show{display:flex;}
+  .modal-box{background:#fff;border-radius:12px;padding:36px 40px;max-width:440px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.25);animation:popIn .2s ease;}
+  @keyframes popIn{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+  .modal-icon{font-size:2.8rem;margin-bottom:12px;}
+  .modal-box h3{font-size:1.25rem;font-weight:700;margin-bottom:8px;}
+  .modal-box p{font-size:.9rem;color:var(--muted);line-height:1.5;margin-bottom:22px;}
+  .modal-btns{display:flex;gap:10px;justify-content:center;}
+
+  /* JUMP BTN */
+  .unanswered-pill{display:inline-flex;align-items:center;gap:6px;background:var(--gold);color:var(--navy);font-family:var(--mono);font-size:.72rem;font-weight:700;padding:5px 12px;border-radius:20px;cursor:pointer;border:none;transition:background .15s;}
+  .unanswered-pill:hover{background:#d4900a;}
+  .question-card.unanswered-flag{animation:pulse 1s ease 2;}
+  @keyframes pulse{0%,100%{box-shadow:var(--shadow)}50%{box-shadow:0 0 0 3px var(--gold)}}
+
+  @media(max-width:680px){
+    .main{padding:16px;}
+    .stats-bar{grid-template-columns:repeat(2,1fr);}
+    .header-inner{padding:14px 16px;}
+    .tabs{padding:0 12px;}
+    .options{padding-left:14px;}
+    .q-header{padding:14px 14px 10px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen"><canvas id="bgCanvas"></canvas>
+  <!-- Admin button -->
+  <button onclick="showAdminLogin()" style="position:fixed;bottom:20px;right:24px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.4);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:7px 14px;font-size:.72rem;font-weight:600;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;letter-spacing:.05em;transition:all .2s;backdrop-filter:blur(4px);z-index:10;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.color='rgba(255,255,255,0.4)';this.style.background='rgba(255,255,255,0.08)'">⚙ Admin</button>
+
+  <div class="login-box">
+    <div class="login-logo">🎓</div>
+    <h2>Oracle Cloud Infrastructure 2025</h2>
+    <p class="sub">Generative AI Professional Review<br>Enter your name and PIN to access the exam.</p>
+    <label class="login-label">YOUR NAME</label>
+    <input class="login-field" id="loginName" type="text" placeholder="e.g. Mahusay, Arey" autocomplete="off">
+    <label class="login-label">YOUR PIN</label>
+    <input class="login-field" id="loginPin" type="password" placeholder="••••••" maxlength="6" autocomplete="off" onkeydown="if(event.key==='Enter')_doLoginWrapper()">
+    <div class="login-error" id="loginError"></div>
+    <button class="login-btn" onclick="_doLoginWrapper()">Access Exam →</button>
+    <div class="login-footer">Access is restricted to authorized participants only.<br>Contact your admin arey.mahusay if you need assistance.</div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div id="adminLoginModal" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.65);align-items:center;justify-content:center;backdrop-filter:blur(4px);">
+  <div style="background:#fff;border-radius:14px;padding:36px 36px 28px;max-width:380px;width:90%;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.4);animation:popIn .2s ease;">
+    <div style="font-size:2.2rem;margin-bottom:10px;">🔐</div>
+    <h3 style="font-size:1.1rem;font-weight:700;color:#0f1f3d;margin:0 0 6px;">Admin Login</h3>
+    <p style="font-size:.82rem;color:#5a6a85;margin:0 0 20px;line-height:1.5;">Enter admin credentials to access the control panel.</p>
+    <div style="text-align:left;margin-bottom:8px;">
+      <div style="font-size:.72rem;font-weight:700;color:#5a6a85;margin-bottom:5px;letter-spacing:.05em;">USERNAME</div>
+      <input id="adminUser" type="text" placeholder="Username" autocomplete="off" style="width:100%;padding:11px 14px;border:1.5px solid #d0d8e8;border-radius:8px;font-size:.9rem;outline:none;box-sizing:border-box;font-family:'IBM Plex Sans',sans-serif;" onfocus="this.style.borderColor='#1a56a0'" onblur="this.style.borderColor='#d0d8e8'">
+    </div>
+    <div style="text-align:left;margin-bottom:6px;">
+      <div style="font-size:.72rem;font-weight:700;color:#5a6a85;margin-bottom:5px;letter-spacing:.05em;">PASSWORD</div>
+      <input id="adminPass" type="password" placeholder="••••••••" autocomplete="off" onkeydown="if(event.key==='Enter')doAdminLogin()" style="width:100%;padding:11px 14px;border:1.5px solid #d0d8e8;border-radius:8px;font-size:.9rem;outline:none;box-sizing:border-box;font-family:'IBM Plex Sans',sans-serif;" onfocus="this.style.borderColor='#1a56a0'" onblur="this.style.borderColor='#d0d8e8'">
+    </div>
+    <div id="adminLoginErr" style="color:#c8102e;font-size:.78rem;min-height:20px;margin-bottom:10px;font-weight:600;text-align:left;"></div>
+    <div style="display:flex;gap:10px;">
+      <button onclick="hideAdminLogin()" style="flex:1;padding:11px;background:#f0f4fa;border:1.5px solid #d0d8e8;border-radius:8px;font-size:.87rem;font-weight:600;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;">Cancel</button>
+      <button onclick="doAdminLogin()" style="flex:1;padding:11px;background:#0f1f3d;color:#fff;border:none;border-radius:8px;font-size:.87rem;font-weight:700;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;">Login →</button>
+    </div>
+  </div>
+</div>
+
+<!-- EXAM WRAP -->
+<div id='examWrap'>
+<header>
+  <div class="header-inner">
+    <div class="header-left">
+      <h1>Oracle Cloud Infrastructure 2025 Generative AI Professional</h1>
+      <p>Exam 1Z0-1127-25 &nbsp;·&nbsp; 60 Questions &nbsp;·&nbsp; Passing Score: 70%</p>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <button onclick="confirmLogout()" id="logoutBtn" style="background:rgba(200,16,46,.25);color:#ff8a96;border:1px solid rgba(200,16,46,.4);border-radius:6px;padding:6px 16px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;letter-spacing:.04em;">⏻ Logout</button>
+      <button class="unanswered-pill" onclick="jumpToNext()" id="jumpBtn" style="display:none">↓ Next Unanswered</button>
+      <span id="welcomeUser" style="color:#a0d4ff;font-size:.8rem;font-family:'IBM Plex Sans',sans-serif;"></span>
+      <span class="header-badge">EXAM PREP</span>
+    </div>
+  </div>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressBar"></div></div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('exam',this)">📝 Exam</button>
+    <button class="tab-btn" onclick="showTab('scoreboard',this)">📊 Scoreboard</button>
+  </div>
+</header>
+
+<div class="main">
+  <!-- EXAM PANEL -->
+  <div class="panel active" id="panel-exam">
+    <div class="stats-bar">
+      <div class="stat-card"><div class="label">Answered</div><div class="value" id="statAnswered">0 / 60</div></div>
+      <div class="stat-card"><div class="label">Correct</div><div class="value green" id="statCorrect">—</div></div>
+      <div class="stat-card"><div class="label">Wrong</div><div class="value red" id="statWrong">—</div></div>
+      <div class="stat-card"><div class="label">Score</div><div class="value gold" id="statScore">—</div></div>
+    </div>
+    <div class="result-banner" id="resultBanner">
+      <h2 id="resultTitle"></h2>
+      <p id="resultSub"></p>
+      <button class="btn btn-gold" id="downloadBtn" onclick="downloadResult()" style="display:none;margin-top:16px;">⬇ Download My Result</button>
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary" id="submitBtn" onclick="confirmSubmit()">✔ Submit Exam</button>
+      <button class="btn btn-danger" id="clearBtn" onclick="confirmClear()">↺ Clear &amp; Retake</button>
+      <div style="flex:1"></div>
+      <div class="filter-bar" style="margin:0">
+        <button class="filter-btn active" onclick="filterCards('all',this)">All</button>
+        <button class="filter-btn" onclick="filterCards('unanswered',this)">Unanswered</button>
+        <button class="filter-btn" onclick="filterCards('correct',this)" id="filterCorrect" style="display:none">Correct</button>
+        <button class="filter-btn" onclick="filterCards('wrong',this)" id="filterWrong" style="display:none">Wrong</button>
+      </div>
+    </div>
+    <div id="examList"></div>
+  </div>
+
+  <!-- SCOREBOARD PANEL -->
+  <div class="panel" id="panel-scoreboard">
+    <div class="scoreboard-wrap">
+      <div class="scoreboard-head">
+        <h2>📊 Exam Attempt History</h2>
+        <span id="sbCount">0 attempts</span>
+      </div>
+      <div id="sbBody"></div>
+    </div>
+  </div>
+</div>
+</div><!-- /examWrap -->
+
+<!-- MODALS -->
+<div class="modal-overlay" id="modalSubmit">
+  <div class="modal-box">
+    <div class="modal-icon">📋</div>
+    <h3>Submit Exam?</h3>
+    <p id="modalSubmitMsg">Are you sure you want to submit?</p>
+    <div class="modal-btns">
+      <button class="btn btn-outline" onclick="closeModal('modalSubmit')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitExam()">Submit Now</button>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="modalClear">
+  <div class="modal-box">
+    <div class="modal-icon">↺</div>
+    <h3>Reset &amp; Retake?</h3>
+    <p>This will clear all your answers and reset the exam. Your current attempt will be saved to the Scoreboard first.</p>
+    <div class="modal-btns">
+      <button class="btn btn-outline" onclick="closeModal('modalClear')">Cancel</button>
+      <button class="btn btn-danger" onclick="clearExam()">Yes, Reset</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOGOUT MODAL -->
+<div id="logoutModal" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.6);align-items:center;justify-content:center;backdrop-filter:blur(3px);">
+  <div style="background:#fff;border-radius:12px;padding:36px;max-width:380px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.35);animation:popIn .2s ease;">
+    <div style="font-size:2.5rem;margin-bottom:12px;">⏻</div>
+    <h3 style="font-size:1.1rem;font-weight:700;color:#0f1f3d;margin:0 0 8px;">Logout?</h3>
+    <p style="font-size:.87rem;color:#5a6a85;margin:0 0 22px;line-height:1.55;"><strong>Your answers and progress will be lost</strong> if you haven't submitted yet.</p>
+    <div style="display:flex;gap:10px;">
+      <button onclick="document.getElementById('logoutModal').style.display='none'" style="flex:1;padding:11px;background:#f0f4fa;border:1.5px solid #d0d8e8;border-radius:8px;font-size:.87rem;font-weight:600;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;">Cancel</button>
+      <button onclick="doLogout()" style="flex:1;padding:11px;background:#c8102e;color:#fff;border:none;border-radius:8px;font-size:.87rem;font-weight:700;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;">Yes, Logout</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── DATA ─────────────────────────────────────────────────────────────────────
+const USERS = {
+  "bellarmin.j.n.deraco@accenture.com": {name:"Deraco, Bellarmin Jay", pin:"748291"},
+  "lorieann.mendoza@accenture.com":     {name:"Mendoza, Lorieann",     pin:"316054"},
+  "arey.mahusay@accenture.com":         {name:"Mahusay, Arey",         pin:"583617"}
+};
+
+const ADMIN_CREDENTIALS = {user:'arey.mahusay', pass:'0607251991'};
+
+const QUESTIONS = [
+  {n:1,q:"In OCI Generative AI Agents, if an ingestion job processes 20 files and 2 fail, what happens when the job is restarted?",opts:["The job processes all 20 files regardless of updates.","All 20 files are re-ingested from the beginning.","Only the 2 failed files that have been updated are ingested.","None of the files are processed during the restart."],ans:["C"]},
+  {n:2,q:"You have set up an Oracle Database 23ai table so that Generative AI Agents can connect to it. You now need to set up a database function that can return vector search results from each query. What does the SCORE field represent in the vector search results returned by the database function?",opts:["The token count of the BODY content","The top_k rank of the document in the search results","The unique identifier for each document","The distance between the query vector and the BODY vector"],ans:["D"]},
+  {n:3,q:"How should you handle a data source in OCI Generative AI Agents if your data is not ready yet?",opts:["Upload placeholder files larger than 100 MB as a temporary solution.","Use multiple buckets to store the incomplete data.","Create an empty folder for the data source and populate it later.","Leave the data source configuration incomplete until the data is ready."],ans:["C"]},
+  {n:4,q:"What happens when you delete a knowledge base in OCI Generative AI Agents?",opts:["The knowledge base is permanently deleted, and the action cannot be undone.","Only the metadata of the knowledge base is removed.","The knowledge base is marked inactive but remains stored in the system.","The knowledge base is archived for later recovery."],ans:["A"]},
+  {n:5,q:"A software engineer is developing a chatbot using a large language model and must decide on a decoding strategy for generating the chatbot's replies. Which decoding approach should they use to ensure the chatbot's responses are diverse and unpredictable?",opts:["To ensure diverse and unpredictable responses, the engineer sets a high temperature and uses non-deterministic decoding.","To minimize the risk of nonsensical replies, the engineer opts for non-deterministic decoding with a very low temperature.","For maximum consistency, the engineer chooses greedy decoding with a low temperature setting.","In a situation requiring creative responses, the engineer selects greedy decoding with an increased temperature."],ans:["A"]},
+  {n:6,q:"How does a Large Language Model (LLM) decide on the first token versus subsequent tokens when generating a response?",opts:["The first token is selected using only the model's past responses, while subsequent tokens are generated based on the input prompt.","The first token is chosen based on the probability distribution of the model's entire vocabulary, while subsequent tokens are created independently of the prompt.","The first token is selected solely based on the input prompt, while subsequent tokens are chosen based on previous tokens and the input prompt.","The first token is randomly selected, while subsequent tokens are always chosen based on the input prompt."],ans:["C"]},
+  {n:7,q:"Consider the code: vs = OracleVS(embedding_function=embed_model, client=conn23c, table_name='DEMO_TABLE', distance_strategy=DistanceStrategy.DOT_PRODUCT) retv = vs.as_retriever(search_type='similarity', search_kwargs={'k': 3}). What is the primary advantage of using this code?",opts:["It helps with debugging the application.","It enables the creation of a vector store from a database table of embeddings.","It provides an efficient method for generating embeddings.","It allows new documents to be indexed automatically when the server restarts."],ans:["B"]},
+  {n:8,q:"Which category of pretrained foundational models is available for on-demand serving mode in the OCI Generative AI service?",opts:["Translation Models","Generation Models","Chat Models","Summarization Models"],ans:["B"]},
+  {n:9,q:"How does retrieval-augmented generation (RAG) differ from prompt engineering and fine-tuning in terms of setup complexity?",opts:["RAG is more complex to set up and requires a compatible data source.","RAG requires fine-tuning on a smaller domain-specific dataset.","RAG is simpler to implement as it does not require training costs.","RAG involves adding LLM optimization to the model's prompt."],ans:["A"]},
+  {n:10,q:"Which is a distinguishing feature of 'Parameter-Efficient Fine-tuning (PEFT)' as opposed to classic 'Fine-tuning' in Large Language Model training?",opts:["PEFT does not modify any parameters but uses soft prompting with unlabeled data.","PEFT modifies all parameters and is typically used when no training data exists.","PEFT modifies all parameters and uses unlabeled, task-agnostic data.","PEFT involves only a few or new parameters and uses labeled, task-specific data."],ans:["D"]},
+  {n:11,q:"What must be done to activate content moderation in OCI Generative AI Agents?",opts:["Enable it in the session trace settings.","Use a third-party content moderation API.","Enable it when creating an endpoint for an agent.","Configure it in the Object Storage metadata settings."],ans:["C"]},
+  {n:12,q:"Which feature in OCI Generative AI Agents tracks the conversation history, including user prompts and model responses?",opts:["Citation","Session Management","Trace","Agent Endpoint"],ans:["B"]},
+  {n:13,q:"What happens when you enable the session option while creating an endpoint in Generative AI Agents?",opts:["The context of the chat session is retained, but the option can be disabled later.","The context of the chat session is retained, and the option cannot be changed later.","The agent stops responding after one hour of inactivity.","All conversations are saved permanently regardless of session settings."],ans:["B"]},
+  {n:14,q:"In OCI Generative AI Agents, what happens if a session-enabled endpoint remains idle for the specified timeout period?",opts:["The session restarts and retains the previous context.","The agent deletes all data related to the session.","The session remains active indefinitely until manually ended.","The session automatically ends and subsequent conversations do not retain the previous context."],ans:["D"]},
+  {n:15,q:"In OCI Generative AI Agents, what does enabling the citation option do when creating an endpoint?",opts:["Blocks unsupported file formats from being ingested","Displays the source details of information for each chat response","Tracks and displays the user's browsing history","Automatically verifies the accuracy of generated responses"],ans:["B"]},
+  {n:16,q:"Which technique involves prompting the Large Language Model (LLM) to emit intermediate reasoning steps as part of its response?",opts:["Chain-of-Thought","Step-Back Prompting","Least-to-most Prompting","In-context Learning"],ans:["A"]},
+  {n:17,q:"You're using a Large Language Model (LLM) to provide responses for a customer service chatbot. However, some users have figured out ways to craft prompts that lead the model to generate irrelevant responses. Which sentence describes the issue?",opts:["The issue is due to prompt injection, where the model is explicitly designed to retrieve exact responses from its training set.","The issue is due to prompt injection, where users manipulate the model to bypass safety constraints and generate unfiltered content.","The issue is due to memorization, where the model is recalling specific details from training data rather than generating contextually appropriate responses.","The issue is due to memorization, where the model has been trained specifically on past customer interactions and cannot generate correct responses."],ans:["B"]},
+  {n:18,q:"You are working with an LLM to create conversational AI for customer support. When should you use Prompting versus Training?",opts:["Use Prompting to improve the model's knowledge of industry-specific terminology and Training to prioritize product names.","Use Training for both product names and industry-specific terminology as Prompting only works for short term goals.","Use Prompting for both product names and industry-specific terminology as Training is unnecessary for such tasks.","Use Prompting to emphasize product names in responses and Training to refine the model's understanding of industry-specific terminology."],ans:["D"]},
+  {n:19,q:"A data scientist is preparing a custom dataset to fine-tune an OCI Generative AI model. Which criterion must be ensured for the dataset to be accepted?",opts:["The dataset must contain at least 32 prompt/completion pairs.","The dataset must be divided into separate files for training and validation.","The dataset must be in a proprietary binary format.","The dataset must have a maximum of 1000 sentences per file."],ans:["A"]},
+  {n:20,q:"Which is a key characteristic of the annotation process used in T-Few fine-tuning?",opts:["T-Few fine-tuning involves updating the weights of all layers in the model.","T-Few fine-tuning uses annotated data to adjust a fraction of model weights.","T-Few fine-tuning requires manual annotation of input-output pairs.","T-Few fine-tuning relies on unsupervised learning techniques for annotation."],ans:["B"]},
+  {n:21,q:"When should you use the T-Few fine-tuning method for training a model?",opts:["For complicated semantical understanding improvement.","For data sets with a few thousand samples or less.","For models that require their own hosting dedicated AI cluster.","For data sets with hundreds of thousands to millions of samples."],ans:["B"]},
+  {n:22,q:"What does 'Loss' measure in the evaluation of OCI Generative AI fine-tuned models?",opts:["The improvement in accuracy achieved by the model during training on the user-uploaded data set.","The difference between the accuracy of the model at the beginning of training and the accuracy of the deployed model.","The percentage of incorrect predictions made by the model compared with the total number of predictions in the evaluation.","The level of incorrectness in the model's predictions, with lower values indicating better performance."],ans:["D"]},
+  {n:23,q:"What is the format required for training data when fine-tuning a custom model in OCI Generative AI?",opts:["XML (Extensible Markup Language)","JSON (JSON Lines)","TXT (Plain Text)","CSV (Comma-Separated Values)"],ans:["B"]},
+  {n:24,q:"Which is a key advantage of using T-Few over Vanilla fine-tuning in the OCI Generative AI service?",opts:["Faster training time and lower cost","Increased model interpretability","Reduced model complexity","Enhanced generalization to unseen data"],ans:["A"]},
+  {n:25,q:"How long does the OCI Generative AI Agents service retain customer-provided queries and retrieved context?",opts:["For up to 30 days after the session ends","Until the customer deletes the data manually","Indefinitely, for future analysis","Only during the user's session"],ans:["D"]},
+  {n:26,q:"You need to build an LLM application using Oracle Database 23ai as the vector store and OCI Generative AI service to embed data and generate responses. What could be your approach?",opts:["Use Select AI.","Use LangChain classes to embed data outside the database and generate response.","Use LangChain Expression Language (LCEL).","Use DB Utils to generate embeddings and generate response using SQL."],ans:["B"]},
+  {n:27,q:"What is one of the benefits of using dedicated AI clusters in OCI Generative AI?",opts:["A pay-per-transaction pricing model","Predictable pricing that doesn't fluctuate with demand","Unpredictable pricing that varies with demand","No minimum commitment required"],ans:["B"]},
+  {n:28,q:"An enterprise team deploys a hosting cluster to serve multiple versions of their fine-tuned cohere.command model. They require high throughput and set up replicas for one version and 3 replicas for another version. How many units will the hosting cluster require in total?",opts:["8","11","16","13"],ans:["D"]},
+  {n:29,q:"How does the architecture of dedicated AI clusters contribute to minimizing GPU memory overhead for T-Few fine-tuned model inference?",opts:["By optimizing GPU memory utilization for each model's unique parameters.","By loading the entire model into GPU memory for efficient processing.","By sharing base model weights across multiple fine-tuned models on the same group of GPUs.","By allocating separate GPUs for each model instance."],ans:["C"]},
+  {n:30,q:"What problem can occur if there is not enough overlap between consecutive chunks when splitting a document for an LLM?",opts:["It will not increase the number of chunks of a given size.","It will not have any impact.","The continuity of the context may be lost.","The embeddings of the consecutive chunks may be more similar semantically."],ans:["C"]},
+  {n:31,q:"What is the correct order to process a block of text while maintaining a balance between improving embedding specificity and preserving context?",opts:["Start with paragraphs, then break them into sentences, and further split into tokens until the chunk size is reached.","Process the text continuously until a predefined separator is encountered.","Randomly split the text into equal-sized chunks without considering sentence or paragraph boundaries.","First extract individual words, then combine them into sentences, and finally group them into paragraphs."],ans:["A"]},
+  {n:32,q:"Which of the following statements is NOT true?",opts:["Embeddings can be created for words, sentences and entire documents.","Embeddings of sentences with similar meanings are positioned close to each other in vector space.","Embeddings can be used to compare text based on semantic similarity.","Embeddings are represented as single-dimensional numerical values that capture text meaning."],ans:["D"]},
+  {n:33,q:"Which role does a 'model endpoint' serve in the inference workflow of the OCI Generative AI service?",opts:["Evaluates the performance metrics of the custom models.","Updates the weights of the base model during the fine-tuning process.","Serves as a designated point for user requests and model responses.","Hosts the training data for fine-tuning custom models."],ans:["C"]},
+  {n:34,q:"What does a dedicated RDMA cluster network do during model fine-tuning and inference?",opts:["It leads to higher latency in model inference.","It increases GPU memory requirements for model deployment.","It enables the deployment of multiple fine-tuned models within a single cluster.","It limits the number of fine-tuned models deployable on the same GPU cluster."],ans:["C"]},
+  {n:35,q:"A startup is evaluating the cost implications of using the OCI Generative AI service for generating text responses. They anticipate steady but moderate volume of requests. Which pricing model would be most appropriate?",opts:["Dedicated AI clusters, as they offer a fixed monthly rate regardless of usage","On-demand inferencing, as it provides a flat fee for unlimited usage","On-demand inferencing, as it allows them to pay per character processed without long-term commitments","Dedicated AI clusters, as they are mandatory for any text generation"],ans:["C"]},
+  {n:36,q:"An AI development company wants to create an assistant that can analyze images and generate descriptive text, as well as take text descriptions and produce accurate visual representations. Which type of model would the company likely focus on integrating?",opts:["A diffusion model that specializes in producing complex outputs.","A Large Language Model based agent that focuses on generating textual responses.","A Retrieval-Augmented Generation (RAG) model that uses text as input and output.","A language model that operates on a token-by-token output basis."],ans:["A"]},
+  {n:37,q:"Which of the following statements is/are applicable about Retrieval Augmented Generation (RAG)?",opts:["RAG can handle queries without re-training.","RAG helps mitigate bias, can overcome model limitations and can handle queries without re-training.","RAG can overcome model limitations.","RAG helps mitigate bias."],ans:["B"]},
+  {n:38,q:"How does the use of a vector database with Retrieval-Augmented Generation (RAG) based Large Language Models (LLMs) fundamentally alter their responses?",opts:["It transforms their architecture from a neural network to a traditional database system.","It limits their ability to understand and generate natural language.","It enables them to bypass the need for pretraining on large text corpora.","It shifts the basis of their responses from static pretrained knowledge to real-time data retrieval."],ans:["D"]},
+  {n:39,q:"Consider the OracleVS code with DOT_PRODUCT distance strategy and k=3 retriever. Which prerequisite steps must be completed before this code can execute successfully?",opts:["Embeddings must be created and stored in the database.","Documents must be retrieved from the database before running the retriever.","Documents must be indexed and saved in the specified table.","A response must be generated before running the retrieval process."],ans:["C"]},
+  {n:40,q:"You are developing a chatbot that processes sensitive data, which must remain secure and not be exposed externally. What is an approach to embedding the data using Oracle Database 23ai?",opts:["Import and use an ONNX model.","Store embeddings in an unencrypted external database.","Use a third party model via a secure API.","Use open-source models."],ans:["A"]},
+  {n:41,q:"How are fine-tuned customer models stored to enable strong data privacy and security in OCI Generative AI service?",opts:["Stored in OCI Key Management service.","Stored in an unencrypted form in OCI Object Storage.","Stored in OCI Object Storage and encrypted by default.","Shared among multiple customers for efficiency."],ans:["C"]},
+  {n:42,q:"How can you verify that an LLM-generated response is grounded in factual and relevant information?",opts:["Examine the document chunks stored in the vector database.","Check the references to the documents provided in the response.","Use model evaluators to assess the accuracy and relevance of responses.","Manually review past conversations to ensure consistency in responses."],ans:["B"]},
+  {n:43,q:"Which statement best describes the role of encoder and decoder models in natural language processing?",opts:["Encoder models take a sequence of words and predict the next word, whereas decoder models convert a sequence of words into a numerical representation.","Encoder models convert a sequence of words into a vector representation, and decoder models take this vector representation to generate a sequence of words.","Encoder models are used only for numerical calculations, whereas decoder models interpret calculated numerical values back into text.","Encoder models and decoder models both convert sequences of words into vector representations without generating new text."],ans:["B"]},
+  {n:44,q:"What does the output of the encoder in an encoder-decoder architecture represent?",opts:["It is a sequence of embeddings that encode the semantic meaning of the input text.","It is the final generated sentence ready for output by the model.","It is a random initialization vector used to start the model's prediction.","It represents the probabilities of the next word in the sequence."],ans:["A"]},
+  {n:45,q:"In the given code, what does setting truncate = 'NONE' do in the EmbedTextDetails configuration?",opts:["It prevents input text from being truncated before processing.","It ensures that only a single word from the input is used for embedding.","It removes all white space from the input text.","It forces the model to limit the output text length."],ans:["A"]},
+  {n:46,q:"What is the purpose of the line: config = oci.config.from_file('~/.oci/config', CONFIG_PROFILE)?",opts:["It defines the profile that will be used to generate AI models.","It loads the OCI configuration details from a file to authenticate the client.","It establishes a secure SSH connection to OCI services.","It initializes a connection to the OCI Generative AI service without using authentication."],ans:["B"]},
+  {n:47,q:"A student is using OCI Generative AI Embedding models to summarize long academic papers. If a paper exceeds the model's token limit, but the most important insights are at the beginning, what action should the student take?",opts:["Select to truncate the end.","Split the paper into multiple overlapping parts and embed separately.","Select to truncate the start.","Manually remove words before processing with embeddings."],ans:["A"]},
+  {n:48,q:"Which statement describes the difference between 'Top k' and 'Top p' in selecting the next token in OCI Generative AI Chat models?",opts:["'Top k' selects the next token based on its position in the list of probable tokens, whereas 'Top p' selects based on the cumulative probability of the top tokens.","'Top k' considers the sum of probabilities of the top tokens, whereas 'Top p' selects from the top 'k' tokens sorted by probability.","'Top k' and 'Top p' both select from the same set of tokens but use different methods to prioritize them based on frequency.","'Top k' and 'Top p' are identical in their approach to token selection but differ in their application of penalties to tokens."],ans:["A"]},
+  {n:49,q:"What distinguishes the Cohere Embed v3 model from its predecessor in the OCI Generative AI service?",opts:["Capacity to translate text in over 20 languages","Emphasis on syntactic clustering of word embeddings","Support for tokenizing longer sentences","Improved retrievals for Retrieval-Augmented Generation (RAG) systems"],ans:["D"]},
+  {n:50,q:"What is the significance of setting chat_detail.serving_mode = oci.generative_ai_inference.models.OnDemandServingMode(model_id='ocid1.generativeaimodel...')?",opts:["It specifies the serving mode and assigns a specific generative AI model ID to be used for inference.","It sets up the storage location where AI-generated responses will be saved.","It creates a new generative AI model instead of using an existing one.","It configures a load balancer to distribute AI inference requests efficiently."],ans:["A"]},
+  {n:51,q:"Analyze the user prompts provided to a language model. Which scenario exemplifies prompt injection (jailbreaking)?",opts:["A user inputs a directive about prioritizing user privacy and asks how the model would respond if asked to share personal details that are public record but sensitive in nature.","A user presents a hypothetical scenario where the AI persuades users that a company's services are best without direct comparisons.","A user submits a query about writing a story where a character needs to bypass a security system, asking for a plausible method focusing on ingenuity.","A user issues a command asking how the model might creatively provide information without directly violating standard protocols that prevent answering."],ans:["D"]},
+  {n:52,q:"When using a specific LLM and splitting documents into chunks, which parameter should you check to ensure the chunks are appropriately sized for processing?",opts:["Context window size","Number of LLM layers","Number of LLM parameters","Max number of tokens LLM can generate"],ans:["A"]},
+  {n:53,q:"You're using your OCI Generative AI Chat model to generate responses in the tone of a pirate for a sales campaign. Which field should you use to provide context and instructions for the model to respond in a specific conversation style?",opts:["Seed","Preamble","Truncate","Temperature"],ans:["B"]},
+  {n:54,q:"What is the primary function of the 'temperature' parameter in OCI Generative AI Chat models?",opts:["Assigns a penalty to tokens that have already appeared in the preceding text.","Controls the randomness of the model's output, affecting its creativity.","Determines the maximum number of tokens the model can generate per response.","Specifies a string that tells the model to stop generating more content."],ans:["B"]},
+  {n:55,q:"You are trying to customize an LLM with your data. You tried prompt engineering, RAG and fine-tuning but still getting sub optimal results. What should be the next best possible option?",opts:["Prompts must always be updated after fine tuning","You should fine tune the model multiple times in a single cycle","The entire process may need to be repeated for further optimization, if required","Retrieval augmented generation (RAG) must be replaced periodically"],ans:["C"]},
+  {n:56,q:"How does the utilization of T-Few transformer layers contribute to the efficiency of the fine-tuning process?",opts:["By allowing updates across all layers of the model.","By incorporating additional layers to the base model.","By excluding transformer layers from the fine-tuning process entirely.","By restricting updates to only a specific group of transformer layers."],ans:["D"]},
+  {n:57,q:"What is a disadvantage of using Few-Shot Model Prompting?",opts:["It adds latency to each model request","It is complex to set up and implement","It requires a compatible data source for retrieval","It requires a labeled dataset, which can be expensive."],ans:["A"]},
+  {n:58,q:"You are implementing an Oracle Generative AI Agent (RAG) using Oracle Database 23ai vector search. What must you ensure about the embedding model used in the database function for vector search?",opts:["It must support only file based vector embeddings.","It must be different from the one used to generate the VECTOR in the BODY field.","It can be any model, regardless of how the VECTOR field was generated.","It must match the embedding model used to create the VECTOR field in the table."],ans:["D"]},
+  {n:59,q:"What source type must be set in the subnet's ingress rule for an Oracle Database in OCI Generative AI Agents?",opts:["IP Address","Security Group","CIDR","Public Internet"],ans:["C"]},
+  {n:60,q:"How does OCI Generative AI Agents ensure that citations link to custom URLs instead of the default Object Storage links?",opts:["By adding metadata to objects in Object Storage","By increasing the session timeout for endpoints","By modifying the RAG agent's retrieval mechanism","By enabling the trace feature during endpoint creation"],ans:["A"]},
+];
+
+const LETTERS = 'ABCD';
+let userAnswers = {};
+let graded = false;
+let scores = [];
+let currentUserEmail = '';
+
+function getUserScoreKey() { return 'oci_genai_scores_' + (currentUserEmail || 'guest'); }
+function loadUserScores() { scores = JSON.parse(localStorage.getItem(getUserScoreKey()) || '[]'); renderScoreboard(); }
+function saveUserScores() { localStorage.setItem(getUserScoreKey(), JSON.stringify(scores)); }
+
+// ── BUILD EXAM ────────────────────────────────────────────────────────────────
+function buildExam() {
+  const list = document.getElementById('examList');
+  list.innerHTML = '';
+  QUESTIONS.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = `card-${qi}`;
+    let optHtml = '';
+    q.opts.forEach((opt, oi) => {
+      const letter = LETTERS[oi];
+      optHtml += `<label class="option-label" id="opt-${qi}-${oi}">
+        <input type="radio" name="q${qi}" value="${letter}" onchange="toggleOpt(${qi},${oi},this)">
+        <span class="option-key">${letter}</span><span>${opt}</span>
+      </label>`;
+    });
+    card.innerHTML = `
+      <div class="q-header">
+        <span class="q-num">${q.n}</span>
+        <span class="q-text">${q.q}</span>
+        <span class="q-badge">SINGLE</span>
+      </div>
+      <div class="options">${optHtml}</div>
+      <div class="q-result" id="result-${qi}"></div>`;
+    list.appendChild(card);
+  });
+}
+
+function toggleOpt(qi, oi, input) {
+  if (graded) { input.checked = !input.checked; return; }
+  const q = QUESTIONS[qi];
+  const letter = LETTERS[oi];
+  q.opts.forEach((_, i) => document.getElementById(`opt-${qi}-${i}`).classList.remove('selected'));
+  userAnswers[qi] = new Set([letter]);
+  document.getElementById(`opt-${qi}-${oi}`).classList.add('selected');
+  updateStats();
+}
+
+// ── STATS ─────────────────────────────────────────────────────────────────────
+function updateStats() {
+  const answered = Object.keys(userAnswers).length;
+  document.getElementById('statAnswered').textContent = `${answered} / 60`;
+  document.getElementById('progressBar').style.width = `${(answered/60)*100}%`;
+  const btn = document.getElementById('jumpBtn');
+  const unanswered = 60 - answered;
+  btn.style.display = unanswered > 0 ? 'inline-flex' : 'none';
+  btn.textContent = `↓ ${unanswered} Unanswered`;
+  if (!graded) {
+    document.getElementById('statCorrect').textContent = '—';
+    document.getElementById('statWrong').textContent   = '—';
+    document.getElementById('statScore').textContent   = '—';
+  }
+  QUESTIONS.forEach((q, qi) => {
+    const card = document.getElementById(`card-${qi}`);
+    if (!graded) {
+      card.classList.remove('answered');
+      if (userAnswers[qi] && userAnswers[qi].size > 0) card.classList.add('answered');
+    }
+  });
+}
+
+// ── SUBMIT ────────────────────────────────────────────────────────────────────
+function confirmSubmit() {
+  const unanswered = 60 - Object.keys(userAnswers).length;
+  document.getElementById('modalSubmitMsg').textContent = unanswered > 0
+    ? `You have ${unanswered} unanswered question(s). Unanswered questions will not be counted. Ready to submit?`
+    : 'All 60 questions answered. Ready to submit!';
+  document.getElementById('modalSubmit').classList.add('show');
+}
+function submitExam() { closeModal('modalSubmit'); gradeExam(); }
+
+function gradeExam() {
+  graded = true;
+  let correct = 0, wrong = 0;
+  QUESTIONS.forEach((q, qi) => {
+    const card = document.getElementById(`card-${qi}`);
+    const resultEl = document.getElementById(`result-${qi}`);
+    const userSet = userAnswers[qi] || new Set();
+    if (userSet.size === 0) return;
+    const ansSet = new Set(q.ans);
+    const isCorrect = userSet.size === ansSet.size && [...ansSet].every(l => userSet.has(l));
+    q.opts.forEach((_, oi) => {
+      const letter = LETTERS[oi];
+      const lbl = document.getElementById(`opt-${qi}-${oi}`);
+      lbl.classList.remove('selected');
+      const isCorrectChoice = ansSet.has(letter);
+      const isUserChoice    = userSet.has(letter);
+      if (isUserChoice && isCorrectChoice) lbl.classList.add('correct-choice');
+      else if (isUserChoice && !isCorrectChoice) lbl.classList.add('wrong-choice');
+      else if (!isUserChoice && isCorrectChoice) lbl.classList.add('missed-choice');
+    });
+    card.classList.remove('answered');
+    if (isCorrect) { card.classList.add('correct'); correct++; }
+    else { card.classList.add('wrong'); wrong++; }
+    resultEl.classList.add('show');
+    if (isCorrect) {
+      resultEl.classList.add('ok');
+      resultEl.innerHTML = '✔ CORRECT';
+    } else {
+      resultEl.classList.add('bad');
+      const userStr = [...userSet].sort().join(', ');
+      const ansStr  = q.ans.join(', ');
+      resultEl.innerHTML = `✘ WRONG &nbsp;<span class="answer-key">Your answer: ${userStr} &nbsp;|&nbsp; Correct: ${ansStr}</span>`;
+    }
+  });
+  const pct = (correct / 60) * 100;
+  const passed = pct >= 70;
+  const totalAnswered = Object.keys(userAnswers).length;
+  const actualWrong = totalAnswered - correct;
+  document.getElementById('statCorrect').textContent = correct;
+  document.getElementById('statWrong').textContent   = actualWrong;
+  document.getElementById('statScore').textContent   = pct.toFixed(1) + '%';
+  const banner = document.getElementById('resultBanner');
+  banner.classList.add('show', passed ? 'passed' : 'failed');
+  document.getElementById('resultTitle').textContent = passed ? `✔ PASSED — ${pct.toFixed(1)}%` : `✘ FAILED — ${pct.toFixed(1)}%`;
+  document.getElementById('resultSub').textContent   = passed
+    ? `Congratulations! You scored ${correct} out of 60. You passed the 70% threshold.`
+    : `You scored ${correct} out of 60. A score of 42 or more (70%) is required to pass.`;
+  document.getElementById('downloadBtn').style.display = 'inline-flex';
+  document.getElementById('filterCorrect').style.display = 'inline-block';
+  document.getElementById('filterWrong').style.display   = 'inline-block';
+  document.getElementById('jumpBtn').style.display = 'none';
+  const attempt = {
+    n: scores.length + 1,
+    name: window.currentStudentFullName || 'Unknown',
+    date: new Date().toLocaleDateString('en-US'),
+    time: new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'}),
+    correct, total:60, pct:pct.toFixed(1), passed
+  };
+  scores.push(attempt);
+  saveUserScores();
+  renderScoreboard();
+  banner.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+// ── CLEAR ─────────────────────────────────────────────────────────────────────
+function confirmClear() { document.getElementById('modalClear').classList.add('show'); }
+function clearExam() {
+  closeModal('modalClear');
+  graded = false; userAnswers = {};
+  QUESTIONS.forEach((q, qi) => {
+    const card = document.getElementById(`card-${qi}`);
+    card.classList.remove('answered','correct','wrong','unanswered-flag');
+    q.opts.forEach((_, oi) => {
+      const lbl = document.getElementById(`opt-${qi}-${oi}`);
+      lbl.classList.remove('selected','correct-choice','wrong-choice','missed-choice');
+      const inp = lbl.querySelector('input'); if (inp) inp.checked = false;
+    });
+    const res = document.getElementById(`result-${qi}`);
+    res.className = 'q-result'; res.innerHTML = '';
+  });
+  document.getElementById('resultBanner').className = 'result-banner';
+  document.getElementById('statAnswered').textContent = '0 / 60';
+  document.getElementById('statCorrect').textContent  = '—';
+  document.getElementById('statWrong').textContent    = '—';
+  document.getElementById('statScore').textContent    = '—';
+  document.getElementById('progressBar').style.width  = '0%';
+  document.getElementById('downloadBtn').style.display = 'none';
+  document.getElementById('filterCorrect').style.display = 'none';
+  document.getElementById('filterWrong').style.display   = 'none';
+  filterCards('all', document.querySelector('.filter-btn'));
+  document.getElementById('jumpBtn').style.display = 'inline-flex';
+  document.getElementById('jumpBtn').textContent = '↓ 60 Unanswered';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ── FILTER / JUMP ─────────────────────────────────────────────────────────────
+function filterCards(type, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  QUESTIONS.forEach((q, qi) => {
+    const card = document.getElementById(`card-${qi}`);
+    let show = true;
+    if (type === 'unanswered') show = !userAnswers[qi] || userAnswers[qi].size === 0;
+    else if (type === 'correct') show = card.classList.contains('correct');
+    else if (type === 'wrong')   show = card.classList.contains('wrong');
+    card.style.display = show ? 'block' : 'none';
+  });
+}
+function jumpToNext() {
+  for (let qi = 0; qi < 60; qi++) {
+    if (!userAnswers[qi] || userAnswers[qi].size === 0) {
+      const card = document.getElementById(`card-${qi}`);
+      card.style.display = 'block';
+      card.scrollIntoView({behavior:'smooth', block:'center'});
+      card.classList.add('unanswered-flag');
+      setTimeout(() => card.classList.remove('unanswered-flag'), 2000);
+      return;
+    }
+  }
+}
+
+// ── SCOREBOARD ────────────────────────────────────────────────────────────────
+function renderScoreboard() {
+  const body  = document.getElementById('sbBody');
+  const count = document.getElementById('sbCount');
+  count.textContent = `${scores.length} attempt${scores.length !== 1 ? 's' : ''}`;
+  if (scores.length === 0) {
+    body.innerHTML = '<div class="sb-empty">No attempts yet. Complete the exam and click Submit to record your score.</div>';
+    return;
+  }
+  let rows = scores.map(s => `
+    <tr>
+      <td><span style="font-family:var(--mono);font-weight:600;color:var(--navy)">EXAM_${s.n}</span></td>
+      <td style="font-weight:600;color:var(--navy)">${s.name || '—'}</td>
+      <td style="color:var(--muted);font-size:.82rem">${s.date} ${s.time}</td>
+      <td style="font-family:var(--mono);font-weight:600">${s.correct} / ${s.total}</td>
+      <td style="font-family:var(--mono);font-weight:700;color:${s.passed?'var(--green)':'var(--red)'}">${s.pct}%</td>
+      <td><span class="sb-badge ${s.passed?'pass':'fail'}">${s.passed?'✔ PASSED':'✘ FAILED'}</span></td>
+    </tr>`).join('');
+  const best = scores.reduce((a,b) => +a.pct > +b.pct ? a : b);
+  rows += `<tr style="background:#f8faf0;border-top:2px solid var(--border)">
+    <td colspan="3" style="font-weight:700;color:var(--navy)">🏆 Best Score</td>
+    <td style="font-family:var(--mono);font-weight:700">${best.correct} / 60</td>
+    <td style="font-family:var(--mono);font-weight:700;color:${best.passed?'var(--green)':'var(--red)'}">${best.pct}%</td>
+    <td><span class="sb-badge ${best.passed?'pass':'fail'}">${best.passed?'✔ PASSED':'✘ FAILED'}</span></td>
+  </tr>`;
+  body.innerHTML = `
+    <table class="sb-table">
+      <thead><tr>
+        <th>Attempt</th><th>Name</th><th>Date &amp; Time</th><th>Score</th><th>Percentage</th><th>Result</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <div style="padding:12px 18px;text-align:right">
+      <button class="btn btn-outline" style="font-size:.75rem;padding:6px 14px" onclick="clearScores()">🗑 Clear History</button>
+    </div>`;
+}
+function clearScores() {
+  if (!confirm('Clear all score history?')) return;
+  scores = []; localStorage.removeItem(getUserScoreKey()); renderScoreboard();
+}
+
+// ── LOGIN ─────────────────────────────────────────────────────────────────────
+function _doLoginCore() {
+  const nameInput = document.getElementById('loginName').value.trim();
+  const pinInput  = document.getElementById('loginPin').value.trim();
+  const errEl     = document.getElementById('loginError');
+  const pinField  = document.getElementById('loginPin');
+  let matched = null;
+  for (const [email, data] of Object.entries(USERS)) {
+    if (data.pin === pinInput && data.name.toLowerCase().includes(nameInput.toLowerCase())) {
+      matched = {email, ...data}; break;
+    }
+  }
+  if (!matched) {
+    errEl.textContent = 'Incorrect name or PIN. Please try again.';
+    pinField.classList.add('shake');
+    pinField.value = '';
+    setTimeout(() => pinField.classList.remove('shake'), 500);
+    return;
+  }
+  window.currentStudentFullName = matched.name;
+  currentUserEmail = matched.email;
+  loadUserScores();
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('examWrap').style.display = 'block';
+  document.getElementById('welcomeUser').textContent = 'Welcome, ' + matched.name.split(',')[1].trim() + '!';
+  document.getElementById('jumpBtn').style.display = 'inline-flex';
+  document.getElementById('jumpBtn').textContent = '↓ 60 Unanswered';
+}
+
+function _doLoginWrapper() {
+  const examOpen = localStorage.getItem('oci_genai_exam_open') !== 'false';
+  if (!examOpen) {
+    const notice = localStorage.getItem('oci_genai_notice') || 'The exam is currently closed. Please contact your administrator.';
+    document.getElementById('loginError').textContent = '🔒 ' + notice;
+    return;
+  }
+  _doLoginCore();
+}
+
+document.getElementById('loginName').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('loginPin').focus();
+});
+
+// ── LOGOUT ────────────────────────────────────────────────────────────────────
+function confirmLogout() { document.getElementById('logoutModal').style.display = 'flex'; }
+function doLogout() {
+  graded = false; userAnswers = {};
+  window.currentStudentFullName = ''; currentUserEmail = ''; scores = [];
+  QUESTIONS.forEach((q, qi) => {
+    const card = document.getElementById(`card-${qi}`);
+    if (card) card.classList.remove('answered','correct','wrong','unanswered-flag');
+    q.opts.forEach((_, oi) => {
+      const lbl = document.getElementById(`opt-${qi}-${oi}`);
+      if (lbl) {
+        lbl.classList.remove('selected','correct-choice','wrong-choice','missed-choice');
+        const inp = lbl.querySelector('input'); if (inp) inp.checked = false;
+      }
+    });
+    const res = document.getElementById(`result-${qi}`);
+    if (res) { res.className = 'q-result'; res.innerHTML = ''; }
+  });
+  document.getElementById('logoutModal').style.display = 'none';
+  document.getElementById('progressBar').style.width = '0%';
+  document.getElementById('statAnswered').textContent = '0 / 60';
+  document.getElementById('statCorrect').textContent  = '—';
+  document.getElementById('statWrong').textContent    = '—';
+  document.getElementById('statScore').textContent    = '—';
+  const banner = document.getElementById('resultBanner');
+  if (banner) banner.className = 'result-banner';
+  const dlBtn = document.getElementById('downloadBtn');
+  if (dlBtn) dlBtn.style.display = 'none';
+  document.getElementById('loginName').value = '';
+  document.getElementById('loginPin').value  = '';
+  document.getElementById('loginError').textContent = '';
+  document.getElementById('welcomeUser').textContent = '';
+  document.getElementById('examWrap').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+  window.scrollTo({top:0});
+}
+
+// ── ADMIN ─────────────────────────────────────────────────────────────────────
+function showAdminLogin() {
+  document.getElementById('adminLoginModal').style.display = 'flex';
+  setTimeout(() => document.getElementById('adminUser').focus(), 100);
+}
+function hideAdminLogin() {
+  document.getElementById('adminLoginModal').style.display = 'none';
+  document.getElementById('adminLoginErr').textContent = '';
+  document.getElementById('adminUser').value = '';
+  document.getElementById('adminPass').value = '';
+}
+function doAdminLogin() {
+  const u = document.getElementById('adminUser').value.trim();
+  const p = document.getElementById('adminPass').value.trim();
+  if (u === ADMIN_CREDENTIALS.user && p === ADMIN_CREDENTIALS.pass) {
+    hideAdminLogin();
+    const examOpen = localStorage.getItem('oci_genai_exam_open') !== 'false';
+    const action = confirm(
+      'ADMIN PANEL\n\n' +
+      'Exam Status: ' + (examOpen ? 'OPEN ✅' : 'CLOSED 🔒') + '\n\n' +
+      'Click OK to TOGGLE exam status (Open↔Close)\nClick Cancel to keep current status.'
+    );
+    if (action) {
+      localStorage.setItem('oci_genai_exam_open', examOpen ? 'false' : 'true');
+      alert('Exam is now ' + (!examOpen ? 'OPEN ✅' : 'CLOSED 🔒'));
+    }
+  } else {
+    document.getElementById('adminLoginErr').textContent = 'Invalid username or password.';
+    document.getElementById('adminPass').value = '';
+  }
+}
+
+// ── TABS & MODALS ─────────────────────────────────────────────────────────────
+function showTab(name, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(`panel-${name}`).classList.add('active');
+  btn.classList.add('active');
+}
+function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('show'); });
+});
+
+// ── DOWNLOAD RESULT ───────────────────────────────────────────────────────────
+function downloadResult() {
+  const studentName = window.currentStudentFullName || 'Student';
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  const timeStr = now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+  const answeredQuestions = QUESTIONS.filter((q,qi) => {
+    const userSet = userAnswers[qi] || new Set();
+    return userSet.size > 0;
+  });
+  if (answeredQuestions.length === 0) { alert('No answered questions to download.'); return; }
+  let correct = 0, wrong = 0;
+  answeredQuestions.forEach(q => {
+    const qi = QUESTIONS.indexOf(q);
+    const userSet = userAnswers[qi] || new Set();
+    const ansSet  = new Set(q.ans);
+    if (userSet.size === ansSet.size && [...ansSet].every(l => userSet.has(l))) correct++;
+    else wrong++;
+  });
+  const unanswered = 60 - answeredQuestions.length;
+  const pct  = ((correct / 60) * 100).toFixed(1);
+  const passed = parseFloat(pct) >= 70;
+  let rows = '';
+  answeredQuestions.forEach(q => {
+    const qi = QUESTIONS.indexOf(q);
+    const userSet = userAnswers[qi] || new Set();
+    const ansSet  = new Set(q.ans);
+    const isCorrect = userSet.size === ansSet.size && [...ansSet].every(l => userSet.has(l));
+    const userAns = [...userSet].sort().join(', ');
+    const corrAns = q.ans.join(', ');
+    let optRows = '';
+    q.opts.forEach((opt, oi) => {
+      const letter = LETTERS[oi];
+      const isCorrectChoice = ansSet.has(letter);
+      const isUserChoice    = userSet.has(letter);
+      let bg = '#ffffff', mark = '';
+      if (isUserChoice && isCorrectChoice)       { bg='#e6f4ed'; mark=' ✔'; }
+      else if (isUserChoice && !isCorrectChoice) { bg='#fde8eb'; mark=' ✘'; }
+      else if (!isUserChoice && isCorrectChoice) { bg='#fff8e1'; mark=' ← correct'; }
+      optRows += `<tr style="background:${bg}"><td style="padding:5px 10px;font-family:monospace;font-weight:700;color:#1a2236;width:30px">${letter}</td><td style="padding:5px 10px;font-size:12px;color:#1a2236">${opt}${mark}</td></tr>`;
+    });
+    const rowBg = isCorrect ? '#e6f4ed' : '#fde8eb';
+    const statusIcon = isCorrect ? '✔' : '✘';
+    const statusColor = isCorrect ? '#1a7f4b' : '#c8102e';
+    rows += `<tr><td colspan="2" style="padding:0"><table width="100%" cellspacing="0" cellpadding="0" style="border:1.5px solid #d0d8e8;border-radius:8px;margin-bottom:10px;overflow:hidden;border-collapse:separate">
+      <tr style="background:${rowBg}">
+        <td style="padding:10px 14px;width:36px;vertical-align:top"><span style="display:inline-block;width:28px;height:28px;background:#0f1f3d;color:#fff;border-radius:6px;text-align:center;line-height:28px;font-size:12px;font-weight:700">${q.n}</span></td>
+        <td style="padding:10px 14px;font-size:13px;color:#1a2236;font-weight:600;vertical-align:top">${q.q}</td>
+        <td style="padding:10px 14px;text-align:right;vertical-align:top;white-space:nowrap"><span style="font-size:18px;font-weight:700;color:${statusColor}">${statusIcon}</span></td>
+      </tr>
+      <tr><td colspan="3" style="padding:0 14px 10px 14px">
+        <table width="100%" cellspacing="0" cellpadding="0">${optRows}</table>
+        <div style="margin-top:8px;font-size:11px;color:#5a6a85;font-family:monospace">Your answer: <strong style="color:${isCorrect?'#1a7f4b':'#c8102e'}">${userAns}</strong> &nbsp;|&nbsp; Correct answer: <strong style="color:#1a7f4b">${corrAns}</strong></div>
+      </td></tr>
+    </table></td></tr>`;
+  });
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Exam Result — ${studentName}</title>
+  <style>body{font-family:'Segoe UI',Arial,sans-serif;margin:0;padding:0;background:#f4f6f9;color:#1a2236;}.page{max-width:820px;margin:0 auto;background:#fff;}@media print{body{background:#fff;}.no-print{display:none!important;}}</style>
+  </head><body><div class="page">
+  <div style="background:#0f1f3d;color:#fff;padding:32px 40px 24px;">
+    <div style="font-size:11px;letter-spacing:.1em;color:#a0b4d0;margin-bottom:6px;font-family:monospace">EXAM RESULT REPORT</div>
+    <h1 style="margin:0;font-size:1.4rem;font-weight:700">Oracle Cloud Infrastructure 2025 Generative AI Professional</h1>
+    <p style="margin:6px 0 0;font-size:.85rem;color:#a0b4d0">${dateStr} · ${timeStr}</p>
+  </div>
+  <div style="padding:24px 40px;border-bottom:2px solid #eef1f7;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px">
+    <div>
+      <div style="font-size:11px;color:#5a6a85;letter-spacing:.08em;margin-bottom:4px">STUDENT NAME</div>
+      <div style="font-size:1.2rem;font-weight:700;color:#0f1f3d">${studentName}</div>
+    </div>
+    <div style="text-align:center;background:${passed?'#e6f4ed':'#fde8eb'};border:2px solid ${passed?'#1a7f4b':'#c8102e'};border-radius:12px;padding:16px 28px">
+      <div style="font-size:2.2rem;font-weight:700;color:${passed?'#1a7f4b':'#c8102e'};line-height:1">${pct}%</div>
+      <div style="font-size:.8rem;font-weight:700;color:${passed?'#1a7f4b':'#c8102e'};margin-top:2px">${passed?'✔ PASSED':'✘ FAILED'}</div>
+      <div style="font-size:.72rem;color:#5a6a85;margin-top:4px">Passing: 70%</div>
+    </div>
+  </div>
+  <div style="padding:20px 40px;background:#f8fafc;border-bottom:1px solid #eef1f7;display:flex;gap:24px;flex-wrap:wrap">
+    <div style="text-align:center;min-width:80px"><div style="font-size:1.6rem;font-weight:700;color:#1a7f4b;font-family:monospace">${correct}</div><div style="font-size:.7rem;color:#5a6a85;letter-spacing:.06em">CORRECT</div></div>
+    <div style="text-align:center;min-width:80px"><div style="font-size:1.6rem;font-weight:700;color:#c8102e;font-family:monospace">${wrong}</div><div style="font-size:.7rem;color:#5a6a85;letter-spacing:.06em">WRONG</div></div>
+    <div style="text-align:center;min-width:80px"><div style="font-size:1.6rem;font-weight:700;color:#5a6a85;font-family:monospace">${unanswered}</div><div style="font-size:.7rem;color:#5a6a85;letter-spacing:.06em">UNANSWERED</div></div>
+    <div style="text-align:center;min-width:80px"><div style="font-size:1.6rem;font-weight:700;color:#0f1f3d;font-family:monospace">${answeredQuestions.length}</div><div style="font-size:.7rem;color:#5a6a85;letter-spacing:.06em">ANSWERED</div></div>
+    <div style="text-align:center;min-width:80px"><div style="font-size:1.6rem;font-weight:700;color:#0f1f3d;font-family:monospace">60</div><div style="font-size:.7rem;color:#5a6a85;letter-spacing:.06em">TOTAL ITEMS</div></div>
+  </div>
+  <div style="padding:12px 40px;background:#fffdf0;border-bottom:1px solid #eef1f7;font-size:11px;color:#5a6a85;display:flex;gap:20px;flex-wrap:wrap">
+    <span><span style="background:#e6f4ed;padding:2px 8px;border-radius:3px">Green</span> = Your correct answer</span>
+    <span><span style="background:#fde8eb;padding:2px 8px;border-radius:3px">Red</span> = Your wrong answer</span>
+    <span><span style="background:#fff8e1;padding:2px 8px;border-radius:3px">Yellow</span> = Correct answer you missed</span>
+  </div>
+  <div class="no-print" style="padding:16px 40px;text-align:right">
+    <button onclick="window.print()" style="background:#0f1f3d;color:#fff;border:none;padding:10px 24px;border-radius:6px;font-size:.85rem;font-weight:700;cursor:pointer">🖨 Print / Save as PDF</button>
+  </div>
+  <div style="padding:10px 40px 40px">
+    <div style="font-size:11px;color:#5a6a85;margin-bottom:14px;font-style:italic;background:#f0f4fa;padding:10px 14px;border-radius:6px;border-left:3px solid #1a56a0">
+      Showing <strong>${answeredQuestions.length}</strong> answered question(s) out of 60 total. Unanswered questions are not included.
+    </div>
+    <table width="100%" cellspacing="0" cellpadding="0">${rows}</table>
+  </div>
+  <div style="background:#0f1f3d;color:#a0b4d0;padding:16px 40px;font-size:.75rem;text-align:center">
+    Oracle Cloud Infrastructure 2025 Generative AI Professional · Generated ${dateStr}
+  </div>
+  </div></body></html>`;
+  const win = window.open('','_blank');
+  win.document.write(html);
+  win.document.close();
+  win.focus();
+}
+
+// ── CIRCUIT BACKGROUND ────────────────────────────────────────────────────────
+(function(){
+  const canvas = document.getElementById('bgCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let traces=[], pulses=[], hexagons=[], rings=[];
+  function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;init();}
+  function init(){
+    traces=[];pulses=[];hexagons=[];rings=[];
+    const W=canvas.width,H=canvas.height,GRID=48;
+    for(let i=0;i<120;i++){
+      const sx=Math.floor(Math.random()*(W/GRID))*GRID,sy=Math.floor(Math.random()*(H/GRID))*GRID;
+      const segs=[];let cx=sx,cy=sy;
+      const steps=Math.floor(Math.random()*5)+2;
+      for(let s=0;s<steps;s++){
+        const dir=Math.floor(Math.random()*4),len=(Math.floor(Math.random()*3)+1)*GRID;
+        let nx=cx,ny=cy;
+        if(dir===0)nx+=len;else if(dir===1)nx-=len;else if(dir===2)ny+=len;else ny-=len;
+        segs.push({x1:cx,y1:cy,x2:nx,y2:ny});cx=nx;cy=ny;
+      }
+      traces.push({segs,alpha:Math.random()*.18+.04});
+      segs.forEach(sg=>{traces.push({dot:{x:sg.x1,y:sg.y1},alpha:Math.random()*.25+.08});traces.push({dot:{x:sg.x2,y:sg.y2},alpha:Math.random()*.25+.08});});
+    }
+    for(let i=0;i<28;i++){const ti=Math.floor(Math.random()*traces.length);pulses.push({traceIdx:ti,t:Math.random(),speed:Math.random()*.003+.001,color:Math.random()<.6?'#c8102e':'#4a9eff',size:Math.random()*3+2});}
+    for(let i=0;i<18;i++){hexagons.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*40+20,alpha:Math.random()*.07+.02,rot:Math.random()*Math.PI,drot:(Math.random()-.5)*.002});}
+    rings=[{x:W*.08,y:H*.12,maxR:180,alpha:.06,color:'#c8102e'},{x:W*.92,y:H*.88,maxR:220,alpha:.05,color:'#4a9eff'},{x:W*.85,y:H*.1,maxR:130,alpha:.04,color:'#c8102e'},{x:W*.15,y:H*.9,maxR:150,alpha:.04,color:'#4a9eff'}];
+  }
+  function hexPath(x,y,r,rot){ctx.beginPath();for(let i=0;i<6;i++){const a=rot+(Math.PI/3)*i;const px=x+r*Math.cos(a),py=y+r*Math.sin(a);i===0?ctx.moveTo(px,py):ctx.lineTo(px,py);}ctx.closePath();}
+  function draw(){
+    const W=canvas.width,H=canvas.height;
+    ctx.clearRect(0,0,W,H);
+    const bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,'#060e1e');bg.addColorStop(.45,'#0c1a32');bg.addColorStop(1,'#040b18');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+    const rg1=ctx.createRadialGradient(W*.0,H*.0,0,W*.15,H*.15,W*.4);rg1.addColorStop(0,'rgba(200,16,46,0.22)');rg1.addColorStop(1,'rgba(200,16,46,0)');ctx.fillStyle=rg1;ctx.fillRect(0,0,W,H);
+    const rg2=ctx.createRadialGradient(W,H,0,W*.88,H*.88,W*.45);rg2.addColorStop(0,'rgba(26,86,160,0.25)');rg2.addColorStop(1,'rgba(26,86,160,0)');ctx.fillStyle=rg2;ctx.fillRect(0,0,W,H);
+    rings.forEach(ring=>{for(let r=ring.maxR;r>0;r-=28){ctx.beginPath();ctx.arc(ring.x,ring.y,r,0,Math.PI*2);ctx.strokeStyle=`rgba(${ring.color==='#c8102e'?'200,16,46':'74,158,255'},${ring.alpha})`;ctx.lineWidth=.8;ctx.stroke();}});
+    hexagons.forEach(h=>{h.rot+=h.drot;hexPath(h.x,h.y,h.r,h.rot);ctx.strokeStyle=`rgba(74,158,255,${h.alpha})`;ctx.lineWidth=1;ctx.stroke();hexPath(h.x,h.y,h.r*.55,h.rot+Math.PI/6);ctx.strokeStyle=`rgba(200,16,46,${h.alpha*.7})`;ctx.lineWidth=.6;ctx.stroke();});
+    traces.forEach(tr=>{
+      if(tr.dot){ctx.beginPath();ctx.arc(tr.dot.x,tr.dot.y,2.5,0,Math.PI*2);ctx.fillStyle=`rgba(74,158,255,${tr.alpha})`;ctx.fill();ctx.beginPath();ctx.arc(tr.dot.x,tr.dot.y,5,0,Math.PI*2);ctx.strokeStyle=`rgba(74,158,255,${tr.alpha*.5})`;ctx.lineWidth=.8;ctx.stroke();return;}
+      if(!tr.segs)return;
+      tr.segs.forEach(seg=>{ctx.beginPath();ctx.moveTo(seg.x1,seg.y1);ctx.lineTo(seg.x2,seg.y1);ctx.lineTo(seg.x2,seg.y2);ctx.strokeStyle=`rgba(74,158,255,${tr.alpha})`;ctx.lineWidth=1;ctx.stroke();});
+    });
+    pulses.forEach(p=>{
+      p.t+=p.speed;if(p.t>1)p.t=0;
+      const tr=traces[p.traceIdx%traces.length];if(!tr||!tr.segs||tr.segs.length===0)return;
+      const seg=tr.segs[Math.floor(p.t*tr.segs.length)%tr.segs.length];if(!seg)return;
+      const lt=(p.t*tr.segs.length)%1;const px=seg.x1+(seg.x2-seg.x1)*lt,py=seg.y1+(seg.y2-seg.y1)*lt;
+      const grd=ctx.createRadialGradient(px,py,0,px,py,p.size*4);grd.addColorStop(0,p.color==='#c8102e'?'rgba(200,16,46,0.9)':'rgba(74,158,255,0.9)');grd.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=grd;ctx.beginPath();ctx.arc(px,py,p.size*4,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.arc(px,py,p.size,0,Math.PI*2);ctx.fillStyle=p.color;ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  resize();window.addEventListener('resize',resize);draw();
+})();
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+buildExam();
+updateStats();
+renderScoreboard();
+</script>
+</body>
+</html>
