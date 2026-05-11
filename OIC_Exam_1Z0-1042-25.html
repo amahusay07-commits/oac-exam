@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oracle Integration Cloud 2025 Professional Review</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;0,700&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#0f1f3d;--navy2:#162848;--accent:#c8102e;--gold:#f0a500;--green:#1a7f4b;--green-bg:#e6f4ed;--red-bg:#fde8eb;--red:#c8102e;--blue:#1a56a0;--blue-lt:#e8f0fb;--gray:#f4f6f9;--border:#d0d8e8;--text:#1a2236;--muted:#5a6a85;--white:#ffffff;--mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;--radius:8px;--shadow:0 2px 16px rgba(15,31,61,.10);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:#eef1f7;color:var(--text);min-height:100vh;}
+  #loginScreen{position:fixed;inset:0;z-index:9999;background:#0a1628;display:flex;align-items:center;justify-content:center;font-family:var(--sans);overflow:hidden;}
+  #loginScreen canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+  .login-box{position:relative;z-index:1;background:#fff;border-radius:14px;padding:48px 44px 40px;width:100%;max-width:420px;box-shadow:0 24px 80px rgba(0,0,0,.45);text-align:center;}
+  .login-logo{width:60px;height:60px;background:#c8102e;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:1.8rem;}
+  .login-box h2{font-size:1.15rem;font-weight:700;color:#0f1f3d;margin-bottom:6px;}
+  .login-box .sub{font-size:.82rem;color:#5a6a85;margin-bottom:28px;line-height:1.55;}
+  .login-label{font-size:.78rem;font-weight:700;color:#0f1f3d;text-align:left;display:block;margin-bottom:6px;letter-spacing:.04em;}
+  .login-field{width:100%;padding:12px 14px;border:1.5px solid #d0d8e8;border-radius:8px;font-size:1rem;font-family:var(--mono);outline:none;letter-spacing:.12em;margin-bottom:12px;transition:border-color .2s;box-sizing:border-box;}
+  .login-field:focus{border-color:#1a56a0;}
+  .login-field.shake{animation:shake .4s ease;}
+  @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+  .login-btn{width:100%;padding:13px;background:#0f1f3d;color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:var(--sans);letter-spacing:.05em;transition:background .2s;margin-top:4px;}
+  .login-btn:hover{background:#1a56a0;}
+  .login-error{color:#c8102e;font-size:.8rem;margin:8px 0 2px;min-height:20px;font-weight:600;}
+  .login-footer{margin-top:20px;font-size:.7rem;color:#a0b4c8;border-top:1px solid #eef1f7;padding-top:14px;}
+  #examWrap{display:none;}
+  header{background:var(--navy);color:#fff;position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(0,0,0,.3);}
+  .header-inner{max-width:1100px;margin:0 auto;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
+  .header-left h1{font-size:1.05rem;font-weight:700;letter-spacing:.02em;line-height:1.3;}
+  .header-left p{font-size:.78rem;color:#a0b4d0;margin-top:2px;font-family:var(--mono);}
+  .header-badge{background:var(--accent);color:#fff;font-family:var(--mono);font-size:.7rem;font-weight:600;padding:4px 10px;border-radius:4px;letter-spacing:.05em;white-space:nowrap;}
+  .progress-bar-wrap{background:rgba(255,255,255,.12);height:4px;}
+  .progress-bar-fill{height:4px;background:var(--gold);width:0%;transition:width .3s ease;}
+  .tabs{background:var(--navy2);display:flex;max-width:1100px;margin:0 auto;padding:0 32px;border-top:1px solid rgba(255,255,255,.08);}
+  .tab-btn{background:none;border:none;color:#7a9bc4;font-family:var(--sans);font-size:.82rem;font-weight:600;padding:11px 20px;cursor:pointer;border-bottom:3px solid transparent;letter-spacing:.04em;transition:color .2s,border-color .2s;}
+  .tab-btn:hover{color:#fff;}
+  .tab-btn.active{color:var(--gold);border-bottom-color:var(--gold);}
+  .main{max-width:1100px;margin:0 auto;padding:32px;}
+  .panel{display:none;}
+  .panel.active{display:block;}
+  .stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;}
+  .stat-card{background:#fff;border-radius:var(--radius);padding:16px 20px;border:1px solid var(--border);box-shadow:var(--shadow);}
+  .stat-card .label{font-size:.7rem;font-family:var(--mono);color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px;}
+  .stat-card .value{font-size:1.6rem;font-weight:700;color:var(--navy);font-family:var(--mono);line-height:1;}
+  .stat-card .value.green{color:var(--green);}
+  .stat-card .value.red{color:var(--red);}
+  .stat-card .value.gold{color:var(--gold);}
+  .question-card{background:#fff;border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;transition:box-shadow .2s;}
+  .question-card:hover{box-shadow:0 4px 24px rgba(15,31,61,.13);}
+  .question-card.answered{border-left:4px solid var(--blue);}
+  .question-card.correct{border-left:4px solid var(--green);background:#f8fdf9;}
+  .question-card.wrong{border-left:4px solid var(--red);background:#fff8f8;}
+  .q-header{display:flex;align-items:flex-start;gap:14px;padding:18px 20px 14px;}
+  .q-num{flex-shrink:0;width:32px;height:32px;background:var(--navy);color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.75rem;font-weight:600;margin-top:1px;}
+  .question-card.correct .q-num{background:var(--green);}
+  .question-card.wrong .q-num{background:var(--red);}
+  .q-text{font-size:.93rem;line-height:1.55;font-weight:400;flex:1;}
+  .q-badge{flex-shrink:0;font-family:var(--mono);font-size:.65rem;font-weight:600;padding:3px 8px;border-radius:4px;letter-spacing:.05em;background:#f0f4fa;color:#5a6a85;margin-top:2px;white-space:nowrap;}
+  .q-badge.multi{background:#e8f0fb;color:var(--blue);}
+  .options{padding:0 20px 16px 66px;display:flex;flex-direction:column;gap:7px;}
+  .option-label{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;border-radius:6px;border:1.5px solid var(--border);cursor:pointer;transition:background .15s,border-color .15s;font-size:.875rem;line-height:1.45;user-select:none;}
+  .option-label:hover{background:var(--gray);border-color:#b0c0dc;}
+  .option-label input[type="checkbox"],.option-label input[type="radio"]{display:none;}
+  .option-key{flex-shrink:0;width:22px;height:22px;border-radius:4px;background:var(--gray);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.7rem;font-weight:600;color:var(--muted);transition:background .15s,color .15s;margin-top:1px;}
+  .option-label.selected .option-key{background:var(--navy);color:#fff;border-color:var(--navy);}
+  .option-label.selected{background:var(--blue-lt);border-color:var(--blue);}
+  .option-label.correct-choice{background:var(--green-bg);border-color:var(--green);}
+  .option-label.correct-choice .option-key{background:var(--green);color:#fff;border-color:var(--green);}
+  .option-label.wrong-choice{background:var(--red-bg);border-color:var(--red);}
+  .option-label.wrong-choice .option-key{background:var(--red);color:#fff;border-color:var(--red);}
+  .option-label.missed-choice{background:var(--green-bg);border-color:var(--green);opacity:.75;}
+  .q-result{display:none;padding:0 20px 14px 66px;font-family:var(--mono);font-size:.75rem;font-weight:600;letter-spacing:.04em;}
+  .q-result.show{display:flex;align-items:center;gap:8px;}
+  .q-result.ok{color:var(--green);}
+  .q-result.bad{color:var(--red);}
+  .q-result .answer-key{color:var(--muted);font-weight:400;}
+  .actions{display:flex;gap:12px;margin-bottom:28px;flex-wrap:wrap;}
+  .btn{font-family:var(--sans);font-size:.85rem;font-weight:600;padding:10px 24px;border-radius:6px;border:none;cursor:pointer;letter-spacing:.03em;transition:all .18s;display:inline-flex;align-items:center;gap:7px;}
+  .btn-primary{background:var(--navy);color:#fff;}
+  .btn-primary:hover{background:var(--blue);transform:translateY(-1px);}
+  .btn-danger{background:var(--accent);color:#fff;}
+  .btn-danger:hover{background:#a50d25;transform:translateY(-1px);}
+  .btn-outline{background:#fff;color:var(--navy);border:1.5px solid var(--border);}
+  .btn-outline:hover{border-color:var(--navy);background:var(--gray);}
+  .btn-gold{background:var(--gold);color:var(--navy);}
+  .btn-gold:hover{background:#d4900a;transform:translateY(-1px);}
+  .result-banner{display:none;border-radius:var(--radius);padding:24px 28px;margin-bottom:24px;border:2px solid;text-align:center;}
+  .result-banner.show{display:block;}
+  .result-banner.passed{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+  .result-banner.failed{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+  .result-banner h2{font-size:2rem;font-family:var(--mono);font-weight:600;margin-bottom:6px;}
+  .result-banner p{font-size:.95rem;opacity:.85;}
+  .scoreboard-wrap{background:#fff;border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;}
+  .scoreboard-head{background:var(--navy);color:#fff;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;}
+  .scoreboard-head h2{font-size:1rem;font-weight:700;}
+  .scoreboard-head span{font-family:var(--mono);font-size:.75rem;color:#7a9bc4;}
+  table.sb-table{width:100%;border-collapse:collapse;}
+  .sb-table th{background:#f0f4fa;font-family:var(--mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);padding:10px 18px;text-align:left;border-bottom:1px solid var(--border);}
+  .sb-table td{padding:12px 18px;font-size:.875rem;border-bottom:1px solid var(--border);}
+  .sb-table tr:last-child td{border-bottom:none;}
+  .sb-table tr:hover td{background:var(--gray);}
+  .sb-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-family:var(--mono);font-size:.72rem;font-weight:600;}
+  .sb-badge.pass{background:var(--green-bg);color:var(--green);}
+  .sb-badge.fail{background:var(--red-bg);color:var(--red);}
+  .sb-empty{padding:40px;text-align:center;color:var(--muted);font-size:.9rem;font-style:italic;}
+  .filter-bar{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+  .filter-btn{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:5px 14px;font-size:.78rem;font-family:var(--mono);cursor:pointer;transition:all .15s;color:var(--muted);}
+  .filter-btn:hover{border-color:var(--navy);color:var(--navy);}
+  .filter-btn.active{background:var(--navy);border-color:var(--navy);color:#fff;}
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.55);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(2px);}
+  .modal-overlay.show{display:flex;}
+  .modal-box{background:#fff;border-radius:12px;padding:36px 40px;max-width:440px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.25);animation:popIn .2s ease;}
+  @keyframes popIn{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+  .modal-icon{font-size:2.8rem;margin-bottom:12px;}
+  .modal-box h3{font-size:1.25rem;font-weight:700;margin-bottom:8px;}
+  .modal-box p{font-size:.9rem;color:var(--muted);line-height:1.5;margin-bottom:22px;}
+  .modal-btns{display:flex;gap:10px;justify-content:center;}
+  .unanswered-pill{display:inline-flex;align-items:center;gap:6px;background:var(--gold);color:var(--navy);font-family:var(--mono);font-size:.72rem;font-weight:700;padding:5px 12px;border-radius:20px;cursor:pointer;border:none;transition:background .15s;}
+  .unanswered-pill:hover{background:#d4900a;}
+  .question-card.unanswered-flag{animation:pulse 1s ease 2;}
+  @keyframes pulse{0%,100%{box-shadow:var(--shadow)}50%{box-shadow:0 0 0 3px var(--gold)}}
+  @media(max-width:680px){.main{padding:16px;}.stats-bar{grid-template-columns:repeat(2,1fr);}.header-inner{padding:14px 16px;}.tabs{padding:0 12px;}.options{padding-left:14px;}.q-header{padding:14px 14px 10px;}}
+</style>
+</head>
+<body>
+
+<div id="loginScreen"><canvas id="bgCanvas"></canvas>
+  <button onclick="showAdminLogin()" style="position:fixed;bottom:20px;right:24px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.4);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:7px 14px;font-size:.72rem;font-weight:600;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;letter-spacing:.05em;backdrop-filter:blur(4px);z-index:10;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.color='rgba(255,255,255,0.4)';this.style.background='rgba(255,255,255,0.08)'">⚙ Admin</button>
+  <div class="login-box">
+    <div class="login-logo">🔗</div>
+    <h2>Oracle Integration Cloud 2025</h2>
+    <p class="sub">Application Integration Professional Review<br>Enter your name and PIN to access the exam.</p>
+    <label class="login-label">YOUR NAME</label>
+    <input class="login-field" id="loginName" type="text" placeholder="e.g. Doe, John" autocomplete="off">
+    <label class="login-label">YOUR PIN</label>
+    <input class="login-field" id="loginPin" type="password" placeholder="••••••" maxlength="6" autocomplete="off" onkeydown="if(event.key==='Enter')_doLoginWrapper()">
+    <div class="login-error" id="loginError"></div>
+    <button class="login-btn" onclick="_doLoginWrapper()">Access Exam →</button>
+    <div class="login-footer">Access is restricted to authorized participants only.<br>Contact your administrator arey.mahusay if you need assistance.</div>
+  </div>
+</div>
+
+<!-- Admin Login Modal -->
+<div id="adminLoginModal" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.65);align-items:center;justify-content:center;backdrop-filter:blur(4px);">
+  <div style="background:#fff;border-radius:14px;padding:36px 36px 28px;max-width:380px;width:90%;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.4);animation:popIn .2s ease;">
+    <div style="font-size:2.2rem;margin-bottom:10px;">🔐</div>
+    <h3 style="font-size:1.1rem;font-weight:700;color:#0f1f3d;margin:0 0 6px;">Admin Login</h3>
+    <p style="font-size:.82rem;color:#5a6a85;margin:0 0 20px;line-height:1.5;">Enter admin credentials to access the control panel.</p>
+    <input id="adminUser" type="text" placeholder="Username" autocomplete="off" style="width:100%;padding:11px 14px;border:1.5px solid #d0d8e8;border-radius:8px;font-size:.9rem;outline:none;box-sizing:border-box;font-family:'IBM Plex Sans',sans-serif;margin-bottom:10px;">
+    <input id="adminPass" type="password" placeholder="••••••••" autocomplete="off" onkeydown="if(event.key==='Enter')doAdminLogin()" style="width:100%;padding:11px 14px;border:1.5px solid #d0d8e8;border-radius:8px;font-size:.9rem;outline:none;box-sizing:border-box;font-family:'IBM Plex Sans',sans-serif;">
+    <div id="adminLoginErr" style="color:#c8102e;font-size:.78rem;min-height:20px;margin:8px 0;font-weight:600;text-align:left;"></div>
+    <div style="display:flex;gap:10px;">
+      <button onclick="hideAdminLogin()" style="flex:1;padding:11px;background:#f0f4fa;border:1.5px solid #d0d8e8;border-radius:8px;font-size:.87rem;font-weight:600;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;">Cancel</button>
+      <button onclick="doAdminLogin()" style="flex:1;padding:11px;background:#0f1f3d;color:#fff;border:none;border-radius:8px;font-size:.87rem;font-weight:700;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;">Login →</button>
+    </div>
+  </div>
+</div>
+
+<div id='examWrap'>
+<header>
+  <div class="header-inner">
+    <div class="header-left">
+      <h1>Oracle Integration Cloud 2025 Application Integration Professional</h1>
+      <p>Exam 1Z0-1042-25 &nbsp;·&nbsp; 72 Questions &nbsp;·&nbsp; Passing Score: 70%</p>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <button onclick="confirmLogout()" style="background:rgba(200,16,46,.25);color:#ff8a96;border:1px solid rgba(200,16,46,.4);border-radius:6px;padding:6px 16px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;letter-spacing:.04em;">⏻ Logout</button>
+      <button class="unanswered-pill" onclick="jumpToNext()" id="jumpBtn" style="display:none">↓ Next Unanswered</button>
+      <span id="welcomeUser" style="color:#a0d4ff;font-size:.8rem;font-family:'IBM Plex Sans',sans-serif;"></span>
+      <span class="header-badge">EXAM PREP</span>
+    </div>
+  </div>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressBar"></div></div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('exam',this)">📝 Exam</button>
+    <button class="tab-btn" onclick="showTab('scoreboard',this)">📊 Scoreboard</button>
+  </div>
+</header>
+
+<div class="main">
+  <div class="panel active" id="panel-exam">
+    <div class="stats-bar">
+      <div class="stat-card"><div class="label">Answered</div><div class="value" id="statAnswered">0 / 72</div></div>
+      <div class="stat-card"><div class="label">Correct</div><div class="value green" id="statCorrect">—</div></div>
+      <div class="stat-card"><div class="label">Wrong</div><div class="value red" id="statWrong">—</div></div>
+      <div class="stat-card"><div class="label">Score</div><div class="value gold" id="statScore">—</div></div>
+    </div>
+    <div class="result-banner" id="resultBanner">
+      <h2 id="resultTitle"></h2>
+      <p id="resultSub"></p>
+      <button class="btn btn-gold" id="downloadBtn" onclick="downloadResult()" style="display:none;margin-top:16px;">⬇ Download My Result</button>
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary" onclick="confirmSubmit()">✔ Submit Exam</button>
+      <button class="btn btn-danger" onclick="confirmClear()">↺ Clear &amp; Retake</button>
+      <div style="flex:1"></div>
+      <div class="filter-bar" style="margin:0">
+        <button class="filter-btn active" onclick="filterCards('all',this)">All</button>
+        <button class="filter-btn" onclick="filterCards('unanswered',this)">Unanswered</button>
+        <button class="filter-btn" onclick="filterCards('correct',this)" id="filterCorrect" style="display:none">Correct</button>
+        <button class="filter-btn" onclick="filterCards('wrong',this)" id="filterWrong" style="display:none">Wrong</button>
+      </div>
+    </div>
+    <div id="examList"></div>
+  </div>
+  <div class="panel" id="panel-scoreboard">
+    <div class="scoreboard-wrap">
+      <div class="scoreboard-head"><h2>📊 Exam Attempt History</h2><span id="sbCount">0 attempts</span></div>
+      <div id="sbBody"></div>
+    </div>
+  </div>
+</div>
+</div><!-- /examWrap -->
+
+<!-- Modals -->
+<div class="modal-overlay" id="modalSubmit">
+  <div class="modal-box"><div class="modal-icon">📋</div><h3>Submit Exam?</h3><p id="modalSubmitMsg">Are you sure you want to submit?</p>
+    <div class="modal-btns"><button class="btn btn-outline" onclick="closeModal('modalSubmit')">Cancel</button><button class="btn btn-primary" onclick="submitExam()">Submit Now</button></div>
+  </div>
+</div>
+<div class="modal-overlay" id="modalClear">
+  <div class="modal-box"><div class="modal-icon">↺</div><h3>Reset &amp; Retake?</h3><p>This will clear all your answers and reset the exam. Your current attempt will be saved to the Scoreboard first.</p>
+    <div class="modal-btns"><button class="btn btn-outline" onclick="closeModal('modalClear')">Cancel</button><button class="btn btn-danger" onclick="clearExam()">Yes, Reset</button></div>
+  </div>
+</div>
+<div id="logoutModal" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.6);align-items:center;justify-content:center;backdrop-filter:blur(3px);">
+  <div style="background:#fff;border-radius:12px;padding:36px;max-width:380px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.35);animation:popIn .2s ease;">
+    <div style="font-size:2.5rem;margin-bottom:12px;">⏻</div>
+    <h3 style="font-size:1.1rem;font-weight:700;color:#0f1f3d;margin:0 0 8px;">Logout?</h3>
+    <p style="font-size:.87rem;color:#5a6a85;margin:0 0 22px;line-height:1.55;"><strong>Your answers and progress will be lost</strong> if you haven't submitted yet.</p>
+    <div style="display:flex;gap:10px;">
+      <button onclick="document.getElementById('logoutModal').style.display='none'" style="flex:1;padding:11px;background:#f0f4fa;border:1.5px solid #d0d8e8;border-radius:8px;font-size:.87rem;font-weight:600;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;">Cancel</button>
+      <button onclick="doLogout()" style="flex:1;padding:11px;background:#c8102e;color:#fff;border:none;border-radius:8px;font-size:.87rem;font-weight:700;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;">Yes, Logout</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── USERS ─────────────────────────────────────────────────────────────────────
+const USERS = {
+  "althea.abadilla@accenture.com":        {name:"Abadilla, Althea",              pin:"602276"},
+  "ian.o.abastillas@accenture.com":       {name:"Abastillas, Ian",               pin:"804025"},
+  "jan.m.b.abellana@accenture.com":       {name:"Abellana, Jan Michael",         pin:"016525"},
+  "glevejane.acabal@accenture.com":       {name:"Acabal, Gleve",                 pin:"808631"},
+  "kenneth.orven.agamon@accenture.com":   {name:"Agamon, Kenneth Orven",         pin:"930086"},
+  "jenn.alito@accenture.com":             {name:"Alito, Jenn",                   pin:"975306"},
+  "roblitchelle.aloguin@accenture.com":   {name:"Aloguin, Roblitchelle Lovely",  pin:"875935"},
+  "irene.anoos@accenture.com":            {name:"Anoos, Irene Kate E.",           pin:"230195"},
+  "zeno.anunciado@accenture.com":         {name:"Anunciado, Zeno",               pin:"265286"},
+  "hannah.mae.arias@accenture.com":       {name:"Arias, Hannah Mae",             pin:"868570"},
+  "cristal.atanoza@accenture.com":        {name:"Atanoza, Cristal",              pin:"890437"},
+  "rolyn.babe@accenture.com":             {name:"Babe, Rolyn",                   pin:"179278"},
+  "clivebray.s.bacho@accenture.com":      {name:"Bacho, Clivebray S.",           pin:"220212"},
+  "richard.m.balane.jr@accenture.com":    {name:"Balane, Richard",               pin:"633229"},
+  "marjun.boctulan@accenture.com":        {name:"Boctulan, Marjun",              pin:"661713"},
+  "vir.cabahug@accenture.com":            {name:"Cabahug, Vir Nichael",          pin:"237451"},
+  "noli.cablao@accenture.com":            {name:"Cablao, Noli",                  pin:"929217"},
+  "shaira.ann.c.castro@accenture.com":    {name:"Castro, Shaira Ann C.",         pin:"965687"},
+  "manuel.c.chua.iii@accenture.com":      {name:"Chua III, Manuel C.",           pin:"203229"},
+  "john.damalerio@accenture.com":         {name:"Damalerio, John Benedict",      pin:"303983"},
+  "joecil.de.gracia@accenture.com":       {name:"De Gracia, Joecil",             pin:"836394"},
+  "jason.b.dela.cerna@accenture.com":     {name:"Dela Cerna, Jason B.",          pin:"225258"},
+  "frenzy.domingo@accenture.com":         {name:"Domingo, Frenzy Joy A.",        pin:"399259"},
+  "rey.a.dumalagan@accenture.com":        {name:"Dumalagan, Rey Allen",          pin:"329500"},
+  "heljhum.enad@accenture.com":           {name:"Enad, Heljhum",                 pin:"298689"},
+  "jigger.escala@accenture.com":          {name:"Escala, Jigger",                pin:"167403"},
+  "matthew.o.fajardo@accenture.com":      {name:"Fajardo, Matt",                 pin:"959807"},
+  "raymond.rox.garcia@accenture.com":     {name:"Garcia, Raymond Rox",           pin:"652614"},
+  "ronalyn.m.gaudicos@accenture.com":     {name:"Gaudicos, Ronalyn M.",          pin:"498251"},
+  "joshua.gida@accenture.com":            {name:"Gida, Joshua",                  pin:"982661"},
+  "juffy.gimang@accenture.com":           {name:"Gimang, Juffy",                 pin:"820696"},
+  "eddie.gomez@accenture.com":            {name:"Gomez, Eddie Mar",              pin:"914668"},
+  "rasshel.gonzaga@accenture.com":        {name:"Gonzaga, Rasshel",              pin:"757503"},
+  "chris.gonzales@accenture.com":         {name:"Gonzales, Chris Carloff",       pin:"098830"},
+  "par.boris.m.gonzales@accenture.com":   {name:"Gonzales, Par Boris Mikhael",   pin:"890407"},
+  "honeydee.hapson@accenture.com":        {name:"Hapson, Honeydee",              pin:"714528"},
+  "renato.jr@accenture.com":              {name:"Jr., Renato",                   pin:"727413"},
+  "hannah.mhae.laquinon@accenture.com":   {name:"Laquinon, Hannah Mhae",        pin:"425723"},
+  "maryjoy.lasutan@accenture.com":        {name:"Lasutan, Maryjoy",              pin:"713289"},
+  "glovymae.liza@accenture.com":          {name:"Liza, Glovymae Joyce",          pin:"417877"},
+  "arey.mahusay@accenture.com":           {name:"Mahusay, Arey",                 pin:"964512"},
+  "wilrie.b.mariquit@accenture.com":      {name:"Mariquit, Wilrie B.",           pin:"352206"},
+  "cherry.molina@accenture.com":          {name:"Molina, Cherry Ann A.",         pin:"757914"},
+  "janice.montero@accenture.com":         {name:"Montero, Janice",               pin:"298026"},
+  "ramela.moreno@accenture.com":          {name:"Moreno, Ramela",                pin:"675292"},
+  "jessica.nava@accenture.com":           {name:"Nava, Jessica",                 pin:"219547"},
+  "rollaine.obejero@accenture.com":       {name:"Obejero, Rollaine Kaye",        pin:"336247"},
+  "kenneth.olayer@accenture.com":         {name:"Olayer, Kenneth",               pin:"810444"},
+  "gillan.olimpo@accenture.com":          {name:"Olimpo, Gillan",                pin:"769043"},
+  "jhon.daniel.olmilla@accenture.com":    {name:"Olmilla, Jhon Daniel",          pin:"821442"},
+  "cecil.oltiano@accenture.com":          {name:"Oltiano, Cecil",                pin:"294850"},
+  "jbelle.a.pangilinan@accenture.com":    {name:"Pangilinan, Jbelle",            pin:"989981"},
+  "ferlyn.pologon@accenture.com":         {name:"Pologon, Ferlyn",               pin:"162167"},
+  "john.m.quiachon@accenture.com":        {name:"Quiachon, John Michael",        pin:"424039"},
+  "john.eudz.m.rebuyon@accenture.com":    {name:"Rebuyon, John Eudz Mari",       pin:"274499"},
+  "kim.charnova.revil@accenture.com":     {name:"Revil, Kim Charnova",           pin:"571295"},
+  "joan.therize.reyes@accenture.com":     {name:"Reyes, Joan Therize",           pin:"570558"},
+  "guillermo.rollan.ii@accenture.com":    {name:"Rollan II, Guillermo",          pin:"190156"},
+  "joan.rulida@accenture.com":            {name:"Rulida, Joan",                  pin:"218256"},
+  "jake.sala@accenture.com":              {name:"Sala, Jake",                    pin:"455927"},
+  "sole.alen.c.saniel@accenture.com":     {name:"Saniel, Sole Alen C.",          pin:"236237"},
+  "eunica.solitario@accenture.com":       {name:"Solitario, Eunica Julianne",    pin:"652089"},
+  "x.suficiencia@accenture.com":          {name:"Suficiencia, Xannetz",          pin:"049902"},
+  "kerwin.tanggaan@accenture.com":        {name:"Tangga, Kerwin",                pin:"298831"},
+  "eshkariel.tapiador@accenture.com":     {name:"Tapiador, Eshkariel",           pin:"188298"},
+  "sean.tiu@accenture.com":               {name:"Tiu, Sean Luke",                pin:"735770"},
+  "charmaine.torres@accenture.com":       {name:"Torres, Charmaine V.",          pin:"596504"},
+  "thea.tuazon@accenture.com":            {name:"Tuazon, Thea",                  pin:"876960"},
+  "nathaniel.vinluan@accenture.com":      {name:"Vinluan, Nathaniel",            pin:"826911"},
+  "benjamen.zapanta@accenture.com":       {name:"Zapanta Jr., Benjamen",         pin:"563917"},
+  "jinnyrose.olajay@accenture.com":       {name:"Olajay, Jinnyrose",             pin:"949540"},
+  "emilou.caparida@accenture.com":        {name:"Caparida, Emilou",              pin:"172017"},
+  "shinnara.alforque@accenture.com":      {name:"Alforque, Shinnara",            pin:"697496"},
+  "jan.traces@accenture.com":             {name:"Traces, Jan",                   pin:"409412"},
+  "christian.marcial@accenture.com":      {name:"Marcial, Christian",            pin:"320071"},
+  "carl.bryan.ampit@accenture.com":       {name:"Ampit, Bryan",                  pin:"624980"},
+  "marymae.erasga@accenture.com":         {name:"Erasga, Marymae",               pin:"791865"},
+  "james.arong@accenture.com":            {name:"Arong, James Kyle",             pin:"931693"},
+  "cris.gievid.m.narca@accenture.com":    {name:"Narca, Cris Gievid",            pin:"152672"},
+  "mark.nunez@accenture.com":             {name:"Nunez, Mark Bernard",           pin:"291043"}
+};
+
+const ADMIN_CREDENTIALS = {user:'arey.mahusay', pass:'0607251991'};
+
+const QUESTIONS = [
+  {n:1,q:"Which statement regarding the management of tracing level options for integrations is invalid?",opts:["If you select to globally disable tracing for all integrations, you can still enable tracing at the individual integration level.","You can change the tracing level on an active integration without having to deactivate and reactivate it.","Changing tracing to the audit or debug level impacts performance.","The tracing level has no impact on billing."],ans:["A"]},
+  {n:2,q:"Oracle Integration (OIC) is available in more than one edition. Which two Enterprise Edition capabilities are also available in Standard Edition?",opts:["Enterprise Application adapters (such as EBS, JDE, SAP, and Siebel)","B2B Trading Partner Agreements","Process Automation","File Server","Visual Builder"],ans:["D","E"]},
+  {n:3,q:"What is the primary function of 'Recipes' in Oracle Integration (OIC)?",opts:["To create and manage custom APIs for integrations","To automate the deployment of integration projects to production","To generate real-time analytics and performance reports","To provide prebuilt integration templates for common use cases"],ans:["D"]},
+  {n:4,q:"You are designing a new integration in Oracle Integration (OIC) that needs to expose a RESTful interface for client applications. Which is a valid consideration when choosing request and response options using the REST Adapter Endpoint Configuration Wizard?",opts:["Although you can define both query and template parameters, only template parameters are available for mapping in the mapper because query parameters are optional.","File attachments can be accepted as a request option for the Trigger interface, but you cannot include attachments as a response to the client.","Both standard and custom HTTP headers can be defined for both the request and the response.","If you select a PUT or POST action (HTTP method), you must define a JSON response payload format."],ans:["C"]},
+  {n:5,q:"You are tasked with creating a new integration in Oracle Integration (OIC) that will be exposed to clients as a SOAP web service interface. This integration will also invoke an external SOAP web service. Which statement is valid regarding the creation of these SOAP adapter connections?",opts:["The WSDL URL property value can be defined by uploading a file for either the inbound Trigger connection or the outbound Invoke connection configuration.","You must explicitly specify the target server TLS version for the external web service outbound Invoke connection configuration.","The SAML and OAuth security policies are available options for creating the outbound Invoke connection.","The Trigger connection and Invoke connection must use different authentication methods."],ans:["A"]},
+  {n:6,q:"When creating integrations in Oracle Integration (OIC), a visual mapper enables you to map element nodes between applications. Which statement is NOT true about the OIC Data Mapper functionality?",opts:["In the Designer view, the Sources section contains data structures of all available data objects, which includes integration metadata, tracking variables, global variables, and integration property values.","The data structure for the target service is always displayed on the right side in the Designer view.","All transformation mappings use eXtensible Stylesheet Language (XSL).","All Source and Target data objects are represented internally as JSON structures."],ans:["D"]},
+  {n:7,q:"The Oracle Integration (OIC) integration design editor provides a data mapper UI tool that is available for MAP actions. Which two statements are TRUE regarding the use of the Mapper tools?",opts:["You cannot drag and drop an XSLT flow control statement directly to a target node element.","You can drag and drop a source data element to multiple target node elements.","You cannot drag and drop an XPath function activity directly to a target node element.","You cannot drag and drop a source data element to a target node element that is already mapped."],ans:["B","D"]},
+  {n:8,q:"As an integration developer, you are implementing an integration in Oracle Integration (OIC) to transform a payload with multiple orders using the For each action. How do you configure the For each action to support this scenario?",opts:["Select the Sequential Processing option and set the number of threads to the number of orders.","Select the Repeating Element field and map the source element that contains the orders.","Select the Group By option separating the orders by their order number.","Select the Parallel Processing option and set the number of threads to the number of orders."],ans:["B"]},
+  {n:9,q:"What is the purpose of adding and configuring a Wait action in a Scheduled pattern integration flow?",opts:["It can be configured to loop through elements until a condition is met.","It is used to trigger an error after a specified duration.","It is used to schedule integration runs at specific times.","It is used to suspend processing within the integration flow.","It is used to configure a global variable for delay settings."],ans:["D"]},
+  {n:10,q:"You are implementing a synchronous Oracle Integration (OIC) integration flow that processes records within a While loop action. You want to delay processing the next record for a certain period of time. Which is a valid consideration when using the Wait action in this scenario?",opts:["The total time for the integration flow cannot exceed 300 seconds.","The Wait action can be positioned only as the last action within a While loop.","The maximum time for a Wait action cannot exceed 5 seconds within a While loop.","The Wait action cannot be used in asynchronous flow."],ans:["A"]},
+  {n:11,q:"You have been tasked with reviewing the current Oracle Integration (OIC) integrations used in your organization that exist in packages, to determine which packages can be automatically converted into projects. Which statement is NOT valid concerning the conversion of an OIC package into an OIC project?",opts:["You can convert a package that includes custom JavaScript libraries.","You can convert accelerator or recipe packages.","You can convert a package that includes schedule pattern integrations.","You can specify role-based access control to resources in the project during the conversion."],ans:["B"]},
+  {n:12,q:"In an Oracle Integration (OIC) project, you are asked to leverage a custom JavaScript library function to be used within an Application pattern integration flow. Which set of steps should you follow to handle this requirement?",opts:["Use the Function Call action within the integration flow to reference the external URI that is hosting the JavaScript library function.","Copy and paste the JavaScript function code into a new JavaScript stage within the integration flow, then map the inbound and outbound data elements in the corresponding Map action.","Import the JavaScript library file to the project, then use the JavaScript action within the integration flow to reference the library function.","Import the JavaScript library file into your OIC instance's database schema, then use a Local Invoke action to call the function."],ans:["C"]},
+  {n:13,q:"Your team is using a JavaScript library function within an Oracle Integration (OIC) integration flow. Because of business requirements, one of the functions needs to be uploaded with additional code. Which consideration regarding JavaScript library functions is NOT valid?",opts:["JavaScript functions are not allowed to make outbound calls to external services.","Active integrations using a function that has been updated must be reactivated.","The JavaScript action has a timeout threshold of 60 seconds.","Network, disk, or thread access is not supported from within a JavaScript function."],ans:["C"]},
+  {n:14,q:"You install an accelerator project from the Integration Store. After extending (customizing) the project, a newer version becomes available in the Integration Store. What happens when you attempt to install the newer version?",opts:["You are prompted to export and save your customizations since they will not be included in the newly installed version.","You are prompted to automatically merge your customizations from the previous version into the newer version of the project.","A message is displayed indicating that the project already exists in your service instance and must be installed as a new project.","The newer version overwrites the existing project without any prompts."],ans:["B"]},
+  {n:15,q:"Which statement is NOT valid with regard to exporting an Oracle Integration (OIC) project?",opts:["You must deactivate the project before it can be exported.","You cannot import a project into an OIC instance that already includes a matching project deployment.","When you import a project, you can specify that anyone can edit, view, and monitor the project.","A project deployment is required before you can export a project."],ans:["A"]},
+  {n:16,q:"You have an Oracle Integration (OIC) synchronous integration flow where several clients are reporting timeouts. Which is a legitimate strategy to mitigate this issue?",opts:["Change the design implementation strategy to an asynchronous flow that provides a separate notification to clients when the processing is complete.","Increase the blocking timeout within the OIC integration settings to allow for extended time.","Change the implementation logic to invoke multiple fine-grained external API calls within a single loop.","Modify the integration flow to include retry logic for external system invocations to handle delays and ensure all requests succeed."],ans:["A"]},
+  {n:17,q:"You have built an integration that includes an Oracle ERP Cloud Adapter connection. A new requirement is added to include newly added custom objects and custom attributes as part of the mappings. Which is the most efficient way to handle this requirement?",opts:["Click the Refresh Metadata option for the ERP Cloud connection, navigate back to your integration, then re-edit the Map action to include the new custom objects and attributes.","Click the Refresh Metadata option for the ERP Cloud connection, navigate back to your integration, delete the Invoke action to ERP Cloud, re-create it, then edit the Map action.","Create a new ERP Cloud connection, update the integration to use the new connection, then re-edit the Map action to include the new custom objects and attributes.","Click the Refresh Metadata option for the ERP Cloud connection, navigate back to your integration, then delete and re-create the Map action to include the new custom objects and attributes."],ans:["A"]},
+  {n:18,q:"Which of the following is NOT a capability of the Oracle Integration (OIC) REST Adapter when configured to consume external REST APIs?",opts:["Supports WebSocket connections for real-time communication","Supports asynchronous REST API invocations with callback URLs","Supports JSON, XML, binary, and URL-form-encoded payloads","Consumes REST APIs protected using OAuth Client Credentials"],ans:["A"]},
+  {n:19,q:"You are configuring an Oracle ERP Cloud Adapter connection invoke action within an Oracle Integration Cloud (OIC) integration and have selected to browse by Business (REST) resources. Once you have selected the parent resource, how many child resources can you select?",opts:["10","5","7","Unlimited"],ans:["A"]},
+  {n:20,q:"You need to create a schedule pattern integration that is based on an existing application pattern integration. How can this be achieved while using the same display name as the original integration?",opts:["You can create the new integration as a different major version of the existing one.","You can create the new integration from scratch by using the same display name and specifying a different identifier.","You can use the Convert tool to change from the application pattern to the schedule pattern.","You can clone the existing integration and specify it to use the schedule pattern instead of the application pattern."],ans:["A"]},
+  {n:21,q:"Which Oracle Integration (OIC) XPath function can be used to retrieve data from an OIC Lookup within the Mapper?",opts:["getLookup","get-value-from-lookup","get-content-as-string","lookupValue"],ans:["D"]},
+  {n:22,q:"Which statement is valid regarding Oracle Integration (OIC) Lookup?",opts:["Lookup values must include two or more domains associated with SaaS application adapters.","An OIC XPath function must be used to retrieve data from Lookups in the Map Editor.","Lookup values are retrieved from a backend database at runtime.","You cannot clone an existing Lookup if it is being currently referenced in one or more active OIC integrations."],ans:["B"]},
+  {n:23,q:"In Oracle Integration (OIC), you are working on an integration that uses a REST trigger, which will require authentication. You need to ensure that authorized clients can access the integration. Which approach should you use?",opts:["Set up an IP whitelist in the OIC instance, allowing only specific IP addresses to access the integration.","Configure the REST Adapter to use the Basic Authentication or OAuth 2.0 security policy.","Enable Cross-Origin Resource Sharing (CORS) and set an API key in the REST Adapter configuration.","Encrypt the payload using a custom encryption algorithm and provide the decryption key to authorized clients."],ans:["B"]},
+  {n:24,q:"In addition to REST trigger connection-based integrations, what other type of integration can you run from the Test page in Oracle Integration?",opts:["Event pattern integrations","Schedule pattern integrations","SOAP trigger connection-based integrations","File trigger connection-based integrations"],ans:["B"]},
+  {n:25,q:"In Oracle Integration (OIC) integration, what is the purpose of the 'Business Identifiers' feature in the context of Observability?",opts:["To identify specific users accessing the integration","To track payload fields in messages during runtime","To group related integration instances for easier management","To monitor the network performance of integrations"],ans:["B"]},
+  {n:26,q:"You are responsible for monitoring various aspects of your company's Oracle Integration (OIC) environment and are exploring the capabilities of the Observability dashboard. Which of these are NOT available on the default dashboard?",opts:["The status of integration instances classified by their tracing level","The percentage of connectivity agents that are unavailable","The calendar of future scheduled integration runs","A graph displaying the connections with the most errors"],ans:["C"]},
+  {n:27,q:"Where in the Observability pages can you view aggregated instance metrics for an integration, such as the total counts and the minimum, maximum, average, and standard deviation execution times for a selected time period?",opts:["The Statistics icon of the integration in the Overview section of the Dashboards page.","The View Statistics icon of the integration on the Instance page.","The Statistics icon in the integration's activity stream in the Errors page.","The View Statistics icon of the integration on the Monitor Integrations page."],ans:["D"]},
+  {n:28,q:"Which statement is FALSE concerning schedule parameters used in Schedule pattern integrations?",opts:["Schedule parameter values can be edited manually when starting a schedule.","Schedule parameter values can be overridden before submitting an ad hoc request.","Schedule parameters are always visible as an additional data source in the Sources section of the Map Editor and expression editors throughout the entire integration.","Updates to schedule parameter values made dynamically in an Assign action will not persist on to the next instance run of the integration."],ans:["D"]},
+  {n:29,q:"In Oracle Integration (OIC), you can notify users by email with hourly or daily reports about system status as well as service alerts. Which is NOT an alert type that can be configured in these notification emails?",opts:["One or more connectivity agents are unavailable.","Failed instances exceeding a specified percentage.","The email quota has exceeded the threshold.","Certificates that are set to expire within seven days."],ans:["B"]},
+  {n:30,q:"You have a use case requiring the design of a synchronous Oracle Integration (OIC) integration flow that returns a custom business fault message to the client if processing fails. Which implementation strategy best satisfies this requirement?",opts:["Implement the Global fault handler to catch the runtime fault, and then use the Re-throw Fault action to send the fault to the client.","Implement a Scope fault handler to catch the runtime fault, and then use the Fault Return action providing mapped data for the custom fault.","Implement a Scope fault handler to catch the runtime fault, and then allow the Global fault handler to automatically send the runtime fault to the Error Hospital.","Create a custom Scope fault handler to catch the runtime fault, and then use the Re-throw Fault action to send the fault to the Error Hospital."],ans:["B"]},
+  {n:31,q:"You are working on an integration within Oracle Integration (OIC) that includes several connections to external systems. You need to implement fault handling to ensure that any unexpected errors are caught and handled correctly. Which approach can you use?",opts:["Create a separate fault handling integration and configure your integration to invoke it when necessary using the Rethrow Fault action.","Use the Throw New Fault action within your integration flow to send caught faults to the OIC Error Hospital.","Open the Global Fault Handler page on the integration canvas and add actions to handle faults.","Add a Try-Catch action to your integration flow and configure it to catch and handle faults."],ans:["C"]},
+  {n:32,q:"A Logger action enables you to log messages at runtime for diagnostic purposes. Which is NOT a valid statement concerning Logger action capabilities?",opts:["You can create a log that is a static message or a variable-populated message.","You can select to disable logging when the integration's tracing level is set to Production.","It can be configured to also send log messages to an external logging service.","It will automatically log messages to the activity stream and diagnostic logs."],ans:["C"]},
+  {n:33,q:"You will be creating and configuring a Connection resource using an Oracle Integration (OIC) File Adapter. Which set of operations are supported in the Invoke role when leveraging access via a Connectivity Agent?",opts:["read, write, list","read, write, list, move","read, write, list, move, download, delete","read, write, list, move, download","read, write"],ans:["C"]},
+  {n:34,q:"Which statement accurately describes the role of Oracle Integration (OIC) Connectivity Agents?",opts:["OIC Connectivity Agents provide connectivity to applications located in private networks, enabling secure data transfer between cloud and on-premises systems.","OIC Connectivity Agents manage the orchestration of integration flows across multiple cloud services.","OIC Connectivity Agents facilitate the creation of custom APIs for integration purposes.","OIC Connectivity Agents are responsible for transforming data formats between different applications."],ans:["A"]},
+  {n:35,q:"You are designing an Oracle Integration (OIC) integration that processes files in a shared file system located within your on-premises data center using Stage File Action operations with the Connectivity Agent. Which statement is NOT valid concerning file operation capabilities?",opts:["Files uploaded through the Connectivity Agent are not available with the Zip File operation.","Files uploaded through the Connectivity Agent can only be read with a file reference, with regard to both the Read Entire File and Read File in Segment operations.","Files uploaded through the Connectivity Agent cannot be unzipped using a file reference.","Files uploaded through the Connectivity Agent are not available with the List File operation."],ans:["A"]},
+  {n:36,q:"When creating a new Oracle Integration (OIC) Connection resource, which task is NOT required in order to transition a new Connection resource from the Draft to a Configured state?",opts:["Configure the Security properties.","Execute a successful test of the Connection.","Specify the corresponding Lookup.","Specify the Connection role.","Configure the Connection properties.","Specify an adapter type."],ans:["C"]},
+  {n:37,q:"Which statement is valid regarding Connection resources in Oracle Integration (OIC)?",opts:["All Connection configurations require the association of an active OIC Connectivity Agent group.","Connection resources can be configured with either a Trigger role or an Invoker role, but not both.","Connection resources associated with an Oracle SaaS adapter type require a Lookup configuration.","All Connection resources must be associated with an adapter type, regardless of role configuration."],ans:["D"]},
+  {n:38,q:"Which Oracle Integration (OIC) adapter can be used to create a configured connection within an integration allowing you to send a file to the embedded File Server associated within the same OIC environment?",opts:["File Adapter","REST Adapter","Local Adapter","FTP Adapter"],ans:["D"]},
+  {n:39,q:"In Oracle Integration (OIC), which statement accurately describes the use of business identifiers in integrations?",opts:["They are used to track and monitor specific fields in messages, helping to identify and troubleshoot issues during the integration process.","Business identifiers are primarily for managing user roles and permissions within integrations.","Business identifiers are used exclusively for defining data transformations between applications.","They are utilized to encrypt sensitive data being transferred between applications."],ans:["A"]},
+  {n:40,q:"In the context of Oracle Integration (OIC), what is the primary purpose of Connection resources?",opts:["To enable automated scaling of integration flows based on runtime performance","To transform data between source and target applications during runtime","To define and configure the endpoints for applications that an integration interacts with","To define the schedule and frequency of integrations"],ans:["C"]},
+  {n:41,q:"You have designed and implemented an integration flow that uses a REST Adapter trigger connection configured with multiple operations. Which statement is valid concerning the Test page?",opts:["The Test page will display only the initial operation that was configured. You can only execute that operation.","The Test page is not available for integrations using multiple operations. You will need to use a third-party test client such as Postman.","The Test page will display only GET method operations. You can execute only those operations.","The Test page will display a list of all configured operations. You can execute any operation."],ans:["D"]},
+  {n:42,q:"Which three statements are TRUE with regard to SOAP and the advantages it provides for web services?",opts:["SOAP typically leverages XML-based payloads to communicate between two client machines across any modern network.","SOAP is commonly used for lightweight mobile applications due to its simplicity.","SOAP clients can easily hold stateful references to remote server-side SOAP objects.","SOAP inherently eliminates the need for error handling, as it guarantees message delivery.","SOAP is platform independent and programming language independent.","SOAP provides flexibility for message formatting, allowing for loose coupling between a client and a server.","SOAP over HTTP is typically not blocked by firewalls and proxy servers."],ans:["A","C","G"]},
+  {n:43,q:"Which of the following best describes the concept of HATEOAS (Hypermedia as the Engine of Application State) in RESTful web services?",opts:["A client application receives resource representations that include hyperlinks to related resources, enabling navigation of the API dynamically based on the server's responses.","A client application receives a base URI from the server and manually constructs all subsequent resource URIs by concatenating strings.","A client application preloads a predefined set of resources and transitions to reduce server interactions.","A client application uses a predefined list of hardcoded URIs to access API endpoints, bypassing server-provided navigation links."],ans:["A"]},
+  {n:44,q:"As an Oracle Integration (OIC) integration designer, you are tasked with implementing a schedule pattern integration between two enterprise applications. The client requires the integration be run every week at 3:00 PM to synchronize data. Which expression satisfies this requirement?",opts:['"FREQ=DAILY;BYDAY=SA;BYHOUR=15;"','"FREQ=DAILY;BYDAY=MO-FR;BYHOUR=15;"','"FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR;BYHOUR=15;"','"FREQ=WEEKLY;BYDAY=MO-FR;BYHOUR=15;"'],ans:["C"]},
+  {n:45,q:"When defining the frequency for schedule pattern integration runs, you can choose to create a simple or more advanced schedule based on an expression language. Which expression syntax must be used?",opts:["Groovy","iCal","cron","CEL"],ans:["B"]},
+  {n:46,q:"You are automating a data exchange process between two systems. System A generates daily CSV files from a secure FTP server. Which set of steps should you follow to implement the file handling options?",opts:["Use the FTP Adapter to read the files from the secure FTP server directory to trigger the integration, process the file by invoking System B, and move them to the archive or error directory based on the processing outcome. Configure the Notification action to send emails.","Use the FTP Adapter to read the files from the secure FTP server directory to trigger the integration, process the file by using Stage File Action operation to System B, and use the FTP Adapter to move them to the archive or error directory. Use the Notification action to send emails.","Configure a Scheduled Integration in OIC to periodically check the secure FTP server directory using the FTP Adapter, process the files by invoking System B, and move them to the archive or error directory. Use the Notification action to send emails.","Use the FTP Adapter to read the files from the secure FTP server directory to trigger the integration, process the file by using Stage File Action operations to System B, and use the FTP Adapter to move the processed file to the archive directory. Configure error handling to move failed files to the error directory. Use the Notification action to send emails."],ans:["C"]},
+  {n:47,q:"You have a use case that requires processing a large data extract more than 10 MB in size using the Stage File action's Read File in Segments operation. Which three are valid options for getting the file data into your integration flow?",opts:["Retrieve the file by invoking a SOAP web service that returns it as an MTOM attachment.","Retrieve the file by invoking a SOAP web service that returns the base64 encoded data within the SOAP body, then decode the data in the Map Editor.","Send the files as a multipart attachment to an integration designed to use a REST trigger.","Upload the file to the OIC embedded File Server, then use an FTP Adapter Download File operation from the integration.","Retrieve the file by invoking a REST API that supports application/blob as the content type."],ans:["A","C","D"]},
+  {n:48,q:"One of your downstream applications is becoming overwhelmed with too many individual synchronous invocations from your current Oracle Integration (OIC) integration. Which approach is a valid OIC design best practice?",opts:["Throttle the individual synchronous calls by adding a Wait activity prior to each invocation to the application within the loop, then fetch a batch response after the loop.","Use the Append option in the Write File operation of the Stage File action within a loop to create a single batch file to be sent to the application.","Reactivate the integration and use the disable tracing and message tracking option, which will optimize performance for each invocation to the application.","Create a custom batch call function, register the function as a Library in your OIC environment, then use the JavaScript call action to invoke the application."],ans:["B"]},
+  {n:49,q:"You need to create an Oracle Integration (OIC) integration that processes records individually that are contained within a single large file using the Read File in Segments operation. Which is a valid consideration?",opts:["The Read File in Segments operation allows you to process the segments sequentially or in parallel.","You need to explicitly configure a Scope action for this operation if you want to add additional actions during the processing of each segment.","Segment sizes can be configured from 1–200 records.","You must provide the actual filename because file references cannot be processed by the Read File in Segments operation."],ans:["A"]},
+  {n:50,q:"Oracle Integration (OIC) provides the File Server feature, which is an embedded SFTP server. Which statement about the OIC File Server features is NOT valid?",opts:["The OIC File Server is disabled by default in a newly provisioned OIC instance.","Any external SFTP client can access a File Server if an OIC administrator has configured specific folder access permission for that client.","Within an integration flow, a File Server action can be used only to read existing files, whereas an FTP adapter connection is required for file write access.","Access to the OIC File Server Management REST APIs is limited to users that have been granted the Service Administrator role."],ans:["C"]},
+  {n:51,q:"Which statement accurately describes a key difference between SOAP and REST web services?",opts:["SOAP is a protocol that typically uses JSON for message formatting, whereas REST is a protocol that uses XML.","SOAP services are stateless, while REST services maintain state across multiple requests.","SOAP web services cannot be used over HTTP, whereas REST web services can only be used over HTTP.","SOAP requires a strict contract defined by WSDL, while REST typically uses lightweight communications with JSON or XML without a formal contract.","SOAP web services are primarily designed for mobile applications, while REST web services are for desktop applications."],ans:["D"]},
+  {n:52,q:"Which of the following statements accurately describes the purpose of WSDL in web services?",opts:["WSDL defines the network endpoints and message formats for web services.","WSDL is a protocol used for securing web services communication.","WSDL is a language used for creating web services from scratch.","WSDL is used to format the data exchanged between web services and clients."],ans:["A"]},
+  {n:53,q:"Which statement best describes how Observability features enhance the monitoring of integrations at runtime?",opts:["Observability features allow for detailed insight into integration performance, including metrics such as response times, error rates, and throughput.","Observability features provide geographical tracking of integration executions to ensure compliance with data residency laws.","Observability features focus on backing up integration configurations and ensuring data integrity.","Observability features are used to create custom dashboards for monitoring the financial impact of integrations."],ans:["A"]},
+  {n:54,q:"Which statement about Oracle Integration (OIC) is NOT valid?",opts:["An application pattern integration can contain one or more trigger (source) connections for requests sent to OIC and one or more invoke (target) connections for requests sent from OIC.","OIC Lookups are based on a static definition, meaning you create and populate them during design time.","When you open the Map Editor for a request or response message in an integration, the data structures are automatically populated with the information pulled from the trigger and invoke connections.","Using the connectivity agent, you can create hybrid integrations and exchange messages between OIC and applications in private or on-premises networks."],ans:["A"]},
+  {n:55,q:"What is the primary purpose of a 'Connection' resource in Oracle Integration Cloud?",opts:["To specify the source and target applications an integration connects to.","To define the business process flow for an orchestration.","To publish and subscribe to messages within the integration.","To create a package of related integrations and artifacts."],ans:["A"]},
+  {n:56,q:"Which of the following statements about invoking integrations in Oracle Integration (OIC) projects is FALSE?",opts:["A globally available integration (created outside of a project) can be invoked by any other globally available integration, provided they are properly configured and activated.","A project integration that is not configured as available to other projects can only be invoked by a parent integration from within the same project.","A project integration can invoke a child integration within the same project, even if the child integration is not configured as publicly available.","A globally available integration (created outside of a project) can invoke child integrations inside any project without additional configuration."],ans:["D"]},
+  {n:57,q:"Which of these tasks is NOT required to implement a Pub/Sub (publish-subscribe) solution leveraging internal OIC Events?",opts:["Add and configure a Publish event action to the publishing integration flow.","Create a defined Event that must use the JSON format.","Create an Event pattern integration selecting an Event as the trigger.","Define an Event adapter connection."],ans:["D"]},
+  {n:58,q:"When leveraging the Oracle Integration (OIC) Connectivity Agent for high-availability on premises environments, which two are valid considerations?",opts:["You cannot have more than two Agent instances per Agent group. Attempting to include a third Agent instance in the same group during installation results in an error.","Each host on which the agent is installed must be configured on separate subnets and assigned to the same OIC Agent group.","You must have the OIC ServiceDeployer role or higher permissions to download and install the OIC Connectivity Agent.","You should install the connectivity agents on the same host as the target application, and then specify different Agent group identifiers for each Agent during its installation.","Since the File Adapter is not supported in high-availability environments, you must use an Agent Group that uses only one installed active Agent."],ans:["A","C"]},
+  {n:59,q:"Your organization has a number of active integrations in Oracle Integration (OIC). Which statement concerning integration deactivation is NOT valid?",opts:["You can choose to retain the event subscription, where events are resent if the integration is reactivated within six hours.","You will not be able to observe any failed instances occurring after the deactivation request.","All existing history, monitoring, and runtime data will be lost.","Processing of any new messages will be immediately stopped."],ans:["C"]},
+  {n:60,q:"You are developing an integration in Oracle Integration (OIC) to integrate two systems and wish to use an OIC Lookup to transform customer status codes between the two systems. Which set of steps are essential for correctly utilizing the Lookup?",opts:["Define a Lookup table containing the customer status code mappings, and then use the Invoke action to call a web service for the transformation.","Design a custom script to perform the transformation, and then use the Lookup function within a Map action to reference the script and transform the customer status codes.","Create a connection between the two systems, then use a SQL query to access the Lookup table directly, and map the customer status codes.","Create a Lookup table with the mappings of customer status codes, and then use the Lookup function within a Map action to reference the table and perform the transformation."],ans:["D"]},
+  {n:61,q:"Oracle Integration (OIC) integrations can be exported so that later they can be imported into another OIC environment. Which statement is NOT valid regarding the import and export of OIC integrations?",opts:["Exported integrations include all their dependent connection resource information except URLs and credentials.","Integrations must be exported as a project deployment if you want to import them into another OIC environment.","Imported integrations can be reconfigured to use different connection resources by using the OIC REST API.","Imported integrations cannot be immediately activated if their dependent connection resources are not already present in the target OIC environment."],ans:["B"]},
+  {n:62,q:"Which certificate type involves the uploading of a keystore (.jks) file to Oracle Integration (OIC) to facilitate two-way SSL communication with external services?",opts:["X.509","Signing key","PGP","SAML"],ans:["A"]},
+  {n:63,q:"Which two statements are TRUE regarding messaging adapters in Oracle Integration (OIC)?",opts:["Both the Apache Kafka and OCI Streaming adapters support XML, JSON, and Avro message formats.","It is not mandatory to install a Connectivity agent to use the OCI Streaming Adapter for Inbound polling.","The OCI Streaming Adapter does not support consuming messages from a specified consumer group.","The Apache Kafka Adapter can be configured to support Transactions in case of Producer."],ans:["A","D"]},
+  {n:64,q:"You are developing an integration in Oracle Integration (OIC) to automate a business process that requires approval from a manager before continuing. Which integration action should you use in this scenario?",opts:["Switch action","Stage File action","Human task action","Fault return action"],ans:["C"]},
+  {n:65,q:"Which operation is NOT supported by an Oracle Integration (OIC) Connection resource configured with the FTP Adapter?",opts:["Read File in Segments","List Files","Delete File","Write File","Read File"],ans:["A"]},
+  {n:66,q:"You are configuring a new Oracle Integration (OIC) REST Adapter trigger connection. The OIC instance is provisioned in a private subnet, and access to it is restricted. You must allow client applications running on external networks to invoke this REST Adapter connection. Which option should you use?",opts:["Configure a Connectivity agent.","Configure the REST Adapter trigger connection to be accessed through the OIC Connectivity Agent.","Configure the OIC instance with a public endpoint and use an OAuth 2.0 security policy.","Configure the REST Adapter trigger connection with Mutual TLS (mTLS)."],ans:["C"]},
+  {n:67,q:"Which two actions can you perform using the Oracle Integration (OIC) Connectivity Agent command-line interface (CLI)?",opts:["Restart the OIC Connectivity Agent service.","Regenerate an OIC Connectivity Agent configuration key.","Check the status of an OIC Connectivity Agent.","Change the OIC Connectivity Agent group assignment.","Update the OIC instance endpoint associated with an agent."],ans:["A","C"]},
+  {n:68,q:"GlobalTech Corporation uses Oracle Integration (OIC) to synchronize data. They wish to convert a schedule pattern integration to an application pattern integration. With regard to this type of conversion, which statement is FALSE?",opts:["During conversion, you must choose an existing REST Adapter trigger connection resource.","You cannot convert a scheduled integration to a REST Adapter-triggered integration with multiple verbs.","After conversion, existing scheduled parameters will be automatically converted to integration properties.","You cannot convert a scheduled integration with assignments that have the fault data type."],ans:["C"]},
+  {n:69,q:"You are configuring an Oracle ERP Cloud adapter connection invoke action within an Oracle Integration Cloud (OIC) integration and have selected to browse by Business (REST) resources. Once you have selected the parent resource, how many child resources can you select?",opts:["10","7","5","Unlimited"],ans:["A"]},
+  {n:70,q:"The Oracle Integration (OIC) Autonomous Transaction Processing (ATP) and Autonomous Data Warehouse (ADW) adapters support bulk load operations natively. Which statement is valid?",opts:["The Bulk Data load operation also requires selecting Multiple Insert statements.","After the Bulk Data load operation is complete, the file can be deleted from OCI Object storage.","The Bulk Data load operation creates a bucket dynamically in OCI Object Storage to store the file if not already created.","The Bulk Data load operation supports only files that are comma delimited."],ans:["B"]},
+  {n:71,q:"What is the maximum number of scheduled parameters that can be created and used in a Schedule pattern integration flow?",opts:["10","5","No limit","3"],ans:["B"]},
+  {n:72,q:"CSV-formatted data has been extracted from Oracle ERP Cloud by invoking a web service using the SOAP Adapter, and the data extract has been returned as an MTOM attachment. You now need to send this CSV file to an external REST API that supports accepting this content as a Base64-encoded string. Which is a valid solution offering the best performance?",opts:["Use the REST adapter configuration wizard to define the structure of the CSV when configuring the invoke connection, then map the MTOM attachment directly.","Create an NXSD in Oracle JDeveloper to define the schema of the CSV and use it to map the transformed data to the REST adapter invoke map action.","Create and register a JavaScript function to convert the contents, invoke it using the JavaScript call action, then map the result to the REST adapter invoke map action.","Map the received MTOM attachment directly to the REST adapter invoke map action using encodeReferenceToBase64 function."],ans:["D"]},
+];
+
+const LETTERS = 'ABCDEFG';
+let userAnswers = {};
+let graded = false;
+let scores = [];
+let currentUserEmail = '';
+
+function getUserScoreKey(){return 'oic_scores_'+(currentUserEmail||'guest');}
+function loadUserScores(){scores=JSON.parse(localStorage.getItem(getUserScoreKey())||'[]');renderScoreboard();}
+function saveUserScores(){localStorage.setItem(getUserScoreKey(),JSON.stringify(scores));}
+
+// ── BUILD ─────────────────────────────────────────────────────────────────────
+function buildExam(){
+  const list=document.getElementById('examList');list.innerHTML='';
+  QUESTIONS.forEach((q,qi)=>{
+    const multi=q.ans.length>1;
+    const card=document.createElement('div');
+    card.className='question-card';card.id=`card-${qi}`;
+    let optHtml='';
+    q.opts.forEach((opt,oi)=>{
+      const letter=LETTERS[oi];
+      const type=multi?'checkbox':'radio';
+      optHtml+=`<label class="option-label" id="opt-${qi}-${oi}">
+        <input type="${type}" name="q${qi}" value="${letter}" onchange="toggleOpt(${qi},${oi},this)">
+        <span class="option-key">${letter}</span><span>${opt}</span>
+      </label>`;
+    });
+    const badge=multi?`<span class="q-badge multi">SELECT ${q.ans.length}</span>`:`<span class="q-badge">SINGLE</span>`;
+    card.innerHTML=`<div class="q-header"><span class="q-num">${q.n}</span><span class="q-text">${q.q}</span>${badge}</div><div class="options">${optHtml}</div><div class="q-result" id="result-${qi}"></div>`;
+    list.appendChild(card);
+  });
+}
+
+function toggleOpt(qi,oi,input){
+  if(graded){input.checked=!input.checked;return;}
+  const q=QUESTIONS[qi];const multi=q.ans.length>1;const letter=LETTERS[oi];
+  if(!userAnswers[qi])userAnswers[qi]=new Set();
+  if(multi){
+    if(input.checked){userAnswers[qi].add(letter);document.getElementById(`opt-${qi}-${oi}`).classList.add('selected');}
+    else{userAnswers[qi].delete(letter);document.getElementById(`opt-${qi}-${oi}`).classList.remove('selected');}
+  }else{
+    q.opts.forEach((_,i)=>document.getElementById(`opt-${qi}-${i}`).classList.remove('selected'));
+    userAnswers[qi]=new Set([letter]);
+    document.getElementById(`opt-${qi}-${oi}`).classList.add('selected');
+  }
+  if(userAnswers[qi].size===0)delete userAnswers[qi];
+  updateStats();
+}
+
+function updateStats(){
+  const answered=Object.keys(userAnswers).length;
+  document.getElementById('statAnswered').textContent=`${answered} / 72`;
+  document.getElementById('progressBar').style.width=`${(answered/72)*100}%`;
+  const btn=document.getElementById('jumpBtn');
+  const un=72-answered;btn.style.display=un>0?'inline-flex':'none';btn.textContent=`↓ ${un} Unanswered`;
+  if(!graded){document.getElementById('statCorrect').textContent='—';document.getElementById('statWrong').textContent='—';document.getElementById('statScore').textContent='—';}
+  QUESTIONS.forEach((_,qi)=>{const card=document.getElementById(`card-${qi}`);if(!graded){card.classList.remove('answered');if(userAnswers[qi]&&userAnswers[qi].size>0)card.classList.add('answered');}});
+}
+
+function confirmSubmit(){
+  const un=72-Object.keys(userAnswers).length;
+  document.getElementById('modalSubmitMsg').textContent=un>0?`You have ${un} unanswered question(s). They will not be counted. Ready to submit?`:'All 72 questions answered. Ready to submit!';
+  document.getElementById('modalSubmit').classList.add('show');
+}
+function submitExam(){closeModal('modalSubmit');gradeExam();}
+
+function gradeExam(){
+  graded=true;let correct=0,wrong=0;
+  QUESTIONS.forEach((q,qi)=>{
+    const card=document.getElementById(`card-${qi}`);
+    const resultEl=document.getElementById(`result-${qi}`);
+    const userSet=userAnswers[qi]||new Set();
+    if(userSet.size===0)return;
+    const ansSet=new Set(q.ans);
+    const isCorrect=userSet.size===ansSet.size&&[...ansSet].every(l=>userSet.has(l));
+    q.opts.forEach((_,oi)=>{
+      const letter=LETTERS[oi];const lbl=document.getElementById(`opt-${qi}-${oi}`);
+      lbl.classList.remove('selected');
+      const isCL=ansSet.has(letter),isUL=userSet.has(letter);
+      if(isUL&&isCL)lbl.classList.add('correct-choice');
+      else if(isUL&&!isCL)lbl.classList.add('wrong-choice');
+      else if(!isUL&&isCL)lbl.classList.add('missed-choice');
+    });
+    card.classList.remove('answered');
+    if(isCorrect){card.classList.add('correct');correct++;}
+    else{card.classList.add('wrong');wrong++;}
+    resultEl.classList.add('show');
+    if(isCorrect){resultEl.classList.add('ok');resultEl.innerHTML='✔ CORRECT';}
+    else{resultEl.classList.add('bad');const us=[...userSet].sort().join(', '),as=q.ans.join(', ');resultEl.innerHTML=`✘ WRONG &nbsp;<span class="answer-key">Your: ${us} | Correct: ${as}</span>`;}
+  });
+  const pct=(correct/72)*100;const passed=pct>=70;
+  const totalAnswered=Object.keys(userAnswers).length;
+  document.getElementById('statCorrect').textContent=correct;
+  document.getElementById('statWrong').textContent=totalAnswered-correct;
+  document.getElementById('statScore').textContent=pct.toFixed(1)+'%';
+  const banner=document.getElementById('resultBanner');
+  banner.classList.add('show',passed?'passed':'failed');
+  document.getElementById('resultTitle').textContent=passed?`✔ PASSED — ${pct.toFixed(1)}%`:`✘ FAILED — ${pct.toFixed(1)}%`;
+  document.getElementById('resultSub').textContent=passed?`Congratulations! You scored ${correct} out of 72. You passed the 70% threshold.`:`You scored ${correct} out of 72. A score of 51 or more (70%) is required to pass.`;
+  document.getElementById('downloadBtn').style.display='inline-flex';
+  document.getElementById('filterCorrect').style.display='inline-block';
+  document.getElementById('filterWrong').style.display='inline-block';
+  document.getElementById('jumpBtn').style.display='none';
+  const attempt={n:scores.length+1,name:window.currentStudentFullName||'Unknown',date:new Date().toLocaleDateString('en-US'),time:new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'}),correct,total:72,pct:pct.toFixed(1),passed};
+  scores.push(attempt);saveUserScores();renderScoreboard();
+  banner.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function confirmClear(){document.getElementById('modalClear').classList.add('show');}
+function clearExam(){
+  closeModal('modalClear');graded=false;userAnswers={};
+  QUESTIONS.forEach((q,qi)=>{
+    const card=document.getElementById(`card-${qi}`);
+    card.classList.remove('answered','correct','wrong','unanswered-flag');
+    q.opts.forEach((_,oi)=>{
+      const lbl=document.getElementById(`opt-${qi}-${oi}`);
+      lbl.classList.remove('selected','correct-choice','wrong-choice','missed-choice');
+      const inp=lbl.querySelector('input');if(inp)inp.checked=false;
+    });
+    const res=document.getElementById(`result-${qi}`);res.className='q-result';res.innerHTML='';
+  });
+  document.getElementById('resultBanner').className='result-banner';
+  document.getElementById('statAnswered').textContent='0 / 72';
+  document.getElementById('statCorrect').textContent='—';
+  document.getElementById('statWrong').textContent='—';
+  document.getElementById('statScore').textContent='—';
+  document.getElementById('progressBar').style.width='0%';
+  document.getElementById('downloadBtn').style.display='none';
+  document.getElementById('filterCorrect').style.display='none';
+  document.getElementById('filterWrong').style.display='none';
+  filterCards('all',document.querySelector('.filter-btn'));
+  document.getElementById('jumpBtn').style.display='inline-flex';
+  document.getElementById('jumpBtn').textContent='↓ 72 Unanswered';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function filterCards(type,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  QUESTIONS.forEach((_,qi)=>{
+    const card=document.getElementById(`card-${qi}`);
+    let show=true;
+    if(type==='unanswered')show=!userAnswers[qi]||userAnswers[qi].size===0;
+    else if(type==='correct')show=card.classList.contains('correct');
+    else if(type==='wrong')show=card.classList.contains('wrong');
+    card.style.display=show?'block':'none';
+  });
+}
+
+function jumpToNext(){
+  for(let qi=0;qi<72;qi++){
+    if(!userAnswers[qi]||userAnswers[qi].size===0){
+      const card=document.getElementById(`card-${qi}`);
+      card.style.display='block';card.scrollIntoView({behavior:'smooth',block:'center'});
+      card.classList.add('unanswered-flag');setTimeout(()=>card.classList.remove('unanswered-flag'),2000);return;
+    }
+  }
+}
+
+function renderScoreboard(){
+  const body=document.getElementById('sbBody');const count=document.getElementById('sbCount');
+  count.textContent=`${scores.length} attempt${scores.length!==1?'s':''}`;
+  if(scores.length===0){body.innerHTML='<div class="sb-empty">No attempts yet. Complete the exam and click Submit to record your score.</div>';return;}
+  let rows=scores.map(s=>`<tr>
+    <td><span style="font-family:var(--mono);font-weight:600;color:var(--navy)">EXAM_${s.n}</span></td>
+    <td style="font-weight:600;color:var(--navy)">${s.name||'—'}</td>
+    <td style="color:var(--muted);font-size:.82rem">${s.date} ${s.time}</td>
+    <td style="font-family:var(--mono);font-weight:600">${s.correct} / ${s.total}</td>
+    <td style="font-family:var(--mono);font-weight:700;color:${s.passed?'var(--green)':'var(--red)'}">${s.pct}%</td>
+    <td><span class="sb-badge ${s.passed?'pass':'fail'}">${s.passed?'✔ PASSED':'✘ FAILED'}</span></td>
+  </tr>`).join('');
+  const best=scores.reduce((a,b)=>+a.pct>+b.pct?a:b);
+  rows+=`<tr style="background:#f8faf0;border-top:2px solid var(--border)">
+    <td colspan="3" style="font-weight:700;color:var(--navy)">🏆 Best Score</td>
+    <td style="font-family:var(--mono);font-weight:700">${best.correct} / 72</td>
+    <td style="font-family:var(--mono);font-weight:700;color:${best.passed?'var(--green)':'var(--red)'}">${best.pct}%</td>
+    <td><span class="sb-badge ${best.passed?'pass':'fail'}">${best.passed?'✔ PASSED':'✘ FAILED'}</span></td>
+  </tr>`;
+  body.innerHTML=`<table class="sb-table"><thead><tr><th>Attempt</th><th>Name</th><th>Date &amp; Time</th><th>Score</th><th>Percentage</th><th>Result</th></tr></thead><tbody>${rows}</tbody></table>
+  <div style="padding:12px 18px;text-align:right"><button class="btn btn-outline" style="font-size:.75rem;padding:6px 14px" onclick="clearScores()">🗑 Clear History</button></div>`;
+}
+function clearScores(){if(!confirm('Clear all score history?'))return;scores=[];localStorage.removeItem(getUserScoreKey());renderScoreboard();}
+
+function _doLoginCore(){
+  const nameInput=document.getElementById('loginName').value.trim();
+  const pinInput=document.getElementById('loginPin').value.trim();
+  const errEl=document.getElementById('loginError');const pinField=document.getElementById('loginPin');
+  let matched=null;
+  for(const[email,data]of Object.entries(USERS)){
+    if(data.pin===pinInput&&data.name.toLowerCase().includes(nameInput.toLowerCase())){matched={email,...data};break;}
+  }
+  if(!matched){
+    errEl.textContent='Incorrect name or PIN. Please try again.';
+    pinField.classList.add('shake');pinField.value='';
+    setTimeout(()=>pinField.classList.remove('shake'),500);return;
+  }
+  window.currentStudentFullName=matched.name;currentUserEmail=matched.email;loadUserScores();
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('examWrap').style.display='block';
+  document.getElementById('welcomeUser').textContent='Welcome, '+matched.name.split(',')[1].trim()+'!';
+  document.getElementById('jumpBtn').style.display='inline-flex';
+  document.getElementById('jumpBtn').textContent='↓ 72 Unanswered';
+}
+function _doLoginWrapper(){
+  if(localStorage.getItem('oic2025_exam_open')==='false'){
+    document.getElementById('loginError').textContent='🔒 The exam is currently closed. Please contact your administrator.';return;
+  }
+  _doLoginCore();
+}
+document.getElementById('loginName').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('loginPin').focus();});
+
+function confirmLogout(){document.getElementById('logoutModal').style.display='flex';}
+function doLogout(){
+  graded=false;userAnswers={};window.currentStudentFullName='';currentUserEmail='';scores=[];
+  QUESTIONS.forEach((q,qi)=>{
+    const card=document.getElementById(`card-${qi}`);if(card)card.classList.remove('answered','correct','wrong','unanswered-flag');
+    q.opts.forEach((_,oi)=>{const lbl=document.getElementById(`opt-${qi}-${oi}`);if(lbl){lbl.classList.remove('selected','correct-choice','wrong-choice','missed-choice');const inp=lbl.querySelector('input');if(inp)inp.checked=false;}});
+    const res=document.getElementById(`result-${qi}`);if(res){res.className='q-result';res.innerHTML='';}
+  });
+  document.getElementById('logoutModal').style.display='none';
+  document.getElementById('progressBar').style.width='0%';
+  document.getElementById('statAnswered').textContent='0 / 72';
+  document.getElementById('statCorrect').textContent='—';
+  document.getElementById('statWrong').textContent='—';
+  document.getElementById('statScore').textContent='—';
+  const banner=document.getElementById('resultBanner');if(banner)banner.className='result-banner';
+  const dlBtn=document.getElementById('downloadBtn');if(dlBtn)dlBtn.style.display='none';
+  document.getElementById('loginName').value='';document.getElementById('loginPin').value='';
+  document.getElementById('loginError').textContent='';document.getElementById('welcomeUser').textContent='';
+  document.getElementById('examWrap').style.display='none';document.getElementById('loginScreen').style.display='flex';
+  window.scrollTo({top:0});
+}
+
+function showAdminLogin(){document.getElementById('adminLoginModal').style.display='flex';setTimeout(()=>document.getElementById('adminUser').focus(),100);}
+function hideAdminLogin(){document.getElementById('adminLoginModal').style.display='none';document.getElementById('adminLoginErr').textContent='';document.getElementById('adminUser').value='';document.getElementById('adminPass').value='';}
+function doAdminLogin(){
+  const u=document.getElementById('adminUser').value.trim();const p=document.getElementById('adminPass').value.trim();
+  if(u===ADMIN_CREDENTIALS.user&&p===ADMIN_CREDENTIALS.pass){
+    hideAdminLogin();
+    const examOpen=localStorage.getItem('oic2025_exam_open')!=='false';
+    const action=confirm('ADMIN PANEL\n\nExam Status: '+(examOpen?'OPEN ✅':'CLOSED 🔒')+'\n\nClick OK to TOGGLE exam status\nClick Cancel to keep current status.');
+    if(action){localStorage.setItem('oic2025_exam_open',examOpen?'false':'true');alert('Exam is now '+((!examOpen)?'OPEN ✅':'CLOSED 🔒'));}
+  }else{document.getElementById('adminLoginErr').textContent='Invalid username or password.';document.getElementById('adminPass').value='';}
+}
+
+function showTab(name,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(`panel-${name}`).classList.add('active');btn.classList.add('active');
+}
+function closeModal(id){document.getElementById(id).classList.remove('show');}
+document.querySelectorAll('.modal-overlay').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show');});});
+
+function downloadResult(){
+  const studentName=window.currentStudentFullName||'Student';
+  const now=new Date();const dateStr=now.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});const timeStr=now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+  const answeredQuestions=QUESTIONS.filter((_,qi)=>{const us=userAnswers[qi]||new Set();return us.size>0;});
+  if(answeredQuestions.length===0){alert('No answered questions to download.');return;}
+  let correct=0,wrong=0;
+  answeredQuestions.forEach(q=>{const qi=QUESTIONS.indexOf(q);const us=userAnswers[qi]||new Set();const as=new Set(q.ans);if(us.size===as.size&&[...as].every(l=>us.has(l)))correct++;else wrong++;});
+  const unanswered=72-answeredQuestions.length;const pct=((correct/72)*100).toFixed(1);const passed=parseFloat(pct)>=70;
+  let rows='';
+  answeredQuestions.forEach(q=>{
+    const qi=QUESTIONS.indexOf(q);const us=userAnswers[qi]||new Set();const as=new Set(q.ans);
+    const isCorrect=us.size===as.size&&[...as].every(l=>us.has(l));
+    const userAns=[...us].sort().join(', ');const corrAns=q.ans.join(', ');
+    let optRows='';
+    q.opts.forEach((opt,oi)=>{
+      const letter=LETTERS[oi];const isCL=as.has(letter),isUL=us.has(letter);
+      let bg='#ffffff',mark='';
+      if(isUL&&isCL){bg='#e6f4ed';mark=' ✔';}else if(isUL&&!isCL){bg='#fde8eb';mark=' ✘';}else if(!isUL&&isCL){bg='#fff8e1';mark=' ← correct';}
+      optRows+=`<tr style="background:${bg}"><td style="padding:5px 10px;font-family:monospace;font-weight:700;color:#1a2236;width:30px">${letter}</td><td style="padding:5px 10px;font-size:12px;color:#1a2236">${opt}${mark}</td></tr>`;
+    });
+    const rowBg=isCorrect?'#e6f4ed':'#fde8eb';const si=isCorrect?'✔':'✘';const sc=isCorrect?'#1a7f4b':'#c8102e';
+    rows+=`<tr><td colspan="2" style="padding:0"><table width="100%" cellspacing="0" cellpadding="0" style="border:1.5px solid #d0d8e8;border-radius:8px;margin-bottom:10px;overflow:hidden;border-collapse:separate">
+      <tr style="background:${rowBg}"><td style="padding:10px 14px;width:36px;vertical-align:top"><span style="display:inline-block;width:28px;height:28px;background:#0f1f3d;color:#fff;border-radius:6px;text-align:center;line-height:28px;font-size:12px;font-weight:700">${q.n}</span></td>
+      <td style="padding:10px 14px;font-size:13px;color:#1a2236;font-weight:600;vertical-align:top">${q.q}</td>
+      <td style="padding:10px 14px;text-align:right;vertical-align:top"><span style="font-size:18px;font-weight:700;color:${sc}">${si}</span></td></tr>
+      <tr><td colspan="3" style="padding:0 14px 10px 14px"><table width="100%" cellspacing="0" cellpadding="0">${optRows}</table>
+      <div style="margin-top:8px;font-size:11px;color:#5a6a85;font-family:monospace">Your answer: <strong style="color:${isCorrect?'#1a7f4b':'#c8102e'}">${userAns}</strong> &nbsp;|&nbsp; Correct answer: <strong style="color:#1a7f4b">${corrAns}</strong></div>
+      </td></tr></table></td></tr>`;
+  });
+  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Exam Result — ${studentName}</title>
+  <style>body{font-family:'Segoe UI',Arial,sans-serif;margin:0;padding:0;background:#f4f6f9;}.page{max-width:820px;margin:0 auto;background:#fff;}@media print{body{background:#fff;}.no-print{display:none!important;}}</style></head>
+  <body><div class="page">
+  <div style="background:#0f1f3d;color:#fff;padding:32px 40px 24px;"><div style="font-size:11px;letter-spacing:.1em;color:#a0b4d0;margin-bottom:6px;font-family:monospace">EXAM RESULT REPORT</div>
+  <h1 style="margin:0;font-size:1.4rem;font-weight:700">Oracle Integration Cloud 2025 Application Integration Professional</h1>
+  <p style="margin:6px 0 0;font-size:.85rem;color:#a0b4d0">${dateStr} · ${timeStr}</p></div>
+  <div style="padding:24px 40px;border-bottom:2px solid #eef1f7;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px">
+    <div><div style="font-size:11px;color:#5a6a85;letter-spacing:.08em;margin-bottom:4px">STUDENT NAME</div><div style="font-size:1.2rem;font-weight:700;color:#0f1f3d">${studentName}</div></div>
+    <div style="text-align:center;background:${passed?'#e6f4ed':'#fde8eb'};border:2px solid ${passed?'#1a7f4b':'#c8102e'};border-radius:12px;padding:16px 28px">
+      <div style="font-size:2.2rem;font-weight:700;color:${passed?'#1a7f4b':'#c8102e'};line-height:1">${pct}%</div>
+      <div style="font-size:.8rem;font-weight:700;color:${passed?'#1a7f4b':'#c8102e'};margin-top:2px">${passed?'✔ PASSED':'✘ FAILED'}</div>
+      <div style="font-size:.72rem;color:#5a6a85;margin-top:4px">Passing: 70%</div></div></div>
+  <div style="padding:20px 40px;background:#f8fafc;border-bottom:1px solid #eef1f7;display:flex;gap:24px;flex-wrap:wrap">
+    <div style="text-align:center;min-width:80px"><div style="font-size:1.6rem;font-weight:700;color:#1a7f4b;font-family:monospace">${correct}</div><div style="font-size:.7rem;color:#5a6a85;letter-spacing:.06em">CORRECT</div></div>
+    <div style="text-align:center;min-width:80px"><div style="font-size:1.6rem;font-weight:700;color:#c8102e;font-family:monospace">${wrong}</div><div style="font-size:.7rem;color:#5a6a85;letter-spacing:.06em">WRONG</div></div>
+    <div style="text-align:center;min-width:80px"><div style="font-size:1.6rem;font-weight:700;color:#5a6a85;font-family:monospace">${unanswered}</div><div style="font-size:.7rem;color:#5a6a85;letter-spacing:.06em">UNANSWERED</div></div>
+    <div style="text-align:center;min-width:80px"><div style="font-size:1.6rem;font-weight:700;color:#0f1f3d;font-family:monospace">${answeredQuestions.length}</div><div style="font-size:.7rem;color:#5a6a85;letter-spacing:.06em">ANSWERED</div></div>
+    <div style="text-align:center;min-width:80px"><div style="font-size:1.6rem;font-weight:700;color:#0f1f3d;font-family:monospace">72</div><div style="font-size:.7rem;color:#5a6a85;letter-spacing:.06em">TOTAL ITEMS</div></div></div>
+  <div style="padding:12px 40px;background:#fffdf0;border-bottom:1px solid #eef1f7;font-size:11px;color:#5a6a85;display:flex;gap:20px;flex-wrap:wrap">
+    <span><span style="background:#e6f4ed;padding:2px 8px;border-radius:3px">Green</span> = Your correct answer</span>
+    <span><span style="background:#fde8eb;padding:2px 8px;border-radius:3px">Red</span> = Your wrong answer</span>
+    <span><span style="background:#fff8e1;padding:2px 8px;border-radius:3px">Yellow</span> = Correct answer you missed</span></div>
+  <div class="no-print" style="padding:16px 40px;text-align:right"><button onclick="window.print()" style="background:#0f1f3d;color:#fff;border:none;padding:10px 24px;border-radius:6px;font-size:.85rem;font-weight:700;cursor:pointer">🖨 Print / Save as PDF</button></div>
+  <div style="padding:10px 40px 40px"><div style="font-size:11px;color:#5a6a85;margin-bottom:14px;font-style:italic;background:#f0f4fa;padding:10px 14px;border-radius:6px;border-left:3px solid #1a56a0">Showing <strong>${answeredQuestions.length}</strong> answered question(s) out of 72 total. Unanswered questions are not included.</div>
+  <table width="100%" cellspacing="0" cellpadding="0">${rows}</table></div>
+  <div style="background:#0f1f3d;color:#a0b4d0;padding:16px 40px;font-size:.75rem;text-align:center">Oracle Integration Cloud 2025 Application Integration Professional · Generated ${dateStr}</div>
+  </div></body></html>`;
+  const win=window.open('','_blank');win.document.write(html);win.document.close();win.focus();
+}
+
+// ── CIRCUIT BACKGROUND ────────────────────────────────────────────────────────
+(function(){
+  const canvas=document.getElementById('bgCanvas');if(!canvas)return;
+  const ctx=canvas.getContext('2d');let traces=[],pulses=[],hexagons=[],rings=[];
+  function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;init();}
+  function init(){
+    traces=[];pulses=[];hexagons=[];rings=[];
+    const W=canvas.width,H=canvas.height,G=48;
+    for(let i=0;i<120;i++){
+      const sx=Math.floor(Math.random()*(W/G))*G,sy=Math.floor(Math.random()*(H/G))*G;
+      const segs=[];let cx=sx,cy=sy;const steps=Math.floor(Math.random()*5)+2;
+      for(let s=0;s<steps;s++){const dir=Math.floor(Math.random()*4),len=(Math.floor(Math.random()*3)+1)*G;let nx=cx,ny=cy;if(dir===0)nx+=len;else if(dir===1)nx-=len;else if(dir===2)ny+=len;else ny-=len;segs.push({x1:cx,y1:cy,x2:nx,y2:ny});cx=nx;cy=ny;}
+      traces.push({segs,alpha:Math.random()*.18+.04});
+      segs.forEach(sg=>{traces.push({dot:{x:sg.x1,y:sg.y1},alpha:Math.random()*.25+.08});traces.push({dot:{x:sg.x2,y:sg.y2},alpha:Math.random()*.25+.08});});
+    }
+    for(let i=0;i<28;i++){const ti=Math.floor(Math.random()*traces.length);pulses.push({traceIdx:ti,t:Math.random(),speed:Math.random()*.003+.001,color:Math.random()<.6?'#c8102e':'#4a9eff',size:Math.random()*3+2});}
+    for(let i=0;i<18;i++){hexagons.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*40+20,alpha:Math.random()*.07+.02,rot:Math.random()*Math.PI,drot:(Math.random()-.5)*.002});}
+    rings=[{x:W*.08,y:H*.12,maxR:180,alpha:.06,color:'#c8102e'},{x:W*.92,y:H*.88,maxR:220,alpha:.05,color:'#4a9eff'},{x:W*.85,y:H*.1,maxR:130,alpha:.04,color:'#c8102e'},{x:W*.15,y:H*.9,maxR:150,alpha:.04,color:'#4a9eff'}];
+  }
+  function hexPath(x,y,r,rot){ctx.beginPath();for(let i=0;i<6;i++){const a=rot+(Math.PI/3)*i;i===0?ctx.moveTo(x+r*Math.cos(a),y+r*Math.sin(a)):ctx.lineTo(x+r*Math.cos(a),y+r*Math.sin(a));}ctx.closePath();}
+  function draw(){
+    const W=canvas.width,H=canvas.height;ctx.clearRect(0,0,W,H);
+    const bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,'#060e1e');bg.addColorStop(.45,'#0c1a32');bg.addColorStop(1,'#040b18');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+    const rg1=ctx.createRadialGradient(0,0,0,W*.15,H*.15,W*.4);rg1.addColorStop(0,'rgba(200,16,46,0.22)');rg1.addColorStop(1,'rgba(200,16,46,0)');ctx.fillStyle=rg1;ctx.fillRect(0,0,W,H);
+    const rg2=ctx.createRadialGradient(W,H,0,W*.88,H*.88,W*.45);rg2.addColorStop(0,'rgba(26,86,160,0.25)');rg2.addColorStop(1,'rgba(26,86,160,0)');ctx.fillStyle=rg2;ctx.fillRect(0,0,W,H);
+    rings.forEach(ring=>{for(let r=ring.maxR;r>0;r-=28){ctx.beginPath();ctx.arc(ring.x,ring.y,r,0,Math.PI*2);ctx.strokeStyle=`rgba(${ring.color==='#c8102e'?'200,16,46':'74,158,255'},${ring.alpha})`;ctx.lineWidth=.8;ctx.stroke();}});
+    hexagons.forEach(h=>{h.rot+=h.drot;hexPath(h.x,h.y,h.r,h.rot);ctx.strokeStyle=`rgba(74,158,255,${h.alpha})`;ctx.lineWidth=1;ctx.stroke();hexPath(h.x,h.y,h.r*.55,h.rot+Math.PI/6);ctx.strokeStyle=`rgba(200,16,46,${h.alpha*.7})`;ctx.lineWidth=.6;ctx.stroke();});
+    traces.forEach(tr=>{
+      if(tr.dot){ctx.beginPath();ctx.arc(tr.dot.x,tr.dot.y,2.5,0,Math.PI*2);ctx.fillStyle=`rgba(74,158,255,${tr.alpha})`;ctx.fill();ctx.beginPath();ctx.arc(tr.dot.x,tr.dot.y,5,0,Math.PI*2);ctx.strokeStyle=`rgba(74,158,255,${tr.alpha*.5})`;ctx.lineWidth=.8;ctx.stroke();return;}
+      if(!tr.segs)return;
+      tr.segs.forEach(seg=>{ctx.beginPath();ctx.moveTo(seg.x1,seg.y1);ctx.lineTo(seg.x2,seg.y1);ctx.lineTo(seg.x2,seg.y2);ctx.strokeStyle=`rgba(74,158,255,${tr.alpha})`;ctx.lineWidth=1;ctx.stroke();});
+    });
+    pulses.forEach(p=>{
+      p.t+=p.speed;if(p.t>1)p.t=0;
+      const tr=traces[p.traceIdx%traces.length];if(!tr||!tr.segs||tr.segs.length===0)return;
+      const seg=tr.segs[Math.floor(p.t*tr.segs.length)%tr.segs.length];if(!seg)return;
+      const lt=(p.t*tr.segs.length)%1;const px=seg.x1+(seg.x2-seg.x1)*lt,py=seg.y1+(seg.y2-seg.y1)*lt;
+      const grd=ctx.createRadialGradient(px,py,0,px,py,p.size*4);grd.addColorStop(0,p.color==='#c8102e'?'rgba(200,16,46,0.9)':'rgba(74,158,255,0.9)');grd.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=grd;ctx.beginPath();ctx.arc(px,py,p.size*4,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.arc(px,py,p.size,0,Math.PI*2);ctx.fillStyle=p.color;ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  resize();window.addEventListener('resize',resize);draw();
+})();
+
+buildExam();updateStats();renderScoreboard();
+</script>
+</body>
+</html>
