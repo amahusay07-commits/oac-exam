@@ -225,7 +225,7 @@
   </div>
 </div>
 <div id="logoutModal" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.6);align-items:center;justify-content:center;backdrop-filter:blur(3px);">
-  <div style="background:#fff;border-radius:12px;padding:36px;max-width:380px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.35);animation:popIn .2s ease;">
+  <div style="background:#fff;border-radius:12px;padding:36px;max-width:380px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.);animation:popIn .2s ease;">
     <div style="font-size:2.5rem;margin-bottom:12px;">⏻</div>
     <h3 style="font-size:1.1rem;font-weight:700;color:#0f1f3d;margin:0 0 8px;">Logout?</h3>
     <p style="font-size:.87rem;color:#5a6a85;margin:0 0 22px;line-height:1.55;"><strong>Your answers and progress will be lost</strong> if you haven't submitted yet.</p>
@@ -245,7 +245,7 @@ const USERS = {
   "glevejane.acabal@accenture.com":       {name:"Acabal, Gleve",                 pin:"808631"},
   "kenneth.orven.agamon@accenture.com":   {name:"Agamon, Kenneth Orven",         pin:"930086"},
   "jenn.alito@accenture.com":             {name:"Alito, Jenn",                   pin:"975306"},
-  "roblitchelle.aloguin@accenture.com":   {name:"Aloguin, Roblitchelle Lovely",  pin:"875935"},
+  "roblitchelle.aloguin@accenture.com":   {name:"Aloguin, Roblitchelle Lovely",  pin:"8759"},
   "irene.anoos@accenture.com":            {name:"Anoos, Irene Kate E.",           pin:"230195"},
   "zeno.anunciado@accenture.com":         {name:"Anunciado, Zeno",               pin:"265286"},
   "hannah.mae.arias@accenture.com":       {name:"Arias, Hannah Mae",             pin:"868570"},
@@ -280,7 +280,7 @@ const USERS = {
   "maryjoy.lasutan@accenture.com":        {name:"Lasutan, Maryjoy",              pin:"713289"},
   "glovymae.liza@accenture.com":          {name:"Liza, Glovymae Joyce",          pin:"417877"},
   "arey.mahusay@accenture.com":           {name:"Mahusay, Arey",                 pin:"964512"},
-  "wilrie.b.mariquit@accenture.com":      {name:"Mariquit, Wilrie B.",           pin:"352206"},
+  "wilrie.b.mariquit@accenture.com":      {name:"Mariquit, Wilrie B.",           pin:"2206"},
   "cherry.molina@accenture.com":          {name:"Molina, Cherry Ann A.",         pin:"757914"},
   "janice.montero@accenture.com":         {name:"Montero, Janice",               pin:"298026"},
   "ramela.moreno@accenture.com":          {name:"Moreno, Ramela",                pin:"675292"},
@@ -304,7 +304,7 @@ const USERS = {
   "x.suficiencia@accenture.com":          {name:"Suficiencia, Xannetz",          pin:"049902"},
   "kerwin.tanggaan@accenture.com":        {name:"Tangga, Kerwin",                pin:"298831"},
   "eshkariel.tapiador@accenture.com":     {name:"Tapiador, Eshkariel",           pin:"188298"},
-  "sean.tiu@accenture.com":               {name:"Tiu, Sean Luke",                pin:"735770"},
+  "sean.tiu@accenture.com":               {name:"Tiu, Sean Luke",                pin:"7770"},
   "charmaine.torres@accenture.com":       {name:"Torres, Charmaine V.",          pin:"596504"},
   "thea.tuazon@accenture.com":            {name:"Tuazon, Thea",                  pin:"876960"},
   "nathaniel.vinluan@accenture.com":      {name:"Vinluan, Nathaniel",            pin:"826911"},
@@ -358,7 +358,7 @@ const QUESTIONS = [
   {n:32,q:"A Logger action enables you to log messages at runtime for diagnostic purposes. Which is NOT a valid statement concerning Logger action capabilities?",opts:["You can create a log that is a static message or a variable-populated message.","You can select to disable logging when the integration's tracing level is set to Production.","It can be configured to also send log messages to an external logging service.","It will automatically log messages to the activity stream and diagnostic logs."],ans:["C"]},
   {n:33,q:"You will be creating and configuring a Connection resource using an Oracle Integration (OIC) File Adapter. Which set of operations are supported in the Invoke role when leveraging access via a Connectivity Agent?",opts:["read, write, list","read, write, list, move","read, write, list, move, download, delete","read, write, list, move, download","read, write"],ans:["C"]},
   {n:34,q:"Which statement accurately describes the role of Oracle Integration (OIC) Connectivity Agents?",opts:["OIC Connectivity Agents provide connectivity to applications located in private networks, enabling secure data transfer between cloud and on-premises systems.","OIC Connectivity Agents manage the orchestration of integration flows across multiple cloud services.","OIC Connectivity Agents facilitate the creation of custom APIs for integration purposes.","OIC Connectivity Agents are responsible for transforming data formats between different applications."],ans:["A"]},
-  {n:35,q:"You are designing an Oracle Integration (OIC) integration that processes files in a shared file system located within your on-premises data center using Stage File Action operations with the Connectivity Agent. Which statement is NOT valid concerning file operation capabilities?",opts:["Files uploaded through the Connectivity Agent are not available with the Zip File operation.","Files uploaded through the Connectivity Agent can only be read with a file reference, with regard to both the Read Entire File and Read File in Segment operations.","Files uploaded through the Connectivity Agent cannot be unzipped using a file reference.","Files uploaded through the Connectivity Agent are not available with the List File operation."],ans:["A"]},
+  {n:35,q:"You are designing an Oracle Integration (OIC) integration that processes files in a shared file system located within your on-premises data center using Stage File Action operations with the Connectivity Agent. Which statement is NOT valid concerning file operation capabilities?",opts:["Files uploaded through the Connectivity Agent are not available with the Zip File operation.","Files uploaded through the Connectivity Agent can only be read with a file reference, with regard to both the Read Entire File and Read File in Segment operations.","Files uploaded through the Connectivity Agent cannot be unzipped using a file reference.","Files uploaded through the Connectivity Agent are not available with the List File operation."],ans:["C"]},
   {n:36,q:"When creating a new Oracle Integration (OIC) Connection resource, which task is NOT required in order to transition a new Connection resource from the Draft to a Configured state?",opts:["Configure the Security properties.","Execute a successful test of the Connection.","Specify the corresponding Lookup.","Specify the Connection role.","Configure the Connection properties.","Specify an adapter type."],ans:["C"]},
   {n:37,q:"Which statement is valid regarding Connection resources in Oracle Integration (OIC)?",opts:["All Connection configurations require the association of an active OIC Connectivity Agent group.","Connection resources can be configured with either a Trigger role or an Invoker role, but not both.","Connection resources associated with an Oracle SaaS adapter type require a Lookup configuration.","All Connection resources must be associated with an adapter type, regardless of role configuration."],ans:["D"]},
   {n:38,q:"Which Oracle Integration (OIC) adapter can be used to create a configured connection within an integration allowing you to send a file to the embedded File Server associated within the same OIC environment?",opts:["File Adapter","REST Adapter","Local Adapter","FTP Adapter"],ans:["D"]},
