@@ -100,7 +100,7 @@
   .sb-table td{padding:12px 18px;font-size:.875rem;border-bottom:1px solid var(--border);}
   .sb-table tr:last-child td{border-bottom:none;}
   .sb-table tr:hover td{background:var(--gray);}
-  .sb-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-family:var(--mono);font-size:.72rem;font-weight:600;}
+  .sb-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-family:var(--mono);font-size:.71rem;font-weight:600;}
   .sb-badge.pass{background:var(--green-bg);color:var(--green);}
   .sb-badge.fail{background:var(--red-bg);color:var(--red);}
   .sb-empty{padding:40px;text-align:center;color:var(--muted);font-size:.9rem;font-style:italic;}
@@ -116,7 +116,7 @@
   .modal-box h3{font-size:1.25rem;font-weight:700;margin-bottom:8px;}
   .modal-box p{font-size:.9rem;color:var(--muted);line-height:1.5;margin-bottom:22px;}
   .modal-btns{display:flex;gap:10px;justify-content:center;}
-  .unanswered-pill{display:inline-flex;align-items:center;gap:6px;background:var(--gold);color:var(--navy);font-family:var(--mono);font-size:.72rem;font-weight:700;padding:5px 12px;border-radius:20px;cursor:pointer;border:none;transition:background .15s;}
+  .unanswered-pill{display:inline-flex;align-items:center;gap:6px;background:var(--gold);color:var(--navy);font-family:var(--mono);font-size:.71rem;font-weight:700;padding:5px 12px;border-radius:20px;cursor:pointer;border:none;transition:background .15s;}
   .unanswered-pill:hover{background:#d4900a;}
   .question-card.unanswered-flag{animation:pulse 1s ease 2;}
   @keyframes pulse{0%,100%{box-shadow:var(--shadow)}50%{box-shadow:0 0 0 3px var(--gold)}}
@@ -126,7 +126,7 @@
 <body>
 
 <div id="loginScreen"><canvas id="bgCanvas"></canvas>
-  <button onclick="showAdminLogin()" style="position:fixed;bottom:20px;right:24px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.4);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:7px 14px;font-size:.72rem;font-weight:600;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;letter-spacing:.05em;backdrop-filter:blur(4px);z-index:10;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.color='rgba(255,255,255,0.4)';this.style.background='rgba(255,255,255,0.08)'">⚙ Admin</button>
+  <button onclick="showAdminLogin()" style="position:fixed;bottom:20px;right:24px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.4);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:7px 14px;font-size:.71rem;font-weight:600;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;letter-spacing:.05em;backdrop-filter:blur(4px);z-index:10;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.color='rgba(255,255,255,0.4)';this.style.background='rgba(255,255,255,0.08)'">⚙ Admin</button>
   <div class="login-box">
     <div class="login-logo">🔗</div>
     <h2>Oracle Integration Cloud 2025</h2>
@@ -162,7 +162,7 @@
   <div class="header-inner">
     <div class="header-left">
       <h1>Oracle Integration Cloud 2025 Application Integration Professional</h1>
-      <p>Exam 1Z0-1042-25 &nbsp;·&nbsp; 72 Questions &nbsp;·&nbsp; Passing Score: 70%</p>
+      <p>Exam 1Z0-1042-25 &nbsp;·&nbsp; 71 Questions &nbsp;·&nbsp; Passing Score: 70%</p>
     </div>
     <div style="display:flex;align-items:center;gap:10px;">
       <button onclick="confirmLogout()" style="background:rgba(200,16,46,.25);color:#ff8a96;border:1px solid rgba(200,16,46,.4);border-radius:6px;padding:6px 16px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;letter-spacing:.04em;">⏻ Logout</button>
@@ -181,7 +181,7 @@
 <div class="main">
   <div class="panel active" id="panel-exam">
     <div class="stats-bar">
-      <div class="stat-card"><div class="label">Answered</div><div class="value" id="statAnswered">0 / 72</div></div>
+      <div class="stat-card"><div class="label">Answered</div><div class="value" id="statAnswered">0 / 71</div></div>
       <div class="stat-card"><div class="label">Correct</div><div class="value green" id="statCorrect">—</div></div>
       <div class="stat-card"><div class="label">Wrong</div><div class="value red" id="statWrong">—</div></div>
       <div class="stat-card"><div class="label">Score</div><div class="value gold" id="statScore">—</div></div>
@@ -275,8 +275,8 @@ const USERS = {
   "chris.gonzales@accenture.com":         {name:"Gonzales, Chris Carloff",       pin:"098830"},
   "par.boris.m.gonzales@accenture.com":   {name:"Gonzales, Par Boris Mikhael",   pin:"890407"},
   "honeydee.hapson@accenture.com":        {name:"Hapson, Honeydee",              pin:"714528"},
-  "renato.jr@accenture.com":              {name:"Jr., Renato",                   pin:"727413"},
-  "hannah.mhae.laquinon@accenture.com":   {name:"Laquinon, Hannah Mhae",        pin:"425723"},
+  "renato.jr@accenture.com":              {name:"Jr., Renato",                   pin:"717413"},
+  "hannah.mhae.laquinon@accenture.com":   {name:"Laquinon, Hannah Mhae",        pin:"425713"},
   "maryjoy.lasutan@accenture.com":        {name:"Lasutan, Maryjoy",              pin:"713289"},
   "glovymae.liza@accenture.com":          {name:"Liza, Glovymae Joyce",          pin:"417877"},
   "arey.mahusay@accenture.com":           {name:"Mahusay, Arey",                 pin:"964512"},
@@ -310,18 +310,18 @@ const USERS = {
   "nathaniel.vinluan@accenture.com":      {name:"Vinluan, Nathaniel",            pin:"826911"},
   "benjamen.zapanta@accenture.com":       {name:"Zapanta Jr., Benjamen",         pin:"563917"},
   "jinnyrose.olajay@accenture.com":       {name:"Olajay, Jinnyrose",             pin:"949540"},
-  "emilou.caparida@accenture.com":        {name:"Caparida, Emilou",              pin:"172017"},
+  "emilou.caparida@accenture.com":        {name:"Caparida, Emilou",              pin:"171017"},
   "shinnara.alforque@accenture.com":      {name:"Alforque, Shinnara",            pin:"697496"},
   "jan.traces@accenture.com":             {name:"Traces, Jan",                   pin:"409412"},
   "christian.marcial@accenture.com":      {name:"Marcial, Christian",            pin:"320071"},
   "carl.bryan.ampit@accenture.com":       {name:"Ampit, Bryan",                  pin:"624980"},
   "marymae.erasga@accenture.com":         {name:"Erasga, Marymae",               pin:"791865"},
   "james.arong@accenture.com":            {name:"Arong, James Kyle",             pin:"931693"},
-  "cris.gievid.m.narca@accenture.com":    {name:"Narca, Cris Gievid",            pin:"152672"},
+  "cris.gievid.m.narca@accenture.com":    {name:"Narca, Cris Gievid",            pin:"152671"},
   "mark.nunez@accenture.com":             {name:"Nunez, Mark Bernard",           pin:"291043"}
 };
 
-const ADMIN_CREDENTIALS = {user:'arey.mahusay', pass:'0607251991'};
+const ADMIN_CREDENTIALS = {user:'arey.mahusay', pass:'0607151991'};
 
 const QUESTIONS = [
   {n:1,q:"Which statement regarding the management of tracing level options for integrations is invalid?",opts:["If you select to globally disable tracing for all integrations, you can still enable tracing at the individual integration level.","You can change the tracing level on an active integration without having to deactivate and reactivate it.","Changing tracing to the audit or debug level impacts performance.","The tracing level has no impact on billing."],ans:["A"]},
@@ -447,17 +447,17 @@ function toggleOpt(qi,oi,input){
 
 function updateStats(){
   const answered=Object.keys(userAnswers).length;
-  document.getElementById('statAnswered').textContent=`${answered} / 72`;
-  document.getElementById('progressBar').style.width=`${(answered/72)*100}%`;
+  document.getElementById('statAnswered').textContent=`${answered} / 71`;
+  document.getElementById('progressBar').style.width=`${(answered/71)*100}%`;
   const btn=document.getElementById('jumpBtn');
-  const un=72-answered;btn.style.display=un>0?'inline-flex':'none';btn.textContent=`↓ ${un} Unanswered`;
+  const un=71-answered;btn.style.display=un>0?'inline-flex':'none';btn.textContent=`↓ ${un} Unanswered`;
   if(!graded){document.getElementById('statCorrect').textContent='—';document.getElementById('statWrong').textContent='—';document.getElementById('statScore').textContent='—';}
   QUESTIONS.forEach((_,qi)=>{const card=document.getElementById(`card-${qi}`);if(!graded){card.classList.remove('answered');if(userAnswers[qi]&&userAnswers[qi].size>0)card.classList.add('answered');}});
 }
 
 function confirmSubmit(){
-  const un=72-Object.keys(userAnswers).length;
-  document.getElementById('modalSubmitMsg').textContent=un>0?`You have ${un} unanswered question(s). They will not be counted. Ready to submit?`:'All 72 questions answered. Ready to submit!';
+  const un=71-Object.keys(userAnswers).length;
+  document.getElementById('modalSubmitMsg').textContent=un>0?`You have ${un} unanswered question(s). They will not be counted. Ready to submit?`:'All 71 questions answered. Ready to submit!';
   document.getElementById('modalSubmit').classList.add('show');
 }
 function submitExam(){closeModal('modalSubmit');gradeExam();}
@@ -486,7 +486,7 @@ function gradeExam(){
     if(isCorrect){resultEl.classList.add('ok');resultEl.innerHTML='✔ CORRECT';}
     else{resultEl.classList.add('bad');const us=[...userSet].sort().join(', '),as=q.ans.join(', ');resultEl.innerHTML=`✘ WRONG &nbsp;<span class="answer-key">Your: ${us} | Correct: ${as}</span>`;}
   });
-  const pct=(correct/72)*100;const passed=pct>=70;
+  const pct=(correct/71)*100;const passed=pct>=70;
   const totalAnswered=Object.keys(userAnswers).length;
   document.getElementById('statCorrect').textContent=correct;
   document.getElementById('statWrong').textContent=totalAnswered-correct;
@@ -494,12 +494,12 @@ function gradeExam(){
   const banner=document.getElementById('resultBanner');
   banner.classList.add('show',passed?'passed':'failed');
   document.getElementById('resultTitle').textContent=passed?`✔ PASSED — ${pct.toFixed(1)}%`:`✘ FAILED — ${pct.toFixed(1)}%`;
-  document.getElementById('resultSub').textContent=passed?`Congratulations! You scored ${correct} out of 72. You passed the 70% threshold.`:`You scored ${correct} out of 72. A score of 51 or more (70%) is required to pass.`;
+  document.getElementById('resultSub').textContent=passed?`Congratulations! You scored ${correct} out of 71. You passed the 70% threshold.`:`You scored ${correct} out of 71. A score of 51 or more (70%) is required to pass.`;
   document.getElementById('downloadBtn').style.display='inline-flex';
   document.getElementById('filterCorrect').style.display='inline-block';
   document.getElementById('filterWrong').style.display='inline-block';
   document.getElementById('jumpBtn').style.display='none';
-  const attempt={n:scores.length+1,name:window.currentStudentFullName||'Unknown',date:new Date().toLocaleDateString('en-US'),time:new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'}),correct,total:72,pct:pct.toFixed(1),passed};
+  const attempt={n:scores.length+1,name:window.currentStudentFullName||'Unknown',date:new Date().toLocaleDateString('en-US'),time:new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'}),correct,total:71,pct:pct.toFixed(1),passed};
   scores.push(attempt);saveUserScores();renderScoreboard();
   banner.scrollIntoView({behavior:'smooth',block:'center'});
 }
@@ -518,7 +518,7 @@ function clearExam(){
     const res=document.getElementById(`result-${qi}`);res.className='q-result';res.innerHTML='';
   });
   document.getElementById('resultBanner').className='result-banner';
-  document.getElementById('statAnswered').textContent='0 / 72';
+  document.getElementById('statAnswered').textContent='0 / 71';
   document.getElementById('statCorrect').textContent='—';
   document.getElementById('statWrong').textContent='—';
   document.getElementById('statScore').textContent='—';
@@ -528,7 +528,7 @@ function clearExam(){
   document.getElementById('filterWrong').style.display='none';
   filterCards('all',document.querySelector('.filter-btn'));
   document.getElementById('jumpBtn').style.display='inline-flex';
-  document.getElementById('jumpBtn').textContent='↓ 72 Unanswered';
+  document.getElementById('jumpBtn').textContent='↓ 71 Unanswered';
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -546,7 +546,7 @@ function filterCards(type,btn){
 }
 
 function jumpToNext(){
-  for(let qi=0;qi<72;qi++){
+  for(let qi=0;qi<71;qi++){
     if(!userAnswers[qi]||userAnswers[qi].size===0){
       const card=document.getElementById(`card-${qi}`);
       card.style.display='block';card.scrollIntoView({behavior:'smooth',block:'center'});
@@ -570,7 +570,7 @@ function renderScoreboard(){
   const best=scores.reduce((a,b)=>+a.pct>+b.pct?a:b);
   rows+=`<tr style="background:#f8faf0;border-top:2px solid var(--border)">
     <td colspan="3" style="font-weight:700;color:var(--navy)">🏆 Best Score</td>
-    <td style="font-family:var(--mono);font-weight:700">${best.correct} / 72</td>
+    <td style="font-family:var(--mono);font-weight:700">${best.correct} / 71</td>
     <td style="font-family:var(--mono);font-weight:700;color:${best.passed?'var(--green)':'var(--red)'}">${best.pct}%</td>
     <td><span class="sb-badge ${best.passed?'pass':'fail'}">${best.passed?'✔ PASSED':'✘ FAILED'}</span></td>
   </tr>`;
@@ -597,7 +597,7 @@ function _doLoginCore(){
   document.getElementById('examWrap').style.display='block';
   document.getElementById('welcomeUser').textContent='Welcome, '+matched.name.split(',')[1].trim()+'!';
   document.getElementById('jumpBtn').style.display='inline-flex';
-  document.getElementById('jumpBtn').textContent='↓ 72 Unanswered';
+  document.getElementById('jumpBtn').textContent='↓ 71 Unanswered';
 }
 function _doLoginWrapper(){
   if(localStorage.getItem('oic2025_exam_open')==='false'){
@@ -617,7 +617,7 @@ function doLogout(){
   });
   document.getElementById('logoutModal').style.display='none';
   document.getElementById('progressBar').style.width='0%';
-  document.getElementById('statAnswered').textContent='0 / 72';
+  document.getElementById('statAnswered').textContent='0 / 71';
   document.getElementById('statCorrect').textContent='—';
   document.getElementById('statWrong').textContent='—';
   document.getElementById('statScore').textContent='—';
@@ -656,7 +656,7 @@ function downloadResult(){
   if(answeredQuestions.length===0){alert('No answered questions to download.');return;}
   let correct=0,wrong=0;
   answeredQuestions.forEach(q=>{const qi=QUESTIONS.indexOf(q);const us=userAnswers[qi]||new Set();const as=new Set(q.ans);if(us.size===as.size&&[...as].every(l=>us.has(l)))correct++;else wrong++;});
-  const unanswered=72-answeredQuestions.length;const pct=((correct/72)*100).toFixed(1);const passed=parseFloat(pct)>=70;
+  const unanswered=71-answeredQuestions.length;const pct=((correct/71)*100).toFixed(1);const passed=parseFloat(pct)>=70;
   let rows='';
   answeredQuestions.forEach(q=>{
     const qi=QUESTIONS.indexOf(q);const us=userAnswers[qi]||new Set();const as=new Set(q.ans);
@@ -689,19 +689,19 @@ function downloadResult(){
     <div style="text-align:center;background:${passed?'#e6f4ed':'#fde8eb'};border:2px solid ${passed?'#1a7f4b':'#c8102e'};border-radius:12px;padding:16px 28px">
       <div style="font-size:2.2rem;font-weight:700;color:${passed?'#1a7f4b':'#c8102e'};line-height:1">${pct}%</div>
       <div style="font-size:.8rem;font-weight:700;color:${passed?'#1a7f4b':'#c8102e'};margin-top:2px">${passed?'✔ PASSED':'✘ FAILED'}</div>
-      <div style="font-size:.72rem;color:#5a6a85;margin-top:4px">Passing: 70%</div></div></div>
+      <div style="font-size:.71rem;color:#5a6a85;margin-top:4px">Passing: 70%</div></div></div>
   <div style="padding:20px 40px;background:#f8fafc;border-bottom:1px solid #eef1f7;display:flex;gap:24px;flex-wrap:wrap">
     <div style="text-align:center;min-width:80px"><div style="font-size:1.6rem;font-weight:700;color:#1a7f4b;font-family:monospace">${correct}</div><div style="font-size:.7rem;color:#5a6a85;letter-spacing:.06em">CORRECT</div></div>
     <div style="text-align:center;min-width:80px"><div style="font-size:1.6rem;font-weight:700;color:#c8102e;font-family:monospace">${wrong}</div><div style="font-size:.7rem;color:#5a6a85;letter-spacing:.06em">WRONG</div></div>
     <div style="text-align:center;min-width:80px"><div style="font-size:1.6rem;font-weight:700;color:#5a6a85;font-family:monospace">${unanswered}</div><div style="font-size:.7rem;color:#5a6a85;letter-spacing:.06em">UNANSWERED</div></div>
     <div style="text-align:center;min-width:80px"><div style="font-size:1.6rem;font-weight:700;color:#0f1f3d;font-family:monospace">${answeredQuestions.length}</div><div style="font-size:.7rem;color:#5a6a85;letter-spacing:.06em">ANSWERED</div></div>
-    <div style="text-align:center;min-width:80px"><div style="font-size:1.6rem;font-weight:700;color:#0f1f3d;font-family:monospace">72</div><div style="font-size:.7rem;color:#5a6a85;letter-spacing:.06em">TOTAL ITEMS</div></div></div>
+    <div style="text-align:center;min-width:80px"><div style="font-size:1.6rem;font-weight:700;color:#0f1f3d;font-family:monospace">71</div><div style="font-size:.7rem;color:#5a6a85;letter-spacing:.06em">TOTAL ITEMS</div></div></div>
   <div style="padding:12px 40px;background:#fffdf0;border-bottom:1px solid #eef1f7;font-size:11px;color:#5a6a85;display:flex;gap:20px;flex-wrap:wrap">
     <span><span style="background:#e6f4ed;padding:2px 8px;border-radius:3px">Green</span> = Your correct answer</span>
     <span><span style="background:#fde8eb;padding:2px 8px;border-radius:3px">Red</span> = Your wrong answer</span>
     <span><span style="background:#fff8e1;padding:2px 8px;border-radius:3px">Yellow</span> = Correct answer you missed</span></div>
   <div class="no-print" style="padding:16px 40px;text-align:right"><button onclick="window.print()" style="background:#0f1f3d;color:#fff;border:none;padding:10px 24px;border-radius:6px;font-size:.85rem;font-weight:700;cursor:pointer">🖨 Print / Save as PDF</button></div>
-  <div style="padding:10px 40px 40px"><div style="font-size:11px;color:#5a6a85;margin-bottom:14px;font-style:italic;background:#f0f4fa;padding:10px 14px;border-radius:6px;border-left:3px solid #1a56a0">Showing <strong>${answeredQuestions.length}</strong> answered question(s) out of 72 total. Unanswered questions are not included.</div>
+  <div style="padding:10px 40px 40px"><div style="font-size:11px;color:#5a6a85;margin-bottom:14px;font-style:italic;background:#f0f4fa;padding:10px 14px;border-radius:6px;border-left:3px solid #1a56a0">Showing <strong>${answeredQuestions.length}</strong> answered question(s) out of 71 total. Unanswered questions are not included.</div>
   <table width="100%" cellspacing="0" cellpadding="0">${rows}</table></div>
   <div style="background:#0f1f3d;color:#a0b4d0;padding:16px 40px;font-size:.75rem;text-align:center">Oracle Integration Cloud 2025 Application Integration Professional · Generated ${dateStr}</div>
   </div></body></html>`;
